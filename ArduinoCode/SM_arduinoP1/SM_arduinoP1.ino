@@ -12,11 +12,11 @@ void setup() {
   pinMode(ledPin, OUTPUT);
 
 
-  //if (joystick.begin() == false)
- // {
-   // Serial.println("Joystick not connected");
-  //  while (1);
-//  }
+  if (joystick.begin() == false)
+  {
+    Serial.println("Joystick not connected");
+    while (1);
+  }
 }
 
 void loop() {
@@ -50,14 +50,18 @@ void loop() {
 
 
 
+    //Serial.println(volts);
+
 
   //Joystick attack
 //  Serial.println(volts);
 
-  if (volts >= 1 && volts <= 2.49 && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
+  if (volts >= .50 && volts <= 1.0) { // && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
    // digitalWrite(ledPin, HIGH); //Mic troubleshoot with LED
  //  Serial.write("bap");
     Serial.write(1); //1 is light attack
+Serial.println(volts);
+Serial.println("STUNNING");    
     Serial.flush();
     delay (20);
   }
@@ -99,6 +103,8 @@ void loop() {
   if (joystick.getVertical() < 400) {
   //  Serial.println("Y: up ");
     Serial.write(2);
+    Serial.println("Woo");
+    Serial.println(joystick.getVertical());
     Serial.flush();
     delay (20);
   }
