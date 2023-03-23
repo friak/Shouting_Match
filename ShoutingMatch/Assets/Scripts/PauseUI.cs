@@ -32,7 +32,7 @@ public class PauseUI : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape)) // && !m_isMoving)
+        if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.P)) // && !m_isMoving)
         {
             if(m_Background != null && m_Menu != null)
             {   
