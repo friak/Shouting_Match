@@ -13,8 +13,14 @@ EditorBuildSettings:
     guid: 05e28b48624794608a61a500c6896af8
   - enabled: 1
     path: Assets/Scenes/SelectScene.unity
-    guid: 127ed1a038be0413f82df97ee3ae6cfc
+    guid: e17dba9c975ed449ba736100076a717f
   - enabled: 1
     path: Assets/Scenes/FightScene.unity
-    guid: 925923a647ac748eeaebd2032b9d9e83
+    guid: 0cee876f871f1444181a4450420fd660
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}
