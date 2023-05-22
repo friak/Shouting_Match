@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum GAMESTATE
 {
@@ -32,6 +33,9 @@ public sealed class GameStateManager : MonoBehaviour
     private string m_TutorialScene;
     [SerializeField]
     private string m_SelectScene;
+
+    private List<CharacterSO> players;
+
 
     private void Awake()
     {
@@ -100,4 +104,10 @@ public sealed class GameStateManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(scene);
     }
+
+    public void StPlayer(CharacterSO player)
+    {
+        players.Add(player);
+    }
+    
 }

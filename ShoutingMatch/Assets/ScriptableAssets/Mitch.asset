@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c088c060b75c5402f956f182b25a5e84, type: 3}
+  m_Name: Mitch
+  m_EditorClassIdentifier: 
+  m_name: Mitch
+  m_profile: {fileID: 21300000, guid: 4b19d76737f3cfc41b93e8311c356f92, type: 3}
+  m_idle: {fileID: 21300000, guid: 8aea1674d58ff752facfaa7019bd2ca6, type: 3}
+  m_health: 100
+  damageSmall: 8
+  damageLarge: 18
