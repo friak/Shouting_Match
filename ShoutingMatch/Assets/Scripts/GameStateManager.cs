@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using System.Collections.Generic;
 
-public enum GAMESTATE
+public enum GameState
 {
     TITLE,
     PLAY,
@@ -25,7 +24,7 @@ public sealed class GameStateManager : MonoBehaviour
         private set { }
     }
 
-    public static GAMESTATE State { get; private set; }
+    public static GameState State { get; private set; }
 
     [SerializeField]
     private string m_TitleScene;
@@ -34,8 +33,10 @@ public sealed class GameStateManager : MonoBehaviour
     [SerializeField]
     private string m_SelectScene;
 
-    private List<CharacterSO> players;
+    [SerializeField]
+    private CharacterSO defaultCharacter1, defaultCharacter2;
 
+    public CharacterSO[] Players { get; set; }
 
     private void Awake()
     {
@@ -50,32 +51,39 @@ public sealed class GameStateManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Players = new CharacterSO[2];
+        // default characters for testing purposes
+        Players[0] = defaultCharacter1;
+        Players[1] = defaultCharacter2;
+    }
 
     public void TogglePause()
     {
-        if (State == GAMESTATE.PAUSE)
+        if (State == GameState.PAUSE)
         {
             //Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 1f;
-            State = GAMESTATE.PLAY;
+            State = GameState.PLAY;
         }
-        else if (State == GAMESTATE.PLAY)
+        else if (State == GameState.PLAY)
         {
             //Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 0f;
-            State = GAMESTATE.PAUSE;
+            State = GameState.PAUSE;
         }
     }
 
     public void NewGame()
     {
-        State = GAMESTATE.PLAY;
+        State = GameState.PLAY;
         _instance.LoadLevel(_instance.m_SelectScene);
     }
 
     public void QuitToTitle()
     {
-        State = GAMESTATE.TITLE;
+        State = GameState.TITLE;
         _instance.LoadLevel(_instance.m_TitleScene);
     }
 
@@ -89,10 +97,10 @@ public sealed class GameStateManager : MonoBehaviour
 
     public void LoadLevel(string name)
     {
-        if(State == GAMESTATE.PAUSE)
+        if(State == GameState.PAUSE)
         {
             Time.timeScale = 1f;
-            State = GAMESTATE.PLAY;
+            State = GameState.PLAY;
         }
         Debug.Log("opening scene: " + name);
         SceneManager.LoadScene(name);
@@ -105,9 +113,9 @@ public sealed class GameStateManager : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
-    public void StPlayer(CharacterSO player)
+    public void SetPlayer(int index, CharacterSO player)
     {
-        players.Add(player);
+        if (index > Players.Length) return;
+        Players[index] = player;
     }
-    
 }

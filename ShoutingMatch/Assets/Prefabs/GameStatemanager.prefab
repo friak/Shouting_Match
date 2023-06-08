@@ -47,3 +47,5 @@ MonoBehaviour:
   m_TitleScene: TitleScene
   m_TutorialScene: TutorialScene
   m_SelectScene: SelectScene
+  defaultCharacter1: {fileID: 11400000, guid: 670ab4fe7535047ccb243e344526c5e9, type: 2}
+  defaultCharacter2: {fileID: 11400000, guid: b0759a5d88c9c43f1b3409cec9c07622, type: 2}

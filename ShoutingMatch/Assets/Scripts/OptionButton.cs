@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
  
 // Character select item
-public class CharacterOption : MonoBehaviour
+public class OptionButton : MonoBehaviour
 {
     private int id;
     [SerializeField]
@@ -23,19 +23,15 @@ public class CharacterOption : MonoBehaviour
         frame.gameObject.SetActive(false);
     }
 
+
     public int GetId()
     {
         return id;
     }
 
-    public Sprite GetIdle()
+    public CharacterSO GetScriptableObject()
     {
-        return character.m_idle;
-    }
-
-    public string GetName()
-    {
-        return character.m_name;
+        return character;
     }
 
     public void SetFrame(Sprite sp)
@@ -54,7 +50,7 @@ public class CharacterOption : MonoBehaviour
         numberOfSelects++;
         if (numberOfSelects > 1)
         {
-            numberOfSelects = 2; // can not be more than 2
+            numberOfSelects = 2; // cannot be more than 2 in our case
             frame.sprite = spriteMultiselect;
         }
         if(numberOfSelects == 1)

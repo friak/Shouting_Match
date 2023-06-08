@@ -11,6 +11,6 @@ public class CharacterSO : ScriptableObject
     public int damageLarge;
 
 
-    /// other fields, e.g. attack types, animations, musics??
+    /// other fields, e.g. attack types, animations, audio??
 
 }

@@ -4,50 +4,68 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 
+public enum selectState
+{
+    SETCHARACTER,
+    SETLOUD,
+    SETQUIET,
+    READY
+}
 // Character select control
 public class SelectionControl : MonoBehaviour
 {
+    private static int idCount = 0;
+    private int playerId;
+
     [SerializeField]
-    private KeyCode up, down, left, right, ready;
+    private KeyCode up, down, left, right, ready, deselect;
     [SerializeField]
     private GameObject nameTag;
     [SerializeField]
     private GameObject player;
     [SerializeField]
     private TextMeshProUGUI readyImg;
+    [SerializeField]
+    private TextMeshProUGUI instruction;
+    [SerializeField]
+    private selectState state;
 
-    private int ID;
-    private bool isReady;
+    private int characterID;
     private bool isMoving;
     private int selectedIndex;
     private Image playerImage;
     private TextMeshProUGUI playerName;
-    private List<CharacterOption> options;
-    private CharacterOption previous;
-    private CharacterOption current;
+    private List<OptionButton> options;
+    private OptionButton previous;
+    private OptionButton current;
     private float timeToSelect = .2f;
+
+    public bool IsReady { get; private set; }
 
 
     void Start()
     {
+        playerId = idCount++;
         isMoving = false;
-        isReady = false;
+        IsReady = false;
+        instruction.gameObject.SetActive(false);
         playerName = nameTag.GetComponent<TextMeshProUGUI>();
         playerImage = player.GetComponent<Image>();
+
         // select a random character
         selectedIndex = Random.Range(0, options.Count);
         previous = options[selectedIndex];
         current = previous;
-        current.Select(ID);
-        playerImage.sprite = current.GetIdle();
-        playerName.SetText(current.GetName());
-        StartCoroutine(SelectFrame(current));
+        current.Select(characterID);
+        playerImage.sprite = current.GetScriptableObject().m_idle;
+        playerName.SetText(current.GetScriptableObject().m_name);
+        StartCoroutine(CoSelectFrame(current));
         playerImage.gameObject.SetActive(true);
     }
 
     void Update()
     {
-        if (!isReady)
+        if (state == selectState.SETCHARACTER)
         {
             if (Input.GetKeyUp(left) && selectedIndex >= 1 && !isMoving)
             {
@@ -70,39 +88,71 @@ public class SelectionControl : MonoBehaviour
                 ChangeCharacter(options[selectedIndex]);
             }
         }
-        if (Input.GetKeyUp(ready))
+        if (Input.GetKeyUp(ready) && state != selectState.READY)
         {
-            ToggleReady();
+            ChangeSelectState();
+        }
+        if (Input.GetKeyUp(deselect) && state == selectState.READY)
+        {
+            ChangeSelectState();
         }
 
     }
 
-    private void ToggleReady()
+    private void ChangeSelectState()
     {
-        isReady = !isReady;
-        if (isReady)
+        switch (state)
         {
-            readyImg.transform.RotateAround(transform.position, transform.up, 90f);
-        }
-        else
-        {
-            readyImg.transform.RotateAround(transform.position, transform.up, -90f);
+            case selectState.SETCHARACTER:
+                {
+                    instruction.gameObject.SetActive(true);
+                    instruction.text = "Give your loudest shout!";
+                    // check if shout was detected ...
+
+                    state = selectState.SETLOUD;
+                    return;
+                }
+            case selectState.SETLOUD:
+                {
+                    instruction.text = "Now your quietest...";
+                    // check if shout was detected ...
+
+                    state = selectState.SETQUIET;
+                    return;
+                }
+            case selectState.SETQUIET:
+                {
+                    GameStateManager.Instance.SetPlayer(playerId, current.GetScriptableObject());
+                    readyImg.transform.RotateAround(transform.position, transform.up, 90f);
+                    state = selectState.READY;
+                    IsReady = true;
+                    return;
+                }
+            case selectState.READY:
+                {
+                    instruction.gameObject.SetActive(false);
+                    readyImg.transform.RotateAround(transform.position, transform.up, -90f);
+                    state = selectState.SETCHARACTER;
+                    IsReady = false;
+                    return;
+                }
         }
     }
 
-    private void ChangeCharacter(CharacterOption opt)
+
+    private void ChangeCharacter(OptionButton opt)
     {
         previous = current;
         current = opt;
-        previous.Deselect(ID);
-        current.Select(ID);
-        playerImage.sprite = opt.GetIdle();
-        playerName.SetText(opt.GetName());
-        StartCoroutine(SelectFrame(opt));
+        previous.Deselect(characterID);
+        current.Select(characterID);
+        playerImage.sprite = opt.GetScriptableObject().m_idle;
+        playerName.SetText(opt.GetScriptableObject().m_name);
+        StartCoroutine(CoSelectFrame(opt));
 
     }
 
-    private IEnumerator SelectFrame(CharacterOption curr)
+    private IEnumerator CoSelectFrame(OptionButton curr)
     {
         isMoving = true;
         float timeElapsed = 0f;
@@ -125,14 +175,17 @@ public class SelectionControl : MonoBehaviour
         isMoving = false;
     }
 
-    public void SetOptions(List<CharacterOption> optionList)
+    public void SetOptions(List<OptionButton> optionList)
     {
         options = optionList;
     }
 
     public void SetId(int id)
     {
-        ID = id;
+        characterID = id;
     }
 
+    public CharacterSO GetSelectedCharacter()
+    {
+        return current.GetScriptableObject(); }
 }
