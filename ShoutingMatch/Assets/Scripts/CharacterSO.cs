@@ -5,12 +5,21 @@ public class CharacterSO : ScriptableObject
 {
     public string m_name;
     public Sprite m_profile;
-    public Sprite m_idle;
+
     public int m_health;
     public int damageSmall;
     public int damageLarge;
 
-
-    /// other fields, e.g. attack types, animations, audio??
+    public Sprite m_annoy;
+    public Sprite m_idle;
+    // missing sprites ...
+    // public Sprite m_block;
+    // public Sprite m_move;
+    // public Sprite m_jump;
+    public Sprite m_getDamage;
+    public Sprite m_lose;
+    public Sprite m_jumpAttack;
+    public Sprite m_lightAttack;
+    public Sprite m_heavyAttack;
 
 }

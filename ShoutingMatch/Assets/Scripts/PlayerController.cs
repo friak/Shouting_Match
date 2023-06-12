@@ -1,37 +1,195 @@
 using UnityEngine;
+using System.Collections;
+
+public enum PlayerState
+{
+    IDLE,
+    MOVE,
+    JUMP,
+    BLOCK,
+    JUMPATTACK,
+    LIGHTATTACK,
+    HEAVYATTACK
+}
 
 public class PlayerController : MonoBehaviour
 {
     private SpriteRenderer character;
+    private Rigidbody2D rbody;
     public bool IsDead { get; private set; }
-    public bool IsFlipped { get; private set; }
-
+    int direction = 1;
     [SerializeField]
-    private GameObject opponent;
+    private Transform opponent;
     [SerializeField]
-    private KeyCode forward, block, jump, crouch, attack0, attack1, attack2;
+    private KeyCode forward, backward, jump, block, attack0, attack1;
     [SerializeField]
-    private float jumpHeight, moveSpeed;
+    private float jumpHeight, moveSpeed, groundRadius;
+    [SerializeField]
+    private LayerMask groundLayer;
+    [SerializeField]
+    private Transform groundCheck;
+    private bool isOnGround;
+    private bool isTurned;
+    private bool isChanging;
+    private PlayerState state;
+    private CharacterSO playerSO;
 
     // Start is called before the first frame update
     void Start()
     {
         IsDead = false;
-        IsFlipped = false;
+        isTurned = false;
+        isChanging = false;
+        direction = -1;
         character = GetComponent<SpriteRenderer>();
+        rbody = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        if(!IsFlipped && transform.position.x > opponent.transform.position.x)
+        isOnGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
+        // TURN
+        if(!isTurned && transform.position.x > opponent.position.x)
         {
-            IsFlipped = !IsFlipped;
-            character.transform.RotateAround(transform.position, transform.up, 180f);
+            character.transform.localScale = new Vector3(-1, 1, 1);
+            isTurned = !isTurned;
+        }
+        else if (isTurned && transform.position.x < opponent.position.x)
+        {
+            character.transform.localScale = new Vector3(1, 1, 1);
+            isTurned = !isTurned;
+        }
+        // MOVE
+        if (Input.GetKey(forward))
+        {
+            rbody.velocity = new Vector2(direction * -moveSpeed, rbody.velocity.y);
+            if(state != PlayerState.MOVE)
+            {
+                state = PlayerState.MOVE;
+            }
+        }
+        else if (Input.GetKey(backward))
+        {
+            rbody.velocity = new Vector2(direction * moveSpeed, rbody.velocity.y);
+            if (state != PlayerState.MOVE)
+            {
+                state = PlayerState.MOVE;
+            }
+        }
+        else
+        {
+            rbody.velocity = new Vector2(0, rbody.velocity.y);
+            if (state != PlayerState.IDLE)
+            {
+                state = PlayerState.IDLE;
+            }
+        }
+        //JUMP
+        if (Input.GetKeyDown(jump) && isOnGround)
+        {
+            rbody.velocity = new Vector2(rbody.velocity.x, jumpHeight);
+            if (state != PlayerState.JUMP)
+            {
+                state = PlayerState.JUMP;
+            }
+        }
+        // jump attack 
+        if ((isTurned && Input.GetKey(jump) || !isTurned && Input.GetKey(backward)) && Input.GetKey(forward))
+        {
+            //rbody.velocity = new Vector2(rbody.velocity.x, jumpHeight);
+            if (state != PlayerState.JUMPATTACK)
+            {
+                state = PlayerState.JUMPATTACK;
+            }
+            //check for hit
+        }
+
+        // ATTACK (ground)
+        if (Input.GetKey(attack0))
+        {
+            if (state != PlayerState.LIGHTATTACK)
+            {
+                state = PlayerState.LIGHTATTACK;
+            }
+            //check for hit
+        }
+        if (Input.GetKey(attack1))
+        {
+            if (state != PlayerState.HEAVYATTACK)
+            {
+                state = PlayerState.HEAVYATTACK;
+            }
+            //check for hit
+        }
+
+        // BLOCK
+        if (Input.GetKey(block))
+        {
+            if (state != PlayerState.BLOCK)
+            {
+                state = PlayerState.BLOCK;
+            }
+        }
+
+        switch (state)
+        {
+            case PlayerState.IDLE:
+                {
+                    character.sprite = playerSO.m_annoy;
+                    return;
+                }
+            case PlayerState.MOVE:
+                {
+                    // character.sprite = playerSO.move; // missing sprite
+                    character.sprite = playerSO.m_idle;
+                    return;
+                }
+            case PlayerState.JUMP:
+                {
+                    // character.sprite = playerSO.jump; // missing sprite
+                    character.sprite = playerSO.m_idle;
+                    return;
+                }
+            case PlayerState.JUMPATTACK:
+                {
+                    character.sprite = playerSO.m_jumpAttack;
+                    return;
+                }
+            case PlayerState.BLOCK:
+                {
+                    // character.sprite = playerSO.m_block; // missing sprite
+                    character.sprite = playerSO.m_idle;
+                    return;
+                }
+            case PlayerState.LIGHTATTACK:
+                {
+                    character.sprite = playerSO.m_lightAttack;
+                    return;
+                }
+            case PlayerState.HEAVYATTACK:
+                {
+                    character.sprite = playerSO.m_heavyAttack;
+                    return;
+                }
         }
     }
 
-    public void SetCharacter(Sprite playerSprite)
+    private IEnumerator SetSprite(Sprite sprite)
     {
-        character.sprite = playerSprite;
+        isChanging = true;
+        character.sprite = sprite;
+        yield return new WaitForSeconds(3f);
+        isChanging = false;
+    }
+
+    public void SetCharacter(CharacterSO pSO)
+    {
+        playerSO = pSO;
+        character.sprite = pSO.m_idle;
+    }
+    public void FlipCharacter()
+    {
+        character.transform.localScale = new Vector3(-1, 1, 1);
+        direction = 1;
     }
 }

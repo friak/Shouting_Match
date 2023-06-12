@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class FightSceneManager : MonoBehaviour
 {
-    private PlayerController[] players;
     [SerializeField]
     private GameObject playerUIHolder;
     [SerializeField]
     private GameObject playerUIPrefab;
-    
+    [SerializeField]
+    private PlayerController[] players;
+
     void Start()
     {
-        players = FindObjectsOfType<PlayerController>(true);
         for (int i = 0; i < players.Length; i++)
         {
             CharacterSO chSO = GameStateManager.Instance.Players[i];
@@ -22,9 +22,11 @@ public class FightSceneManager : MonoBehaviour
             if (i % 2 == 1)
             {
                 playerUI.Flip();
+                players[i].FlipCharacter();
             }
+
             // Set player character
-            players[i].SetCharacter(chSO.m_idle);
+            players[i].SetCharacter(chSO);
         }
     }
 
