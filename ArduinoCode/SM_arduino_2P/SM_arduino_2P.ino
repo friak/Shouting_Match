@@ -1,21 +1,22 @@
 #include <Wire.h>
 #include "SparkFun_Qwiic_Joystick_Arduino_Library.h" //Click here to get the library: http://librarymanager/All#SparkFun_joystick
-JOYSTICK joystick; //Create instance of this object
+JOYSTICK joystick2;
+
 
 const int sampleWindow = 200; // Sample window width in milliseconds
-unsigned int shout;
+unsigned int shout2;
 
 void setup() {
  Serial.begin(9600);
-  if (joystick.begin() == false)
+  if (joystick2.begin() == false)
   {
-    Serial.println("Joystick not connected");
+    Serial.println("Joystick does not appear to be connected. Please check wiring. Freezing...");
     while (1);
   }
 }
 
 void loop() {
- 
+
  // MICROPHONE CODE
   unsigned long start = millis(); // Start of sample window
   unsigned int peakToPeak = 0;   // peak-to-peak level
@@ -26,27 +27,27 @@ void loop() {
   unsigned int signalMax2 = 0;
   unsigned int signalMin2 = 1024;
 
- // collect data within sample window
- while (millis() - start < sampleWindow) { 
-  shout = analogRead(0);
-  if (shout < 1024) { //This is the max of the 10-bit ADC so this loop will include all readings
-    if (shout > signalMax) {
-      signalMax = shout;  // save just the max levels
+  // collect data within sample window
+  while (millis() - start < sampleWindow) {
+  shout2 = analogRead(0);
+  if (shout2 < 1024) {  //This is the max of the 10-bit ADC so this loop will include all readings
+    if (shout2 > signalMax) {
+      signalMax = shout2;  // save just the max levels
       }
-    else if (shout < signalMin) {
-      signalMin = shout;  // save just the min levels
-     }
+      else if (shout2 < signalMin) {
+      signalMin = shout2;  // save just the min levels
+      }
+    }
   }
- }
   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
   double volts = (peakToPeak * 3.3) / 1024;  // convert to volts
-  
-  //debug
+
+
+ //debug
 //  Serial.println(volts);
- // delay (500);
+// delay (500);
 
 
- 
 //ATTACK CONTROLS
 if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(1); //1 is light attack  
@@ -73,16 +74,16 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   }
 
   //DIRECTIONAL CONTROLS
-  if (joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
+  if (joystick2.getVertical() == 499 && joystick2.getHorizontal() == 510) {
     Serial.write(100);
     Serial.flush();
     delay (200);
     //debug
-    Serial.println("idle"); 
+    //Serial.println("idle"); 
     // Serial.println(joystick.getVertical());
   }
   
-  if (joystick.getVertical() < 400) {
+  if (joystick2.getVertical() < 400) {
     Serial.println("Y: jump ");
     Serial.write(2);
     Serial.flush();
@@ -93,7 +94,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   }
 
 
-  if (joystick.getVertical() == 1023) {
+  if (joystick2.getVertical() == 1023) {
     Serial.println("Y: crouch ");
     Serial.write(3);
     Serial.flush();
@@ -104,7 +105,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   }
 
 
-  if (joystick.getHorizontal() == 0 ) {
+  if (joystick2.getHorizontal() == 0 ) {
     Serial.println("X: left ");
     Serial.write(4);
     Serial.flush();
@@ -115,7 +116,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   }
 
 
-  if (joystick.getHorizontal() == 1023 ) {
+  if (joystick2.getHorizontal() == 1023 ) {
     Serial.write(5);
     Serial.flush();
     delay (300);
@@ -123,7 +124,5 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
     Serial.println("X: right ");
     // Serial.println(joystick.getVertical());
   }
-
-
 
 }
