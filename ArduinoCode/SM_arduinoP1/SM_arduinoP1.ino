@@ -53,7 +53,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   Serial.flush();
   delay (200);
   //debug
-  Serial.println("LIGHT");
+//  Serial.println("LIGHT");
   }
 
  if (volts >= .61 && volts <= 1.60) {// && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
@@ -61,7 +61,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   Serial.flush();
   delay (200);
   //debug
-  Serial.println("MED");
+//  Serial.println("MED");
   }
 
   if (volts >= 2.00) {//  && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
@@ -69,7 +69,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   Serial.flush();
   delay (200);
   //debug
-  Serial.println("HEAVY");
+//  Serial.println("HEAVY");
   }
 
   //DIRECTIONAL CONTROLS
@@ -78,39 +78,36 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
     Serial.flush();
     delay (200);
     //debug
-    Serial.println("idle"); 
+//    Serial.println("idle"); 
     // Serial.println(joystick.getVertical());
   }
   
   if (joystick.getVertical() < 400) {
-    Serial.println("Y: jump ");
     Serial.write(2);
     Serial.flush();
     delay (300);
     //debug
-    Serial.println("Y: jump ");
+//    Serial.println("Y: jump ");
     // Serial.println(joystick.getVertical());
   }
 
 
   if (joystick.getVertical() == 1023) {
-    Serial.println("Y: crouch ");
     Serial.write(3);
     Serial.flush();
     delay (300);
     //debug
-    Serial.println("Y: crouch ");
+    //Serial.println("Y: crouch ");
     // Serial.println(joystick.getVertical());
   }
 
 
   if (joystick.getHorizontal() == 0 ) {
-    Serial.println("X: left ");
     Serial.write(4);
     Serial.flush();
     delay (300);
     //debug
-    Serial.println("X: left ");
+   // Serial.println("X: left ");
     // Serial.println(joystick.getVertical());
   }
 
@@ -120,7 +117,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
     Serial.flush();
     delay (300);
     //debug
-    Serial.println("X: right ");
+   // Serial.println("X: right ");
     // Serial.println(joystick.getVertical());
   }
 

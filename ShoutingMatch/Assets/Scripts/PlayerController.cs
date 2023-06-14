@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.IO;
+using System.IO.Ports;
 
 public enum PlayerState
 {
@@ -14,6 +16,11 @@ public enum PlayerState
 
 public class PlayerController : MonoBehaviour
 {
+    //Choosing USB port for Player 1
+    public SerialPort sp = new SerialPort("COM3", 9600);
+    //Arduino data
+    public int data;
+
     private SpriteRenderer character;
     private Rigidbody2D rbody;
     public bool IsDead { get; private set; }
@@ -37,6 +44,17 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Arduino Communication
+        try
+        {
+            sp.Open();
+            sp.ReadTimeout = 25;
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("Port Not Found!");
+        }
+
         IsDead = false;
         isTurned = false;
         isChanging = false;
@@ -47,6 +65,19 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //Arduino Communication
+        if (sp.IsOpen)
+        {
+            try
+            {
+                data = sp.ReadByte();
+            }
+            catch (System.Exception)
+            {
+
+            }
+        }
+
         isOnGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
         // TURN
         if(!isTurned && transform.position.x > opponent.position.x)
