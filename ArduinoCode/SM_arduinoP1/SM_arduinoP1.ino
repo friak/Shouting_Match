@@ -73,14 +73,14 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   }
 
   //DIRECTIONAL CONTROLS
-  if (joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
-    Serial.write(100);
-    Serial.flush();
-    delay (200);
+  //if (joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
+  //  Serial.write(100);
+  //  Serial.flush();
+  // delay (200);
     //debug
 //    Serial.println("idle"); 
     // Serial.println(joystick.getVertical());
-  }
+//  }
   
   if (joystick.getVertical() < 400) {
     Serial.write(2);
