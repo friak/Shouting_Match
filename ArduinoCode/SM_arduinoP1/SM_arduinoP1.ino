@@ -2,16 +2,11 @@
 #include "SparkFun_Qwiic_Joystick_Arduino_Library.h" //Click here to get the library: http://librarymanager/All#SparkFun_joystick
 JOYSTICK joystick; //Create instance of this object
 
-
-const int sampleWindow = 150; // Sample window width in milliseconds
+const int sampleWindow = 200; // Sample window width in milliseconds
 unsigned int shout;
-int ledPin = 9; //debug leds
 
 void setup() {
-  Serial.begin(9600);
-  pinMode(ledPin, OUTPUT);
-
-
+ Serial.begin(9600);
   if (joystick.begin() == false)
   {
     Serial.println("Joystick not connected");
@@ -20,7 +15,8 @@ void setup() {
 }
 
 void loop() {
-
+ 
+ // MICROPHONE CODE
   unsigned long start = millis(); // Start of sample window
   unsigned int peakToPeak = 0;   // peak-to-peak level
   unsigned int signalMax = 0;
@@ -30,107 +26,102 @@ void loop() {
   unsigned int signalMax2 = 0;
   unsigned int signalMin2 = 1024;
 
-  // collect data within sample window
-  while (millis() - start < sampleWindow)
-  { shout = analogRead(0);
-    if (shout < 1024)  //This is the max of the 10-bit ADC so this loop will include all readings
-    {
-      if (shout > signalMax)
-      {
-        signalMax = shout;  // save just the max levels
+ // collect data within sample window
+ while (millis() - start < sampleWindow) { 
+  shout = analogRead(0);
+  if (shout < 1024) { //This is the max of the 10-bit ADC so this loop will include all readings
+    if (shout > signalMax) {
+      signalMax = shout;  // save just the max levels
       }
-      else if (shout < signalMin)
-      {
-        signalMin = shout;  // save just the min levels
-      }
-    }
+    else if (shout < signalMin) {
+      signalMin = shout;  // save just the min levels
+     }
   }
+ }
   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
   double volts = (peakToPeak * 3.3) / 1024;  // convert to volts
-
-
-
-    //Serial.println(volts);
-
-
-  //Joystick attack
+  
+  //debug
 //  Serial.println(volts);
+ // delay (500);
 
-  if (volts >= .50 && volts <= 1.0) { // && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
-   // digitalWrite(ledPin, HIGH); //Mic troubleshoot with LED
- //  Serial.write("bap");
-    Serial.write(1); //1 is light attack
-Serial.println(volts);
-Serial.println("STUNNING");    
-    Serial.flush();
-    delay (20);
-  }
-  else
-  {
- //   digitalWrite(ledPin, LOW);
+
+ 
+//ATTACK CONTROLS
+if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
+  Serial.write(1); //1 is light attack  
+  Serial.flush();
+  delay (200);
+  //debug
+  Serial.println("LIGHT");
   }
 
-  if (volts >= 2.5 && volts <= 3.29 && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
-   // digitalWrite(ledPin, HIGH);
-    Serial.write(11); //11 is mid attack
-    Serial.flush();
-    delay (20);
-  }
-  else
-  {
-//    digitalWrite(ledPin, LOW);
+ if (volts >= .61 && volts <= 1.60) {// && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
+  Serial.write(11); //11 is mid attack
+  Serial.flush();
+  delay (200);
+  //debug
+  Serial.println("MED");
   }
 
-  if (volts >= 3.30  && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
-   // digitalWrite(ledPin, HIGH);
-    Serial.write(111); //111 is heavy attack
-    Serial.flush();
-    delay (20);
-  }
-  else
-  {
- //   digitalWrite(ledPin, LOW);
+  if (volts >= 2.00) {//  && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
+  Serial.write(111); //111 is heavy attack
+  Serial.flush();
+  delay (200);
+  //debug
+  Serial.println("HEAVY");
   }
 
   //Joystick Directional
   if (joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
-  //  Serial.println("idle"); 
     Serial.write(100);
     Serial.flush();
-    delay (20);
+    delay (200);
+    //debug
+    Serial.println("idle"); 
+    // Serial.println(joystick.getVertical());
   }
   
   if (joystick.getVertical() < 400) {
-  //  Serial.println("Y: up ");
+    Serial.println("Y: jump ");
     Serial.write(2);
-    Serial.println("Woo");
-    Serial.println(joystick.getVertical());
     Serial.flush();
-    delay (20);
+    delay (300);
+    //debug
+    Serial.println("Y: jump ");
+    // Serial.println(joystick.getVertical());
   }
 
 
   if (joystick.getVertical() == 1023) {
- // Serial.println("Y: down ");
+    Serial.println("Y: crouch ");
     Serial.write(3);
     Serial.flush();
-    delay (20);
+    delay (300);
+    //debug
+    Serial.println("Y: crouch ");
+    // Serial.println(joystick.getVertical());
   }
 
 
   if (joystick.getHorizontal() == 0 ) {
-   // Serial.println("X: block ");
+    Serial.println("X: left ");
     Serial.write(4);
     Serial.flush();
-    delay (20);
+    delay (300);
+    //debug
+    Serial.println("X: left ");
+    // Serial.println(joystick.getVertical());
   }
 
 
   if (joystick.getHorizontal() == 1023 ) {
-   // Serial.println("X: grab ");
     Serial.write(5);
     Serial.flush();
-    delay (20);
+    delay (300);
+    //debug
+    Serial.println("X: right ");
+    // Serial.println(joystick.getVertical());
   }
 
 
