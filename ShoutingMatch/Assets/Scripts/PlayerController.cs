@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public enum PlayerState
 {
@@ -6,17 +8,15 @@ public enum PlayerState
     MOVE,
     JUMP,
     BLOCK,
+    HIT,
     JUMPATTACK,
     LIGHTATTACK,
-    HEAVYATTACK
+    HEAVYATTACK,
+    DEAD
 }
 
 public class PlayerController : MonoBehaviour
 {
-    private SpriteRenderer character;
-    private Rigidbody2D rbody;
-    public bool IsDead { get; private set; }
-    int direction = 1;
     [SerializeField]
     private Transform opponent;
     [SerializeField]
@@ -27,26 +27,37 @@ public class PlayerController : MonoBehaviour
     private LayerMask groundLayer;
     [SerializeField]
     private Transform groundCheck;
+
+    private SpriteRenderer character;
+    private Rigidbody2D rbody;
+    private PlayerUI healthBar;
+    public bool IsDead { get; private set; }
     private bool isOnGround;
     private bool isTurned;
-    // private bool isChanging;
-    private PlayerState state;
+    public bool IsHit {get; set;}
+    private bool IsAttack;
+    public PlayerState State { get; private set; }
     private Player player;
-
+    int direction = 1;
     private int data;
+    private float currentHealth;
+    private PlayerController opponentControl;
 
     // Start is called before the first frame update
     void Start()
     {
         IsDead = false;
         isTurned = false;
-        // isChanging = false;
+        IsHit = false;
+        IsAttack = false;
         direction = -1;
         character = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
+        currentHealth = 100;
+        opponentControl = opponent.gameObject.GetComponent<PlayerController>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Arduino Communication
         if (player.SPort.IsOpen)
@@ -61,10 +72,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (IsDead) return;
         isOnGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
-
+        
         // TURN
-        if(!isTurned && transform.position.x > opponent.position.x)
+        if (!isTurned && transform.position.x > opponent.position.x)
         {
             character.transform.localScale = new Vector3(-1, 1, 1);
             isTurned = !isTurned;
@@ -79,38 +91,39 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(forward) || data == player.Controls["Forward"])
         {
             rbody.velocity = new Vector2(direction * -moveSpeed, rbody.velocity.y);
-            if(state != PlayerState.MOVE)
+            if(State != PlayerState.MOVE)
             {
-                state = PlayerState.MOVE;
-                ChangeState(state);
+                State = PlayerState.MOVE;
+                ChangeState(State);
             }
         }
         else if (Input.GetKey(backward) || data == player.Controls["Backward"])
         {
             rbody.velocity = new Vector2(direction * moveSpeed, rbody.velocity.y);
-            if (state != PlayerState.MOVE)
+            if (State != PlayerState.MOVE)
             {
-                state = PlayerState.MOVE;
-                ChangeState(state);
+                State = PlayerState.MOVE;
+                ChangeState(State);
             }
         }
         else
         {
             rbody.velocity = new Vector2(0, rbody.velocity.y);
-            if (state != PlayerState.IDLE)
+            if (State != PlayerState.IDLE)
             {
-                state = PlayerState.IDLE;
-                ChangeState(state);
+                State = PlayerState.IDLE;
+                ChangeState(State);
             }
         }
+
         //JUMP
-        if ((Input.GetKeyDown(jump) || data == player.Controls["Jump"]) && isOnGround )
+        if ((Input.GetKeyDown(jump) || data == player.Controls["Jump"]) && isOnGround)
         {
             rbody.velocity = new Vector2(rbody.velocity.x, jumpHeight);
-            if (state != PlayerState.JUMP)
+            if (State != PlayerState.JUMP)
             {
-                state = PlayerState.JUMP;
-                ChangeState(state);
+                State = PlayerState.JUMP;
+                ChangeState(State);
             }
         }
         // jump attack 
@@ -119,44 +132,44 @@ public class PlayerController : MonoBehaviour
             && Input.GetKey(jump))
         {
             //rbody.velocity = new Vector2(rbody.velocity.x, jumpHeight);
-            if (state != PlayerState.JUMPATTACK)
+            if (State != PlayerState.JUMPATTACK)
             {
-                state = PlayerState.JUMPATTACK;
-                ChangeState(state);
+                State = PlayerState.JUMPATTACK;
+                ChangeState(State);
+                if (!IsAttack) StartCoroutine(CheckHit(player.Character.damageLarge));
             }
-            //check for hit
         }
 
         // ATTACK (ground)
         if (Input.GetKey(attack0) || data == player.Controls["Attack1"])
         {
-            if (state != PlayerState.LIGHTATTACK)
+            if (State != PlayerState.LIGHTATTACK)
             {
-                state = PlayerState.LIGHTATTACK;
-                ChangeState(state);
+                State = PlayerState.LIGHTATTACK;
+                ChangeState(State);
+                if(!IsAttack) StartCoroutine(CheckHit(player.Character.damageSmall));
             }
-            //check for hit
         }
         if (Input.GetKey(attack1) || data == player.Controls["Attack2"])
         {
-            if (state != PlayerState.HEAVYATTACK)
+            if (State != PlayerState.HEAVYATTACK)
             {
-                state = PlayerState.HEAVYATTACK;
-                ChangeState(state);
+                State = PlayerState.HEAVYATTACK;
+                ChangeState(State);
+                if (!IsAttack) StartCoroutine(CheckHit(player.Character.damageLarge));
             }
-            //check for hit
         }
 
         // BLOCK
         if (Input.GetKey(block) || data == player.Controls["Block"])
         {
-            if (state != PlayerState.BLOCK)
+            if (State != PlayerState.BLOCK)
             {
-                state = PlayerState.BLOCK;
-                ChangeState(state);
+                State = PlayerState.BLOCK;
+                ChangeState(State);
             }
         }
-        
+
     }
 
     private void ChangeState(PlayerState state)
@@ -196,6 +209,12 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("BLOCK");
                     return;
                 }
+            case PlayerState.HIT:
+                {
+                    character.sprite = player.Character.m_getDamage;
+                    Debug.Log("HIT");
+                    return;
+                }
             case PlayerState.LIGHTATTACK:
                 {
                     character.sprite = player.Character.m_lightAttack;
@@ -206,21 +225,72 @@ public class PlayerController : MonoBehaviour
                     character.sprite = player.Character.m_heavyAttack;
                     return;
                 }
+           case PlayerState.DEAD:
+            {
+                character.sprite = player.Character.m_lose;
+                return;
+            }
         }
     }
-    /* private IEnumerator SetSprite(Sprite sprite)
-    {
-        isChanging = true;
-        character.sprite = sprite;
-        yield return new WaitForSeconds(3f);
-        isChanging = false;
-    } */
 
+    private IEnumerator CheckHit(int damage)
+    {
+        IsAttack = true;
+        if (opponentControl.State != PlayerState.BLOCK && IsHit)
+        {
+            opponentControl.State = PlayerState.HIT;
+            opponentControl.TakeDamage(damage);
+        }
+        yield return new WaitForSecondsRealtime(1f);
+        IsAttack = false;
+    }
+         
+
+    private void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("Damage taken, health: " + currentHealth); ;
+        healthBar.SetHealth(currentHealth);
+        if(currentHealth <= 0)
+        {
+            State = PlayerState.DEAD;
+            ChangeState(State);
+            healthBar.GameOver.text += "\n" + opponentControl.character.name + " WINS!";
+            healthBar.GameOver.gameObject.SetActive(true);
+            IsDead = true;
+        }
+    }
+
+     void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            opponentControl.IsHit = true;
+            Debug.Log("hit");
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            opponentControl.IsHit = false;
+            Debug.Log("hit exit");
+        }
+    }
 
     public void SetPlayer(Player p)
     {
         player = p;
         character.sprite = player.Character.m_idle;
+    }
+
+    public void SetHealthBar(PlayerUI hb, int max)
+    {
+        healthBar = hb;
+        healthBar.SetMaxValue(max);
+        currentHealth = max;
+        Debug.Log("max health: " + currentHealth);
     }
 
     public void FlipCharacter()

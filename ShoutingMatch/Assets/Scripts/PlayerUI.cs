@@ -10,6 +10,23 @@ public class PlayerUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI playerName;
 
+    [SerializeField]
+    public Slider HealthBar;
+
+    [SerializeField]
+    public TextMeshProUGUI GameOver;
+
+    public void SetMaxValue(float max)
+    {
+        HealthBar.maxValue = max;
+        HealthBar.value = max;
+    }
+
+    public void SetHealth(float health)
+    {
+        HealthBar.value = health;
+    }
+
     public void SetProfile(Sprite img)
     {
         profileImg.sprite = img;

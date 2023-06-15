@@ -75,7 +75,7 @@ public sealed class GameStateManager : MonoBehaviour
         d2.Add("Attack2",222);
         
         Players[0] = new Player("/dev/cu.usbmodem1422101", defaultCharacter1, d1);
-        Players[1] = new Player("/dev/cu.usbmodem141301", defaultCharacter2, d2);
+        Players[1] = new Player("/dev/cu.usbmodem141101", defaultCharacter2, d2);
     }
 
     public void TogglePause()

@@ -43,7 +43,7 @@ void loop() {
   double volts = (peakToPeak * 3.3) / 1024;  // convert to volts
 
 
- //debug
+//debug
 //  Serial.println(volts);
 // delay (500);
 
@@ -52,25 +52,25 @@ void loop() {
 if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(200); //1 is light attack  
   Serial.flush();
-  delay (200);
+  delay (30);
   //debug
-  //Serial.println("LIGHT");
+  Serial.println("LIGHT");
   }
 
  if (volts >= .61 && volts <= 1.60) {// && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(22); //11 is mid attack
   Serial.flush();
-  delay (20);
+   delay (30);
   //debug
-  //Serial.println("MED");
+  Serial.println("MED");
   }
 
   if (volts >= 2.00) {//  && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(222); //111 is heavy attack
   Serial.flush();
-  delay (20);
+   delay (30);
   //debug
-  //Serial.println("HEAVY");
+  Serial.println("HEAVY");
   }
 
   //DIRECTIONAL CONTROLS
@@ -88,37 +88,33 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
     Serial.flush();
     delay (30);
     //debug
-    //Serial.println("Y: jump ");
+    Serial.println("Y: jump ");
     // Serial.println(joystick.getVertical());
   }
-
-
+  
   if (joystick2.getVertical() == 1023) {
     Serial.write(7);
     Serial.flush();
     delay (30);
     //debug
-    //Serial.println("Y: block ");
+    Serial.println("Y: block ");
     // Serial.println(joystick.getVertical());
-  }
-
-
+  } 
+  
   if (joystick2.getHorizontal() == 0 ) {
     Serial.write(8);
     Serial.flush();
     delay (30);
     //debug
-    //Serial.println("X: left ");
+    Serial.println("X: left ");
     // Serial.println(joystick.getVertical());
   }
-
-
   if (joystick2.getHorizontal() == 1023 ) {
     Serial.write(9);
     Serial.flush();
     delay (30);
     //debug
-    //Serial.println("X: right ");
+    Serial.println("X: right ");
     // Serial.println(joystick.getVertical());
   }
 

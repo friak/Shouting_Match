@@ -27,6 +27,7 @@ public class FightSceneManager : MonoBehaviour
 
             // Set player
             players[i].SetPlayer(player);
+            players[i].SetHealthBar(playerUI, player.Character.m_health);
         }
     }
 
