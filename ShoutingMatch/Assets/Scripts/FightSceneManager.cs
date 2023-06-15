@@ -13,20 +13,20 @@ public class FightSceneManager : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            CharacterSO chSO = GameStateManager.Instance.Players[i];
+            Player player = GameStateManager.Instance.Players[i];
             //Create the UI - set profile and name
-            GameObject player = Instantiate(playerUIPrefab, playerUIHolder.transform);
-            PlayerUI playerUI = player.GetComponent<PlayerUI>();
-            playerUI.SetName(chSO.m_name);
-            playerUI.SetProfile(chSO.m_profile);
+            GameObject playerGO = Instantiate(playerUIPrefab, playerUIHolder.transform);
+            PlayerUI playerUI = playerGO.GetComponent<PlayerUI>();
+            playerUI.SetName(player.Character.m_name);
+            playerUI.SetProfile(player.Character.m_profile);
             if (i % 2 == 1)
             {
                 playerUI.Flip();
                 players[i].FlipCharacter();
             }
 
-            // Set player character
-            players[i].SetCharacter(chSO);
+            // Set player
+            players[i].SetPlayer(player);
         }
     }
 

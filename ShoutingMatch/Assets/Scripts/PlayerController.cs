@@ -1,7 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.IO;
-using System.IO.Ports;
 
 public enum PlayerState
 {
@@ -16,11 +13,6 @@ public enum PlayerState
 
 public class PlayerController : MonoBehaviour
 {
-    //Choosing USB port for Player 1
-    public SerialPort sp = new SerialPort("COM3", 9600);
-    //Arduino data
-    public int data;
-
     private SpriteRenderer character;
     private Rigidbody2D rbody;
     public bool IsDead { get; private set; }
@@ -37,27 +29,18 @@ public class PlayerController : MonoBehaviour
     private Transform groundCheck;
     private bool isOnGround;
     private bool isTurned;
-    private bool isChanging;
+    // private bool isChanging;
     private PlayerState state;
-    private CharacterSO playerSO;
+    private Player player;
+
+    private int data;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Arduino Communication
-        try
-        {
-            sp.Open();
-            sp.ReadTimeout = 25;
-        }
-        catch (System.Exception)
-        {
-            Debug.Log("Port Not Found!");
-        }
-
         IsDead = false;
         isTurned = false;
-        isChanging = false;
+        // isChanging = false;
         direction = -1;
         character = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
@@ -65,20 +48,21 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Arduino Communication
-        if (sp.IsOpen)
+        // Arduino Communication
+        if (player.SPort.IsOpen)
         {
             try
             {
-                data = sp.ReadByte();
+                data = player.SPort.ReadByte();
+                Debug.Log("Received data: player name: " + player.Character.m_name + ", data: " + data.ToString());
             }
             catch (System.Exception)
             {
-
             }
         }
 
         isOnGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
+
         // TURN
         if(!isTurned && transform.position.x > opponent.position.x)
         {
@@ -90,21 +74,24 @@ public class PlayerController : MonoBehaviour
             character.transform.localScale = new Vector3(1, 1, 1);
             isTurned = !isTurned;
         }
+
         // MOVE
-        if (Input.GetKey(forward))
+        if (Input.GetKey(forward) || data == player.Controls["Forward"])
         {
             rbody.velocity = new Vector2(direction * -moveSpeed, rbody.velocity.y);
             if(state != PlayerState.MOVE)
             {
                 state = PlayerState.MOVE;
+                ChangeState(state);
             }
         }
-        else if (Input.GetKey(backward))
+        else if (Input.GetKey(backward) || data == player.Controls["Backward"])
         {
             rbody.velocity = new Vector2(direction * moveSpeed, rbody.velocity.y);
             if (state != PlayerState.MOVE)
             {
                 state = PlayerState.MOVE;
+                ChangeState(state);
             }
         }
         else
@@ -113,111 +100,129 @@ public class PlayerController : MonoBehaviour
             if (state != PlayerState.IDLE)
             {
                 state = PlayerState.IDLE;
+                ChangeState(state);
             }
         }
         //JUMP
-        if (Input.GetKeyDown(jump) && isOnGround)
+        if ((Input.GetKeyDown(jump) || data == player.Controls["Jump"]) && isOnGround )
         {
             rbody.velocity = new Vector2(rbody.velocity.x, jumpHeight);
             if (state != PlayerState.JUMP)
             {
                 state = PlayerState.JUMP;
+                ChangeState(state);
             }
         }
         // jump attack 
-        if ((isTurned && Input.GetKey(jump) || !isTurned && Input.GetKey(backward)) && Input.GetKey(forward))
+        if ((isTurned && (Input.GetKey(forward) || data == player.Controls["Forward"])
+            || !isTurned && (Input.GetKey(backward) || data == player.Controls["Backward"]))
+            && Input.GetKey(jump))
         {
             //rbody.velocity = new Vector2(rbody.velocity.x, jumpHeight);
             if (state != PlayerState.JUMPATTACK)
             {
                 state = PlayerState.JUMPATTACK;
+                ChangeState(state);
             }
             //check for hit
         }
 
         // ATTACK (ground)
-        if (Input.GetKey(attack0))
+        if (Input.GetKey(attack0) || data == player.Controls["Attack1"])
         {
             if (state != PlayerState.LIGHTATTACK)
             {
                 state = PlayerState.LIGHTATTACK;
+                ChangeState(state);
             }
             //check for hit
         }
-        if (Input.GetKey(attack1))
+        if (Input.GetKey(attack1) || data == player.Controls["Attack2"])
         {
             if (state != PlayerState.HEAVYATTACK)
             {
                 state = PlayerState.HEAVYATTACK;
+                ChangeState(state);
             }
             //check for hit
         }
 
         // BLOCK
-        if (Input.GetKey(block))
+        if (Input.GetKey(block) || data == player.Controls["Block"])
         {
             if (state != PlayerState.BLOCK)
             {
                 state = PlayerState.BLOCK;
+                ChangeState(state);
             }
         }
+        
+    }
 
+    private void ChangeState(PlayerState state)
+    {
         switch (state)
         {
             case PlayerState.IDLE:
                 {
-                    character.sprite = playerSO.m_annoy;
+                    character.sprite = player.Character.m_annoy;
+                    Debug.Log("IDLE");
                     return;
                 }
             case PlayerState.MOVE:
                 {
                     // character.sprite = playerSO.move; // missing sprite
-                    character.sprite = playerSO.m_idle;
+                    character.sprite = player.Character.m_idle;
+                    Debug.Log("MOVE");
                     return;
                 }
             case PlayerState.JUMP:
                 {
                     // character.sprite = playerSO.jump; // missing sprite
-                    character.sprite = playerSO.m_idle;
+                    character.sprite = player.Character.m_idle;
+                    Debug.Log("JUMP");
                     return;
                 }
             case PlayerState.JUMPATTACK:
                 {
-                    character.sprite = playerSO.m_jumpAttack;
+                    character.sprite = player.Character.m_jumpAttack;
+                    Debug.Log("JUMP ATTACK");
                     return;
                 }
             case PlayerState.BLOCK:
                 {
                     // character.sprite = playerSO.m_block; // missing sprite
-                    character.sprite = playerSO.m_idle;
+                    character.sprite = player.Character.m_idle;
+                    Debug.Log("BLOCK");
                     return;
                 }
             case PlayerState.LIGHTATTACK:
                 {
-                    character.sprite = playerSO.m_lightAttack;
+                    character.sprite = player.Character.m_lightAttack;
                     return;
                 }
             case PlayerState.HEAVYATTACK:
                 {
-                    character.sprite = playerSO.m_heavyAttack;
+                    character.sprite = player.Character.m_heavyAttack;
                     return;
                 }
         }
     }
-
-    private IEnumerator SetSprite(Sprite sprite)
+    /* private IEnumerator SetSprite(Sprite sprite)
     {
         isChanging = true;
         character.sprite = sprite;
         yield return new WaitForSeconds(3f);
         isChanging = false;
+    } */
+
+
+    public void SetPlayer(Player p)
+    {
+        player = p;
+        character.sprite = player.Character.m_idle;
     }
 
-    public void SetCharacter(CharacterSO pSO)
-    {
-        playerSO = pSO;
-        character.sprite = pSO.m_idle;
-    }
     public void FlipCharacter()
     {
         character.transform.localScale = new Vector3(-1, 1, 1);

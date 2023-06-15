@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum GameState
 {
@@ -33,10 +34,12 @@ public sealed class GameStateManager : MonoBehaviour
     [SerializeField]
     private string m_SelectScene;
 
-    [SerializeField]
+    [SerializeField]// for testing purposes - we don't have to start at the select scene
     private CharacterSO defaultCharacter1, defaultCharacter2;
 
-    public CharacterSO[] Players { get; set; }
+    public Player[] Players { get; set; }
+
+
 
     private void Awake()
     {
@@ -53,10 +56,26 @@ public sealed class GameStateManager : MonoBehaviour
 
     private void Start()
     {
-        Players = new CharacterSO[2];
+        Players = new Player[2];
         // default characters for testing purposes
-        Players[0] = defaultCharacter1;
-        Players[1] = defaultCharacter2;
+        Dictionary<string, int> d1 = new Dictionary<string, int>();
+        d1.Add("Forward",4);
+        d1.Add("Backward",5);
+        d1.Add("Block",3);
+        d1.Add("Jump",2);
+        d1.Add("Attack1",1);
+        d1.Add("Attack2", 111);
+
+        Dictionary<string, int> d2 = new Dictionary<string, int>();
+        d2.Add("Forward",8);
+        d2.Add("Backward",9);
+        d2.Add("Block",7);
+        d2.Add("Jump",6);
+        d2.Add("Attack1",200);
+        d2.Add("Attack2",222);
+        
+        Players[0] = new Player("/dev/cu.usbmodem1422101", defaultCharacter1, d1);
+        Players[1] = new Player("/dev/cu.usbmodem141301", defaultCharacter2, d2);
     }
 
     public void TogglePause()
@@ -116,6 +135,6 @@ public sealed class GameStateManager : MonoBehaviour
     public void SetPlayer(int index, CharacterSO player)
     {
         if (index > Players.Length) return;
-        Players[index] = player;
+        Players[index].ChangeCharacter(player);
     }
 }

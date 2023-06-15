@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
-using System.IO;
-using System.IO.Ports;
 
 public enum selectState
 {
@@ -13,14 +11,10 @@ public enum selectState
     SETQUIET,
     READY
 }
+
 // Character select control
 public class SelectionControl : MonoBehaviour
 {
-    //Choosing USB port for Player 1
-    SerialPort sp = new SerialPort("COM3", 9600);
-    //Arduino data
-    public int data;
-
     private static int idCount = 0;
     private int playerId;
 
@@ -49,22 +43,8 @@ public class SelectionControl : MonoBehaviour
 
     public bool IsReady { get; private set; }
 
-
-
     void Start()
     {
-
-        // Arduino Communication
-        try
-        {
-            sp.Open();
-            sp.ReadTimeout = 25;
-        }
-        catch (System.Exception)
-        {
-            Debug.Log("Port Not Found!");
-        }
-
         playerId = idCount++;
         isMoving = false;
         IsReady = false;
@@ -81,23 +61,10 @@ public class SelectionControl : MonoBehaviour
         playerName.SetText(current.GetScriptableObject().m_name);
         StartCoroutine(CoSelectFrame(current));
         playerImage.gameObject.SetActive(true);
-
     }
 
     void Update()
     {
-        //Arduino Communication
-        if (sp.IsOpen)
-        {
-            try
-            {
-                data = sp.ReadByte();
-            }
-            catch (System.Exception)
-            {
-
-            }
-        }
 
         //Keyboard Controls
         if (state == selectState.SETCHARACTER)
@@ -133,7 +100,6 @@ public class SelectionControl : MonoBehaviour
         }
 
     }
-
 
 
     private void ChangeSelectState()

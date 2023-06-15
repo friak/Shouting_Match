@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: Kim
   m_profile: {fileID: 21300000, guid: 51858b3148e307997a48450bd29a4a63, type: 3}
-  m_idle: {fileID: 21300000, guid: 52b3c95a1b846f89996b6b3837f10009, type: 3}
   m_health: 110
   damageSmall: 8
   damageLarge: 14
+  m_annoy: {fileID: 21300000, guid: 07dbdb71b576e413ca36fa9a17a768f5, type: 3}
+  m_idle: {fileID: 21300000, guid: 52b3c95a1b846f89996b6b3837f10009, type: 3}
+  m_getDamage: {fileID: 21300000, guid: ad78f42d71887118086bde670cc134b0, type: 3}
+  m_lose: {fileID: 21300000, guid: cca1a25ad85cc17e18a6e753dabc7495, type: 3}
+  m_jumpAttack: {fileID: 21300000, guid: 18fa790f0f60b99d1999159135286928, type: 3}
+  m_lightAttack: {fileID: 21300000, guid: 54b5104d4b2389ef0835ea8c12635c85, type: 3}
+  m_heavyAttack: {fileID: 21300000, guid: f0590c681fa12f9bc9e68730c242d727, type: 3}

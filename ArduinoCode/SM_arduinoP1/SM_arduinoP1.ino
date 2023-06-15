@@ -42,7 +42,7 @@ void loop() {
   double volts = (peakToPeak * 3.3) / 1024;  // convert to volts
   
   //debug
-//  Serial.println(volts);
+  //  Serial.println(volts);
  // delay (500);
 
 
@@ -51,25 +51,25 @@ void loop() {
 if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(1); //1 is light attack  
   Serial.flush();
-  delay (200);
+  delay (20);
   //debug
-//  Serial.println("LIGHT");
+ Serial.println("LIGHT");
   }
 
  if (volts >= .61 && volts <= 1.60) {// && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(11); //11 is mid attack
   Serial.flush();
-  delay (200);
+  delay (20);
   //debug
-//  Serial.println("MED");
+ Serial.println("MED");
   }
 
   if (volts >= 2.00) {//  && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(111); //111 is heavy attack
   Serial.flush();
-  delay (200);
+  delay (20);
   //debug
-//  Serial.println("HEAVY");
+Serial.println("HEAVY");
   }
 
   //DIRECTIONAL CONTROLS
@@ -85,9 +85,9 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (joystick.getVertical() < 400) {
     Serial.write(2);
     Serial.flush();
-    delay (300);
+    delay (30);
     //debug
-//    Serial.println("Y: jump ");
+   Serial.println("Y: jump ");
     // Serial.println(joystick.getVertical());
   }
 
@@ -95,9 +95,9 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (joystick.getVertical() == 1023) {
     Serial.write(3);
     Serial.flush();
-    delay (300);
+    delay (30);
     //debug
-    //Serial.println("Y: crouch ");
+   Serial.println("Y: block "); // this is going to be block for now (we hav no crouch sprite)
     // Serial.println(joystick.getVertical());
   }
 
@@ -105,9 +105,9 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (joystick.getHorizontal() == 0 ) {
     Serial.write(4);
     Serial.flush();
-    delay (300);
+    delay (30);
     //debug
-   // Serial.println("X: left ");
+    Serial.println("X: left ");
     // Serial.println(joystick.getVertical());
   }
 
@@ -115,9 +115,9 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (joystick.getHorizontal() == 1023 ) {
     Serial.write(5);
     Serial.flush();
-    delay (300);
+    delay (30);
     //debug
-   // Serial.println("X: right ");
+    Serial.println("X: right ");
     // Serial.println(joystick.getVertical());
   }
 

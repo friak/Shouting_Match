@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: Sissy
   m_profile: {fileID: 21300000, guid: 673590f5d6ca6d019b76e677c7dff51e, type: 3}
-  m_idle: {fileID: 21300000, guid: f33c7fed2b68c5af5bd7241632108828, type: 3}
   m_health: 100
   damageSmall: 8
   damageLarge: 16
+  m_annoy: {fileID: 21300000, guid: c1f5941990cb262ef935fe8f68bbae8f, type: 3}
+  m_idle: {fileID: 21300000, guid: f33c7fed2b68c5af5bd7241632108828, type: 3}
+  m_getDamage: {fileID: 21300000, guid: 33f0e6ddb545427a4804681ed96a177d, type: 3}
+  m_lose: {fileID: 21300000, guid: 7dc3bca795938cff484c99c240ac6867, type: 3}
+  m_jumpAttack: {fileID: 21300000, guid: 9a97f5b7d4e3e7d68873200e308a1862, type: 3}
+  m_lightAttack: {fileID: 21300000, guid: b4f0396a281c38a3da90acbc7216020e, type: 3}
+  m_heavyAttack: {fileID: 21300000, guid: 78d68855e94943be896dd690b9bebf94, type: 3}

@@ -60,7 +60,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
  if (volts >= .61 && volts <= 1.60) {// && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(22); //11 is mid attack
   Serial.flush();
-  delay (200);
+  delay (20);
   //debug
   //Serial.println("MED");
   }
@@ -68,7 +68,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (volts >= 2.00) {//  && joystick.getVertical() == 499 && joystick.getHorizontal() == 510) {
   Serial.write(222); //111 is heavy attack
   Serial.flush();
-  delay (200);
+  delay (20);
   //debug
   //Serial.println("HEAVY");
   }
@@ -86,7 +86,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (joystick2.getVertical() < 400) {
     Serial.write(6);
     Serial.flush();
-    delay (300);
+    delay (30);
     //debug
     //Serial.println("Y: jump ");
     // Serial.println(joystick.getVertical());
@@ -96,9 +96,9 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (joystick2.getVertical() == 1023) {
     Serial.write(7);
     Serial.flush();
-    delay (300);
+    delay (30);
     //debug
-    //Serial.println("Y: crouch ");
+    //Serial.println("Y: block ");
     // Serial.println(joystick.getVertical());
   }
 
@@ -106,7 +106,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (joystick2.getHorizontal() == 0 ) {
     Serial.write(8);
     Serial.flush();
-    delay (300);
+    delay (30);
     //debug
     //Serial.println("X: left ");
     // Serial.println(joystick.getVertical());
@@ -116,7 +116,7 @@ if (volts >= .20 && volts <= .60) { // && joystick.getVertical() == 499 && joyst
   if (joystick2.getHorizontal() == 1023 ) {
     Serial.write(9);
     Serial.flush();
-    delay (300);
+    delay (30);
     //debug
     //Serial.println("X: right ");
     // Serial.println(joystick.getVertical());

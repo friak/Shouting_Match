@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: Mitch
   m_profile: {fileID: 21300000, guid: 4b19d76737f3cfc41b93e8311c356f92, type: 3}
-  m_idle: {fileID: 21300000, guid: 8aea1674d58ff752facfaa7019bd2ca6, type: 3}
   m_health: 100
   damageSmall: 8
   damageLarge: 18
+  m_annoy: {fileID: 21300000, guid: a3fe013c7d80304e29bf192c7278bbc0, type: 3}
+  m_idle: {fileID: 21300000, guid: 8aea1674d58ff752facfaa7019bd2ca6, type: 3}
+  m_getDamage: {fileID: 21300000, guid: 3e05097ddff241a1fba1f5b93a2b21b5, type: 3}
+  m_lose: {fileID: 21300000, guid: a66e05e0a9b4085b7b73b66d3f002281, type: 3}
+  m_jumpAttack: {fileID: 21300000, guid: a8114190b3afdad0aa7a8c769aa605ee, type: 3}
+  m_lightAttack: {fileID: 21300000, guid: b26d8c1931383a62fbadef9ab2273d1a, type: 3}
+  m_heavyAttack: {fileID: 21300000, guid: 2c09490b4c7730f17bbe65dda60821d1, type: 3}

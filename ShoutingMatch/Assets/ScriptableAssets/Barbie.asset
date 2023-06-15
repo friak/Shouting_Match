@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: Barbie
   m_profile: {fileID: 21300000, guid: e95e0b070dc74adee860b0fa896fbc62, type: 3}
-  m_idle: {fileID: 21300000, guid: 5536fbfd47c3179d38a9dd183756717a, type: 3}
   m_health: 90
   damageSmall: 10
   damageLarge: 15
+  m_annoy: {fileID: 21300000, guid: 173bd5dd6c81cfe21affbde67cb5982b, type: 3}
+  m_idle: {fileID: 21300000, guid: 5536fbfd47c3179d38a9dd183756717a, type: 3}
+  m_getDamage: {fileID: 21300000, guid: 788e53a76e5ac3b618b5b6578324a4ae, type: 3}
+  m_lose: {fileID: 21300000, guid: 62efeef38af7371b49d8bee933748062, type: 3}
+  m_jumpAttack: {fileID: 21300000, guid: 0608843449513ea3ca38566c27d6b017, type: 3}
+  m_lightAttack: {fileID: 21300000, guid: a129f5e664e2bf440aa88b68b947de2e, type: 3}
+  m_heavyAttack: {fileID: 21300000, guid: 3b8a7467a5c5a245099ccbeb84346f49, type: 3}
