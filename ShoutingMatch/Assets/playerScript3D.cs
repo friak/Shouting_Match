@@ -6,7 +6,7 @@ public class playerScript3D : MonoBehaviour
 {
     float actionCooldown = 1.0f;
     float timeSinceAction = 0.0f;
-
+    bool groundTouch = true;
     
     Rigidbody m_Rigidbody;
     public float m_Thrust = 50f;
@@ -22,19 +22,50 @@ public class playerScript3D : MonoBehaviour
     void Update()
     {
         timeSinceAction += Time.deltaTime;
+        
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "GroundTouch")
+        {
+            groundTouch = true;
+            Debug.Log("touching Ground");
+        }
+
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "GroundTouch")
+        {
+            groundTouch = false;
+            Debug.Log("not touching Ground");
+        }
+    }
+    
     void PlayerJumpActionButton()
     {
         if (timeSinceAction > actionCooldown)
         {
             timeSinceAction = 0;
-            m_Rigidbody.AddForce(Vector3.up * 1000);
+            m_Rigidbody.AddForce(Vector3.up * 500);
+            Debug.Log("in the air");
+            groundTouch = false;
 
         }
     }
     void FixedUpdate()
     {
-        if (Input.GetKey("w"))
+        if (Input.GetKey("a"))
+        {
+            Debug.Log("block");
+            if (Input.GetKey("w"))
+            {
+                groundTouch = true;
+                m_Rigidbody.AddForce(Vector3.down * 500);
+                m_Rigidbody.AddForce(Vector3.left * 200);
+            }
+        }
+        if (Input.GetKey("w") && groundTouch==true)
         {
         
                 PlayerJumpActionButton();
@@ -42,21 +73,15 @@ public class playerScript3D : MonoBehaviour
 
 
         }
-        if (Input.GetKey("a"))
-        {
-            if (Input.GetKey("w"))
-            {
-                m_Rigidbody.AddForce(Vector3.down * 1000);
-                m_Rigidbody.AddForce(Vector3.left * 100);
-            }
-        }
         if (Input.GetKey("d"))
         {
-            m_Rigidbody.AddForce(Vector3.right * 20);
+            m_Rigidbody.AddForce(Vector3.right * 10);
+            
         }
         if (Input.GetKey("s"))
         {
             m_Rigidbody.AddForce(Vector3.down * 40);
+            Debug.Log("crouch");
         }
     }
 }
