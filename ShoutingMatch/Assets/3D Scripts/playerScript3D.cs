@@ -49,23 +49,24 @@ public class playerScript3D : MonoBehaviour
             timeSinceAction = 0;
             m_Rigidbody.AddForce(Vector3.up * 500);
             Debug.Log("in the air");
-            groundTouch = false;
 
         }
     }
     void FixedUpdate()
     {
-        if (Input.GetKey("a"))
+        if (Input.GetKey("a") && Input.GetKey("w"))
         {
             Debug.Log("block");
-            if (Input.GetKey("w"))
+            
+        }
+
+        else if (Input.GetKey("a"))
+        {
             {
-                groundTouch = true;
-                m_Rigidbody.AddForce(Vector3.down * 500);
-                m_Rigidbody.AddForce(Vector3.left * 200);
+                m_Rigidbody.AddForce(Vector3.left * b10);
             }
         }
-        if (Input.GetKey("w") && groundTouch==true)
+        else if (Input.GetKey("w") && groundTouch==true)
         {
         
                 PlayerJumpActionButton();
