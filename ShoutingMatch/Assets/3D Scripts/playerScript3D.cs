@@ -63,7 +63,7 @@ public class playerScript3D : MonoBehaviour
         else if (Input.GetKey("a"))
         {
             {
-                m_Rigidbody.AddForce(Vector3.left * b10);
+                //m_Rigidbody.AddForce(Vector3.left * b10);
             }
         }
         else if (Input.GetKey("w") && groundTouch==true)
