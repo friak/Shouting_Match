@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
+
+    [SerializeField] public int health;
+    [SerializeField] public int speed;
+    [SerializeField] public float blockTime;
+
     public 
     // Start is called before the first frame update
     void Start()

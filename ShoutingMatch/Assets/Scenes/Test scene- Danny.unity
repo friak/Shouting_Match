@@ -471,27 +471,21 @@ CapsuleCollider:
   m_Height: 1.8082956
   m_Direction: 1
   m_Center: {x: -0.019298477, y: 0.9174533, z: 0}
---- !u!95 &365171409
-Animator:
-  serializedVersion: 5
+--- !u!114 &365171409
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 365171403}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07427f1018a8c514cbb8ef127a2efcda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  speed: 9
+  blockTime: 0
 --- !u!1 &1048544844
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 266018afae7d24846a88699c3cc1dc43, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.69
+      value: -4.31
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 266018afae7d24846a88699c3cc1dc43, type: 3}
       propertyPath: m_LocalPosition.z
@@ -722,34 +716,13 @@ PrefabInstance:
       addedObject: {fileID: 1193749900}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 266018afae7d24846a88699c3cc1dc43, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1193749899}
+      addedObject: {fileID: 1193749903}
   m_SourcePrefab: {fileID: 100100000, guid: 266018afae7d24846a88699c3cc1dc43, type: 3}
 --- !u!1 &1193749898 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 266018afae7d24846a88699c3cc1dc43, type: 3}
   m_PrefabInstance: {fileID: 1193749897}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1193749899
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193749898}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!136 &1193749900
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -813,6 +786,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Thrust: 50
+--- !u!114 &1193749903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193749898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07427f1018a8c514cbb8ef127a2efcda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  speed: 10
+  blockTime: 0
 --- !u!1 &1227085405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,7 +1189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 266018afae7d24846a88699c3cc1dc43, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.69
+      value: -4.31
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 266018afae7d24846a88699c3cc1dc43, type: 3}
       propertyPath: m_LocalPosition.z

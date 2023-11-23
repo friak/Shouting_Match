@@ -47,7 +47,7 @@ public class playerScript3D : MonoBehaviour
         if (timeSinceAction > actionCooldown)
         {
             timeSinceAction = 0;
-            m_Rigidbody.AddForce(Vector3.up * 500);
+            m_Rigidbody.AddForce(Vector3.up * (this.GetComponent<player>().speed *20));
             Debug.Log("in the air");
 
         }
@@ -63,7 +63,7 @@ public class playerScript3D : MonoBehaviour
         else if (Input.GetKey("a"))
         {
             {
-                //m_Rigidbody.AddForce(Vector3.left * b10);
+                m_Rigidbody.AddForce(Vector3.left * this.GetComponent<player>().speed);
             }
         }
         else if (Input.GetKey("w") && groundTouch==true)
@@ -76,12 +76,12 @@ public class playerScript3D : MonoBehaviour
         }
         if (Input.GetKey("d"))
         {
-            m_Rigidbody.AddForce(Vector3.right * 10);
+            m_Rigidbody.AddForce(Vector3.right * this.GetComponent<player>().speed);
             
         }
         if (Input.GetKey("s"))
         {
-            m_Rigidbody.AddForce(Vector3.down * 40);
+            m_Rigidbody.AddForce(Vector3.down * this.GetComponent<player>().speed);
             Debug.Log("crouch");
         }
     }
