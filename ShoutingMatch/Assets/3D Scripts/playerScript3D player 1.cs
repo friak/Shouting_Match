@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class playerScript3D : MonoBehaviour
+public class playerScriptTwo3D : MonoBehaviour
 {
     float actionCooldown = 1.0f;
     float timeSinceAction = 0.0f;
     bool groundTouch = true;
+    public GameObject DirectionPointer;
     
     Rigidbody m_Rigidbody;
     public float m_Thrust = 50f;
@@ -54,10 +56,46 @@ public class playerScript3D : MonoBehaviour
     }
     void FixedUpdate()
     {
+        void attackList(string directional, string attackLevel)
+        {
+            //do stuff
+        }
+        if (Input.GetKey("j"))
+        {
+            {
+                Debug.Log("light attack");
+                attackList("", "light");
+            }
+        }
+        if (Input.GetKey("k"))
+        {
+            {
+                Debug.Log("medium attack");
+                attackList("", "medium");
+            }
+        }
+        if (Input.GetKey("l"))
+        {
+            {
+                Debug.Log("attack attack");
+                attackList("", "heavy");
+            }
+        }
+
         if (Input.GetKey("a") && Input.GetKey("w"))
         {
             Debug.Log("block");
             
+        }
+        if (Input.GetKey("d") && Input.GetKey("w"))
+        {
+            Debug.Log("air move");
+
+        }
+        if (Input.GetKey("s") && Input.GetKey("d"))
+        {
+            Debug.Log("croch move");
+
         }
 
         else if (Input.GetKey("a"))
@@ -74,12 +112,12 @@ public class playerScript3D : MonoBehaviour
 
 
         }
-        if (Input.GetKey("d"))
+        else if (Input.GetKey("d"))
         {
             m_Rigidbody.AddForce(Vector3.right * this.GetComponent<player>().speed);
             
         }
-        if (Input.GetKey("s"))
+        else if (Input.GetKey("s"))
         {
             m_Rigidbody.AddForce(Vector3.down * this.GetComponent<player>().speed);
             Debug.Log("crouch");
