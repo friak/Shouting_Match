@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1055065778079685642, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2133658648972264799, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 5
@@ -76,6 +80,18 @@ PrefabInstance:
       propertyPath: InitialModule.startSizeZ.scalar
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4792834336993999089, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.83905834
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792834336993999089, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792834336993999089, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.76862746
+      objectReference: {fileID: 0}
     - target: {fileID: 5102665469594650727, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -83,6 +99,10 @@ PrefabInstance:
     - target: {fileID: 6050900558987541495, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
       propertyPath: m_Name
       value: Aura Burst M
+      objectReference: {fileID: 0}
+    - target: {fileID: 6766325111640224707, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7580734971996513054, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
       propertyPath: m_LocalScale.x
@@ -99,6 +119,14 @@ PrefabInstance:
     - target: {fileID: 7580734971996513054, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602088388678428550, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8902101433535646318, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
