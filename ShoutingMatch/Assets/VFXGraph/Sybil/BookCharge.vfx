@@ -16,10 +16,10 @@ MonoBehaviour:
   - title: Small particle Charge
     position:
       serializedVersion: 2
-      x: 1994
+      x: 1432
       y: -412
-      width: 499
-      height: 1944
+      width: 1061
+      height: 2428
     contents:
     - model: {fileID: 8926484042661614555}
       id: 0
@@ -28,6 +28,15 @@ MonoBehaviour:
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614609}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661615072}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661615067}
+      id: 0
+      isStickyNote: 0
+    - model: {fileID: 8926484042661615141}
       id: 0
       isStickyNote: 0
   - title: Flash
@@ -6398,7 +6407,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 1111, y: 1125}
+  m_UIPosition: {x: 1458, y: 1058}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -6559,7 +6568,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 1351, y: 1125}
+  m_UIPosition: {x: 1762, y: 1071}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -8158,7 +8167,7 @@ MonoBehaviour:
   m_Children:
   - {fileID: 8926484042661615147}
   - {fileID: 8926484042661615154}
-  m_UIPosition: {x: 2006, y: 1574}
+  m_UIPosition: {x: 2043, y: 1458}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
