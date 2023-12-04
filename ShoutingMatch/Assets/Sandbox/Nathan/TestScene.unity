@@ -5830,6 +5830,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2974588630321910197, guid: 765356c7c7438e0409a41e3a4b8aca82, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7405544378826639938, guid: 765356c7c7438e0409a41e3a4b8aca82, type: 3}
       propertyPath: m_Name
       value: Arcane Explosion
@@ -16467,6 +16471,14 @@ PrefabInstance:
     - target: {fileID: 2626283341770074903, guid: e80456681ef348f449032afb9ae0dde5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626283341770074903, guid: e80456681ef348f449032afb9ae0dde5, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7072694874480456361, guid: e80456681ef348f449032afb9ae0dde5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7405544378826639938, guid: e80456681ef348f449032afb9ae0dde5, type: 3}
       propertyPath: m_Name

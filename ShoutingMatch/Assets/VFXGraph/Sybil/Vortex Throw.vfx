@@ -117,9 +117,6 @@ MonoBehaviour:
     - model: {fileID: 8926484042661615133}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661615135}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661615139}
       id: 0
       isStickyNote: 0
@@ -127,24 +124,6 @@ MonoBehaviour:
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661615144}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615159}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615162}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615169}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615175}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615178}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615181}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661615184}
@@ -164,31 +143,10 @@ MonoBehaviour:
     - model: {fileID: 8926484042661615045}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661615078}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661615062}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661615047}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615075}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615084}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615091}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615097}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 0}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615130}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614795}
@@ -14774,7 +14732,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":0.0,"value":0.0,"inTangent":810.8017578125,"outTangent":810.8017578125,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":1.2333621978759766,"value":1000.0122680664063,"inTangent":810.8017578125,"outTangent":810.8017578125,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":0.0,"value":0.0,"inTangent":-881.637451171875,"outTangent":-881.637451171875,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":2.200343132019043,"value":-1939.9049072265625,"inTangent":-881.637451171875,"outTangent":-881.637451171875,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Angle
