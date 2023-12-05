@@ -28,6 +28,7 @@ public class CharacterSelectManager : MonoBehaviour
             optionList.Add(characterOption);
             // Debug.Log("pos" + option.transform.position);
         }
+
         // init players
         players = FindObjectsOfType<SelectionControl>(true);
         for (int i = 0; i < players.Length; i++)

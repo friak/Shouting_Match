@@ -7,7 +7,7 @@ public class FightSceneManager : MonoBehaviour
     [SerializeField]
     private GameObject playerUIPrefab;
     [SerializeField]
-    private PlayerController[] players;
+    private PlayerController2D[] players;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class FightSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach(PlayerController player in players)
+        foreach(PlayerController2D player in players)
         {
             if (player.IsDead)
             {
