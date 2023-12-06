@@ -9,6 +9,7 @@ public class
     [SerializeField]
     private Transform m_opponent;
 
+    private Vector3 screenBounds;
     private float gravity = -9.82f;
     private float groundedGravity = -0.05f;
 
@@ -17,15 +18,16 @@ public class
     private CharacterController characterController;
 
     // move
-    private bool isMoving = false;
-    private Vector2 currMove;
-    private bool isTurned = true;
     private bool isForward = false;
+    private Vector2 currMove;
+    private float moveX;
     private float moveSpeed = 5;
-    private float verticalVelicoty;
+    private bool isTurned = true;
+    private bool isForwardAnimation = false;
+    // private float verticalVelicoty;
 
     // jump
-    private float jumpHeight = 0.5f;
+    private float jumpHeight = 0.25f;
     private bool isJumpingPressed = false;
     private bool isJumping = false;
     private bool isJumpAnimation = false;
@@ -35,35 +37,44 @@ public class
     private bool isCrouching = false;
     // block
     private bool isBlocking = false;
-    private bool isBlockPressed = false;
+    private bool isBlockAnimation = false;
 
-    void Awake()
+    private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-
         playerInput = new PlayerInput();
         SubscribeActions();
-
         float timeToUp = jumpHeight / 2;
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToUp, 2);
         initJumpVelocity = (2 * jumpHeight) / timeToUp;
 
-        if (m_isPlayer1) isTurned = false;
+        if (m_isPlayer1)
+        {
+            isTurned = false;
+        }
+
     }
 
+
     // Update is called once per frame
-    void Update()
-    {   
+    private void Update()
+    {
+        Turn();
+        Jump();
+        Crouch();
         Move();
+        Forward();
+        Block();
         ApplyGravity();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        isMoving = context.ReadValueAsButton();
-        currMove.x = isMoving ? 1 : 0;
-        currMove.x = isTurned ? -1 * currMove.x : currMove.x;
+        moveX = context.ReadValue<float>();
+        currMove.x = moveX;
+        isForward = isTurned ? moveX < 0 : moveX > 0;
+        isBlocking = isTurned ? moveX > 0 : moveX < 0;
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -74,11 +85,6 @@ public class
     public void OnCrouch(InputAction.CallbackContext context)
     {
         isCrouchPressed = context.ReadValueAsButton();
-    }
-
-    public void OnBlock(InputAction.CallbackContext context)
-    {
-        isBlockPressed = context.ReadValueAsButton();
     }
 
     public void Jump()
@@ -112,24 +118,21 @@ public class
 
     public void Block()
     {
-        if (!isBlocking && isBlockPressed)
+        if (isBlocking && !isBlockAnimation)
         {
             animator.SetBool("isBlocking", true);
-            isBlocking = true;
+            isBlockAnimation = true;
             // to do: transition to block attack animation if being hit (trigger: blockAttack)
         }
-        else if (isBlocking && !isBlockPressed)
+        else if (!isBlocking && isBlockAnimation)
         {
             animator.SetBool("isBlocking", false);
-            isBlocking = false;
+            isBlockAnimation = false;
         }
     }
 
     public void Move()
     {
-        Jump();
-        Crouch();
-        // forward and jump movement 
         if (isCrouching)
         {
             characterController.Move(Vector3.zero);
@@ -138,9 +141,6 @@ public class
         {
             characterController.Move(currMove * moveSpeed * Time.deltaTime);
         }
-        Forward();
-        Turn();
-        Block();
     }
 
     private void Turn()
@@ -159,15 +159,15 @@ public class
     }
     private void Forward()
     {
-        if (isMoving && !isForward)
+        if (isForward && !isForwardAnimation)
         {
             animator.SetBool("isForward", true);
-            isForward = true;
+            isForwardAnimation = true;
         }
-        else if (!isMoving && isForward)
+        else if (!isForward && isForwardAnimation)
         {
             animator.SetBool("isForward", false);
-            isForward = false;
+            isForwardAnimation = false;
         }
     }
 
@@ -212,9 +212,6 @@ public class
             playerInput.P1_Controls.Crouch.started += OnCrouch;
             playerInput.P1_Controls.Crouch.performed += OnCrouch;
             playerInput.P1_Controls.Crouch.canceled += OnCrouch;
-            playerInput.P1_Controls.Block.started += OnBlock;
-            playerInput.P1_Controls.Block.performed += OnBlock;
-            playerInput.P1_Controls.Block.canceled += OnBlock;
         }
         else
         {
@@ -226,9 +223,6 @@ public class
             playerInput.P2_Controls.Crouch.started += OnCrouch;
             playerInput.P2_Controls.Crouch.performed += OnCrouch;
             playerInput.P2_Controls.Crouch.canceled += OnCrouch;
-            playerInput.P2_Controls.Block.started += OnBlock;
-            playerInput.P2_Controls.Block.performed += OnBlock;
-            playerInput.P2_Controls.Block.canceled += OnBlock;
         }
     }
 

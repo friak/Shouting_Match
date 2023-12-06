@@ -29,12 +29,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""2ee5add6-b30d-4f2f-a390-3a4f0784a49f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Jump"",
@@ -53,22 +53,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Block"",
-                    ""type"": ""Button"",
-                    ""id"": ""d6bf9bd9-c7fe-4abc-8970-dba0d11704bf"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""16c341a4-c770-42c4-ba8c-9942cf454236"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -77,15 +68,37 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""6f2c7279-53e4-491a-87ec-6092b38dd7df"",
+                    ""name"": ""1D Axis"",
+                    ""id"": ""95b1abb7-35cf-4eea-a5a2-8ed3aff9afd6"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""27e26f43-251a-4c22-afa5-e34cc6a48524"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""1f00667a-14c2-4d46-a865-bc6bf57e025b"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -130,28 +143,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ad2a2b74-ad4a-492e-9ddf-cc8c3568a78a"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""52e4e9e8-3b10-4181-beee-4fe9e95ec6fd"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -161,12 +152,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""728bd351-c49d-4331-9ae2-76a736c62df2"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Jump"",
@@ -185,22 +176,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Block"",
-                    ""type"": ""Button"",
-                    ""id"": ""06116767-b762-4be4-95f4-42953829a783"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""57d4d0ba-ba34-4dd1-a93b-a91de1d38cbe"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -209,15 +191,37 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""32858a33-4bff-4a3e-80d1-a01cbe5b4e91"",
+                    ""name"": ""1D Axis"",
+                    ""id"": ""0605a27e-5afa-4d83-a72b-d6d9aa626339"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""bf97dabd-8ece-4cc4-b95d-b2da04c2ad63"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""19241773-7f19-4134-9f3a-93cf7125b0c3"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -262,28 +266,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e2e213e8-4fe9-480d-8fe7-b92c7b34019f"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""48426824-7c13-4d74-89a2-3d0b0237d13a"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -295,13 +277,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_P1_Controls_Move = m_P1_Controls.FindAction("Move", throwIfNotFound: true);
         m_P1_Controls_Jump = m_P1_Controls.FindAction("Jump", throwIfNotFound: true);
         m_P1_Controls_Crouch = m_P1_Controls.FindAction("Crouch", throwIfNotFound: true);
-        m_P1_Controls_Block = m_P1_Controls.FindAction("Block", throwIfNotFound: true);
         // P2_Controls
         m_P2_Controls = asset.FindActionMap("P2_Controls", throwIfNotFound: true);
         m_P2_Controls_Move = m_P2_Controls.FindAction("Move", throwIfNotFound: true);
         m_P2_Controls_Jump = m_P2_Controls.FindAction("Jump", throwIfNotFound: true);
         m_P2_Controls_Crouch = m_P2_Controls.FindAction("Crouch", throwIfNotFound: true);
-        m_P2_Controls_Block = m_P2_Controls.FindAction("Block", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -366,7 +346,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_P1_Controls_Move;
     private readonly InputAction m_P1_Controls_Jump;
     private readonly InputAction m_P1_Controls_Crouch;
-    private readonly InputAction m_P1_Controls_Block;
     public struct P1_ControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -374,7 +353,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_P1_Controls_Move;
         public InputAction @Jump => m_Wrapper.m_P1_Controls_Jump;
         public InputAction @Crouch => m_Wrapper.m_P1_Controls_Crouch;
-        public InputAction @Block => m_Wrapper.m_P1_Controls_Block;
         public InputActionMap Get() { return m_Wrapper.m_P1_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -393,9 +371,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
-            @Block.started += instance.OnBlock;
-            @Block.performed += instance.OnBlock;
-            @Block.canceled += instance.OnBlock;
         }
 
         private void UnregisterCallbacks(IP1_ControlsActions instance)
@@ -409,9 +384,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
-            @Block.started -= instance.OnBlock;
-            @Block.performed -= instance.OnBlock;
-            @Block.canceled -= instance.OnBlock;
         }
 
         public void RemoveCallbacks(IP1_ControlsActions instance)
@@ -436,7 +408,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_P2_Controls_Move;
     private readonly InputAction m_P2_Controls_Jump;
     private readonly InputAction m_P2_Controls_Crouch;
-    private readonly InputAction m_P2_Controls_Block;
     public struct P2_ControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -444,7 +415,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_P2_Controls_Move;
         public InputAction @Jump => m_Wrapper.m_P2_Controls_Jump;
         public InputAction @Crouch => m_Wrapper.m_P2_Controls_Crouch;
-        public InputAction @Block => m_Wrapper.m_P2_Controls_Block;
         public InputActionMap Get() { return m_Wrapper.m_P2_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -463,9 +433,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
-            @Block.started += instance.OnBlock;
-            @Block.performed += instance.OnBlock;
-            @Block.canceled += instance.OnBlock;
         }
 
         private void UnregisterCallbacks(IP2_ControlsActions instance)
@@ -479,9 +446,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
-            @Block.started -= instance.OnBlock;
-            @Block.performed -= instance.OnBlock;
-            @Block.canceled -= instance.OnBlock;
         }
 
         public void RemoveCallbacks(IP2_ControlsActions instance)
@@ -504,13 +468,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
-        void OnBlock(InputAction.CallbackContext context);
     }
     public interface IP2_ControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
-        void OnBlock(InputAction.CallbackContext context);
     }
 }
