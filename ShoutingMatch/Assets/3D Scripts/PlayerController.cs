@@ -11,27 +11,31 @@ public class
 
     private float gravity = -9.82f;
     private float groundedGravity = -0.05f;
-    private float verticalVelicoty;
 
     private Animator animator;
-
     private PlayerInput playerInput;
-    private bool isMoving = false;
-    private float moveX;
-    private Vector2 currMove;
     private CharacterController characterController;
-    private bool isTurned = true;
 
+    // move
+    private bool isMoving = false;
+    private Vector2 currMove;
+    private bool isTurned = true;
     private bool isForward = false;
-    private bool isBackward = false;
     private float moveSpeed = 5;
+    private float verticalVelicoty;
+
+    // jump
     private float jumpHeight = 0.5f;
     private bool isJumpingPressed = false;
     private bool isJumping = false;
     private bool isJumpAnimation = false;
     private float initJumpVelocity;
+    // crouch
     private bool isCrouchPressed = false;
     private bool isCrouching = false;
+    // block
+    private bool isBlocking = false;
+    private bool isBlockPressed = false;
 
     void Awake()
     {
@@ -50,33 +54,31 @@ public class
 
     // Update is called once per frame
     void Update()
-    {
-        Jump();
-        Crouch();
+    {   
         Move();
-        Turn();
-        Animate();
         ApplyGravity();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveX = context.ReadValue<float>();
-        // Debug.Log("Move input:" + moveX);
-        currMove.x = moveX;
-        isMoving = moveX != 0;
+        isMoving = context.ReadValueAsButton();
+        currMove.x = isMoving ? 1 : 0;
+        currMove.x = isTurned ? -1 * currMove.x : currMove.x;
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         isJumpingPressed = context.ReadValueAsButton();    
-
     }
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
         isCrouchPressed = context.ReadValueAsButton();
+    }
 
+    public void OnBlock(InputAction.CallbackContext context)
+    {
+        isBlockPressed = context.ReadValueAsButton();
     }
 
     public void Jump()
@@ -108,9 +110,26 @@ public class
         }
     }
 
+    public void Block()
+    {
+        if (!isBlocking && isBlockPressed)
+        {
+            animator.SetBool("isBlocking", true);
+            isBlocking = true;
+            // to do: transition to block attack animation if being hit (trigger: blockAttack)
+        }
+        else if (isBlocking && !isBlockPressed)
+        {
+            animator.SetBool("isBlocking", false);
+            isBlocking = false;
+        }
+    }
+
     public void Move()
     {
-        // move on the horizontal axis 
+        Jump();
+        Crouch();
+        // forward and jump movement 
         if (isCrouching)
         {
             characterController.Move(Vector3.zero);
@@ -119,6 +138,9 @@ public class
         {
             characterController.Move(currMove * moveSpeed * Time.deltaTime);
         }
+        Forward();
+        Turn();
+        Block();
     }
 
     private void Turn()
@@ -135,24 +157,17 @@ public class
         }
 
     }
-    private void Animate()
+    private void Forward()
     {
-        if (moveX > 0 && !isForward)
+        if (isMoving && !isForward)
         {
             animator.SetBool("isForward", true);
             isForward = true;
         }
-        else if (moveX == 0)
+        else if (!isMoving && isForward)
         {
             animator.SetBool("isForward", false);
-            animator.SetBool("isBackward", false);
             isForward = false;
-            isBackward = false;
-        }
-        else if (moveX < 0 && !isBackward)
-        {
-            animator.SetBool("isBackward", true);
-            isBackward = true;
         }
     }
 
@@ -197,6 +212,9 @@ public class
             playerInput.P1_Controls.Crouch.started += OnCrouch;
             playerInput.P1_Controls.Crouch.performed += OnCrouch;
             playerInput.P1_Controls.Crouch.canceled += OnCrouch;
+            playerInput.P1_Controls.Block.started += OnBlock;
+            playerInput.P1_Controls.Block.performed += OnBlock;
+            playerInput.P1_Controls.Block.canceled += OnBlock;
         }
         else
         {
@@ -208,8 +226,10 @@ public class
             playerInput.P2_Controls.Crouch.started += OnCrouch;
             playerInput.P2_Controls.Crouch.performed += OnCrouch;
             playerInput.P2_Controls.Crouch.canceled += OnCrouch;
+            playerInput.P2_Controls.Block.started += OnBlock;
+            playerInput.P2_Controls.Block.performed += OnBlock;
+            playerInput.P2_Controls.Block.canceled += OnBlock;
         }
-
     }
 
     private void OnEnable()
