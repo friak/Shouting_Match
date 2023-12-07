@@ -30,6 +30,7 @@ public class
     private bool isJumping = false;
     private bool isJumpAnimation = false;
     private float initJumpVelocity;
+    private float fallFaster = 2.0f;
     // crouch
     private bool isCrouchPressed = false;
     private bool isCrouching = false;
@@ -82,7 +83,7 @@ public class
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        isJumpingPressed = context.ReadValueAsButton();    
+        isJumpingPressed = context.ReadValueAsButton();   
     }
 
     public void OnCrouch(InputAction.CallbackContext context)
@@ -101,6 +102,13 @@ public class
     public void OnAttack3(InputAction.CallbackContext context)
     {
         isAttack3 = context.ReadValueAsButton();
+    }
+
+    public void OnAttackEnd(InputAction.CallbackContext context)
+    {
+        animator.ResetTrigger("attack1");
+        animator.ResetTrigger("attack2");
+        animator.ResetTrigger("attack3");
     }
 
     public void Jump()
@@ -194,15 +202,15 @@ public class
 
     private void Attack()
     {
-        if (isAttack1)
+        if (isAttack1 || (isAttack1 && isJumpingPressed)) // idle
         {
             animator.SetTrigger("attack1");
         }
-        if (isAttack2)
+        if ((isAttack2 && isJumpingPressed && isForward) || (isAttack2 && isForward)) // directional
         {
             animator.SetTrigger("attack2");
         }
-        if (isAttack3)
+        if ((isAttack3 && isForward && isCrouching) || (isAttack3 && isCrouching))  // crouch
         {
             animator.SetTrigger("attack3");
         }
@@ -211,7 +219,6 @@ public class
     private void ApplyGravity()
     {
         bool isFalling = currMove.y <= 0.0f || !isJumpingPressed;
-        float fallFaster = 2.0f;
         if (characterController.isGrounded)
         {
             if (isJumpAnimation)
@@ -251,13 +258,13 @@ public class
             playerInput.P1_Controls.Crouch.canceled += OnCrouch;
             playerInput.P1_Controls.Attack1.started += OnAttack1;
             playerInput.P1_Controls.Attack1.performed += OnAttack1;
-            playerInput.P1_Controls.Attack1.canceled += OnAttack1;
+            playerInput.P1_Controls.Attack1.canceled += OnAttackEnd;
             playerInput.P1_Controls.Attack2.started += OnAttack2;
             playerInput.P1_Controls.Attack2.performed += OnAttack2;
-            playerInput.P1_Controls.Attack2.canceled += OnAttack2;
-            playerInput.P1_Controls.Attack2.started += OnAttack3;
-            playerInput.P1_Controls.Attack2.performed += OnAttack3;
-            playerInput.P1_Controls.Attack2.canceled += OnAttack3;
+            playerInput.P1_Controls.Attack2.canceled += OnAttackEnd;
+            playerInput.P1_Controls.Attack3.started += OnAttack3;
+            playerInput.P1_Controls.Attack3.performed += OnAttack3;
+            playerInput.P1_Controls.Attack3.canceled += OnAttackEnd;
         }
         else
         {
@@ -271,13 +278,13 @@ public class
             playerInput.P2_Controls.Crouch.canceled += OnCrouch;
             playerInput.P2_Controls.Attack1.started += OnAttack1;
             playerInput.P2_Controls.Attack1.performed += OnAttack1;
-            playerInput.P2_Controls.Attack1.canceled += OnAttack1;
+            playerInput.P2_Controls.Attack1.canceled += OnAttackEnd;
             playerInput.P2_Controls.Attack2.started += OnAttack2;
             playerInput.P2_Controls.Attack2.performed += OnAttack2;
-            playerInput.P2_Controls.Attack2.canceled += OnAttack2;
-            playerInput.P2_Controls.Attack2.started += OnAttack3;
-            playerInput.P2_Controls.Attack2.performed += OnAttack3;
-            playerInput.P2_Controls.Attack2.canceled += OnAttack3;
+            playerInput.P2_Controls.Attack2.canceled += OnAttackEnd;
+            playerInput.P2_Controls.Attack3.started += OnAttack3;
+            playerInput.P2_Controls.Attack3.performed += OnAttack3;
+            playerInput.P2_Controls.Attack3.canceled += OnAttackEnd;
         }
     }
 
