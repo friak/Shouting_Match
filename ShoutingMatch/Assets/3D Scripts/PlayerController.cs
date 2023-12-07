@@ -9,7 +9,6 @@ public class
     [SerializeField]
     private Transform m_opponent;
 
-    private Vector3 screenBounds;
     private float gravity = -9.82f;
     private float groundedGravity = -0.05f;
 
@@ -19,15 +18,14 @@ public class
 
     // move
     private bool isForward = false;
-    private Vector2 currMove;
+    private Vector3 currMove;
     private float moveX;
     private float moveSpeed = 5;
     private bool isTurned = true;
     private bool isForwardAnimation = false;
-    // private float verticalVelicoty;
-
+    private float zPos = 0.5f;
     // jump
-    private float jumpHeight = 0.25f;
+    private float jumpHeight = 0.3f;
     private bool isJumpingPressed = false;
     private bool isJumping = false;
     private bool isJumpAnimation = false;
@@ -38,6 +36,10 @@ public class
     // block
     private bool isBlocking = false;
     private bool isBlockAnimation = false;
+    // attack
+    private bool isAttack1 = false;
+    private bool isAttack2 = false;
+    private bool isAttack3 = false;
 
     private void Awake()
     {
@@ -60,6 +62,7 @@ public class
     // Update is called once per frame
     private void Update()
     {
+        Attack();
         Turn();
         Jump();
         Crouch();
@@ -85,6 +88,19 @@ public class
     public void OnCrouch(InputAction.CallbackContext context)
     {
         isCrouchPressed = context.ReadValueAsButton();
+    }
+
+    public void OnAttack1(InputAction.CallbackContext context)
+    {
+        isAttack1 = context.ReadValueAsButton();
+    }
+    public void OnAttack2(InputAction.CallbackContext context)
+    {
+        isAttack2 = context.ReadValueAsButton();
+    }
+    public void OnAttack3(InputAction.CallbackContext context)
+    {
+        isAttack3 = context.ReadValueAsButton();
     }
 
     public void Jump()
@@ -139,6 +155,11 @@ public class
         }
         else
         {
+            // fixing z index if needed
+            if (transform.position.z != 0.5f)
+            {
+                currMove.z = (zPos - transform.position.z) * 0.05f;
+            }
             characterController.Move(currMove * moveSpeed * Time.deltaTime);
         }
     }
@@ -168,6 +189,22 @@ public class
         {
             animator.SetBool("isForward", false);
             isForwardAnimation = false;
+        }
+    }
+
+    private void Attack()
+    {
+        if (isAttack1)
+        {
+            animator.SetTrigger("attack1");
+        }
+        if (isAttack2)
+        {
+            animator.SetTrigger("attack2");
+        }
+        if (isAttack3)
+        {
+            animator.SetTrigger("attack3");
         }
     }
 
@@ -207,22 +244,40 @@ public class
             playerInput.P1_Controls.Move.started += OnMove;
             playerInput.P1_Controls.Move.performed += OnMove;
             playerInput.P1_Controls.Move.canceled += OnMove;
-            playerInput.P1_Controls.Jump.started += OnJump;
+            playerInput.P1_Controls.Jump.performed += OnJump;
             playerInput.P1_Controls.Jump.canceled += OnJump;
             playerInput.P1_Controls.Crouch.started += OnCrouch;
             playerInput.P1_Controls.Crouch.performed += OnCrouch;
             playerInput.P1_Controls.Crouch.canceled += OnCrouch;
+            playerInput.P1_Controls.Attack1.started += OnAttack1;
+            playerInput.P1_Controls.Attack1.performed += OnAttack1;
+            playerInput.P1_Controls.Attack1.canceled += OnAttack1;
+            playerInput.P1_Controls.Attack2.started += OnAttack2;
+            playerInput.P1_Controls.Attack2.performed += OnAttack2;
+            playerInput.P1_Controls.Attack2.canceled += OnAttack2;
+            playerInput.P1_Controls.Attack2.started += OnAttack3;
+            playerInput.P1_Controls.Attack2.performed += OnAttack3;
+            playerInput.P1_Controls.Attack2.canceled += OnAttack3;
         }
         else
         {
             playerInput.P2_Controls.Move.started += OnMove;
             playerInput.P2_Controls.Move.performed += OnMove;
             playerInput.P2_Controls.Move.canceled += OnMove;
-            playerInput.P2_Controls.Jump.started += OnJump;
+            playerInput.P2_Controls.Jump.performed += OnJump;
             playerInput.P2_Controls.Jump.canceled += OnJump;
             playerInput.P2_Controls.Crouch.started += OnCrouch;
             playerInput.P2_Controls.Crouch.performed += OnCrouch;
             playerInput.P2_Controls.Crouch.canceled += OnCrouch;
+            playerInput.P2_Controls.Attack1.started += OnAttack1;
+            playerInput.P2_Controls.Attack1.performed += OnAttack1;
+            playerInput.P2_Controls.Attack1.canceled += OnAttack1;
+            playerInput.P2_Controls.Attack2.started += OnAttack2;
+            playerInput.P2_Controls.Attack2.performed += OnAttack2;
+            playerInput.P2_Controls.Attack2.canceled += OnAttack2;
+            playerInput.P2_Controls.Attack2.started += OnAttack3;
+            playerInput.P2_Controls.Attack2.performed += OnAttack3;
+            playerInput.P2_Controls.Attack2.canceled += OnAttack3;
         }
     }
 

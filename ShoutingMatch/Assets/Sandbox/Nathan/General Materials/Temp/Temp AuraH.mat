@@ -347,7 +347,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.9622642, g: 0.07625483, b: 0.07625483, a: 0.5254902}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.9622641, g: 0.07625479, b: 0.07625479, a: 0.5254902}
+    - _Color: {r: 0.9622642, g: 0.07625483, b: 0.07625483, a: 0.5254902}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
