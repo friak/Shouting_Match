@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class
@@ -10,6 +11,7 @@ public class
     [SerializeField]
     private Transform m_opponent;
     public Transform Opponent { get { return m_opponent; } private set { } }
+
     
     [SerializeField]
     private Animator animator;
@@ -62,7 +64,9 @@ public class
     private void Start()
     {
         int direction = m_isPlayer1 ? 1 : -1;
+        Debug.Log("this is direction: "+ direction);
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
+        Debug.Log("this is direction adjusted: " + direction);
         isTurned = m_isPlayer1 ? false : true;
         float timeToUp = jumpHeight / 2;
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToUp, 2);
