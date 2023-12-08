@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class
@@ -65,9 +64,7 @@ public class
     private void Start()
     {
         int direction = m_isPlayer1 ? 1 : -1;
-        Debug.Log("this is direction: "+ direction);
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
-        Debug.Log("this is direction adjusted: " + direction);
         isTurned = m_isPlayer1 ? false : true;
         float timeToUp = jumpHeight / 2;
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToUp, 2);
@@ -80,7 +77,7 @@ public class
     {
         if (AttackIsExecuting())
         {
-            // animator ..
+            // animator should freeze in current state
             return;
         }
         Attack();
@@ -210,6 +207,7 @@ public class
     {
         return attack1.IsAttacking || attack2.IsAttacking || attack3.IsAttacking;
     }
+
     private void Turn()
     {
         if (!isTurned && transform.position.x > m_opponent.position.x)

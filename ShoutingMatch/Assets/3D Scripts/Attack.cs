@@ -24,6 +24,9 @@ public class Attack : MonoBehaviour
     private GameObject attackPrefab;
     [SerializeField]
     private GameObject chargePrefab;
+    [SerializeField]
+    private int damage;
+    // multipliers for damage: 2.5 * light = medium, 4 * light = heavy // or ScriptableAssets!!!
     private AttackState state;
     private Transform opponent;
     private GameObject attackInstance;
@@ -33,7 +36,9 @@ public class Attack : MonoBehaviour
     private bool isExiting = false;
     public bool IsAttacking { get; private set; } = false;
 
-    private void Start() 
+
+
+    private void Start()
     {
         state = AttackState.DORMANT;
         opponent = GetComponentInParent<PlayerController>().Opponent;
@@ -86,7 +91,7 @@ public class Attack : MonoBehaviour
                     }
                     else
                     {
-                        attackInstance = Instantiate(attackPrefab, transform); 
+                        attackInstance = Instantiate(attackPrefab, transform);
                         state = AttackState.UPDATE;
                         isEntering = false;
                     }
@@ -94,7 +99,7 @@ public class Attack : MonoBehaviour
                 }
             case AttackType.BLASTOPPONENT:
                 {
-                    if(opponent != null)
+                    if (opponent != null)
                     {
                         if (chargePrefab != null)
                         {
@@ -120,7 +125,7 @@ public class Attack : MonoBehaviour
         }
     }
 
-    public void ExecuteAttack() 
+    public void ExecuteAttack()
     {
         Debug.Log("Executing attack");
         switch (attackType)
@@ -136,7 +141,7 @@ public class Attack : MonoBehaviour
                     // thorw it at the opponent
                     float step = 1.8f * Time.deltaTime; //  distance to move
                     attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.position, step);
-                    Debug.Log(Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) + "" );
+                    Debug.Log(Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) + "");
                     if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < 0.5f)
                     {
                         state = AttackState.EXIT;
@@ -174,5 +179,16 @@ public class Attack : MonoBehaviour
         IsAttacking = false;
         isExiting = false;
         yield return true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        string tag = opponent.gameObject.tag;
+        if (other.tag == tag)
+        {
+            Player opp = opponent.GetComponent<Player>();
+            opp.TakeDamage(damage);
+            Debug.Log("-------- Health after hit: " + opp.Health);
+        }
     }
 }

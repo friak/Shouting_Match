@@ -356,7 +356,7 @@ Transform:
   - {fileID: 6548930872747413341}
   - {fileID: 6155237875787494097}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4634775721372382643
 Animator:
@@ -419,6 +419,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isPlayer1: 0
   m_opponent: {fileID: 0}
+  projectile: {fileID: 0}
+  shotpoint: {fileID: 0}
   animator: {fileID: 4634775721372382643}
   characterController: {fileID: 5727995928337358908}
   attack1: {fileID: 5942421112939154868}
@@ -1834,7 +1836,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1857,6 +1859,7 @@ MonoBehaviour:
   attackType: 0
   attackPrefab: {fileID: 5367212819000101155, guid: 5f0879c7f2b957247917d459c7df84bf, type: 3}
   chargePrefab: {fileID: 0}
+  damage: 0
 --- !u!1 &6520446870263618228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,7 +1940,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1960,6 +1963,7 @@ MonoBehaviour:
   attackType: 2
   attackPrefab: {fileID: 3176433126588992604, guid: 2824ad4e47c327b419b4e93f020dd34b, type: 3}
   chargePrefab: {fileID: 0}
+  damage: 0
 --- !u!1 &6810303224877510560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,7 +2622,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2641,6 +2645,7 @@ MonoBehaviour:
   attackType: 2
   attackPrefab: {fileID: 7271776728716093697, guid: f7cbd9c08f892c242a1be728251a10be, type: 3}
   chargePrefab: {fileID: 0}
+  damage: 0
 --- !u!1 &9109974582545523969
 GameObject:
   m_ObjectHideFlags: 0
