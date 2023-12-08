@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 136db34a2cf41864b960264d267913e5, type: 2}
+    - target: {fileID: 3048894763411439616, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9498e3151420d8141ace5db3bc9117ce, type: 2}
     - target: {fileID: 3850088826703682708, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
       propertyPath: m_Name
       value: Shockwave M
@@ -23,6 +27,18 @@ PrefabInstance:
     - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -62,6 +78,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301036386370829264, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

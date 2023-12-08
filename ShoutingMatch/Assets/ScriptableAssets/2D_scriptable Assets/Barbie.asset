@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c088c060b75c5402f956f182b25a5e84, type: 3}
   m_Name: Barbie
   m_EditorClassIdentifier: 
-  m_name: Barbie
+  m_name: Sybil
   m_profile: {fileID: 21300000, guid: e95e0b070dc74adee860b0fa896fbc62, type: 3}
   m_health: 90
   damageSmall: 10
