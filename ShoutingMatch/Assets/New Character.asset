@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c088c060b75c5402f956f182b25a5e84, type: 3}
   m_Name: New Character
   m_EditorClassIdentifier: 
-  m_name: 
-  m_profile: {fileID: 0}
+  m_name: '?'
+  m_profile: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   m_health: 0
   damageSmall: 0
   damageLarge: 0
-  m_annoy: {fileID: 0}
-  m_idle: {fileID: 0}
-  m_getDamage: {fileID: 0}
+  m_annoy: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_idle: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_getDamage: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   m_lose: {fileID: 0}
   m_jumpAttack: {fileID: 0}
   m_lightAttack: {fileID: 0}
