@@ -4,19 +4,20 @@ using UnityEngine.InputSystem;
 public class
     PlayerController : MonoBehaviour
 {
-
+    
     [SerializeField]
     private bool m_isPlayer1;
     [SerializeField]
     private Transform m_opponent;
-
-    private float gravity = -9.82f;
-    private float groundedGravity = -0.05f;
-
+    public Transform Opponent { get { return m_opponent; } private set { } }
+    
+    [SerializeField]
     private Animator animator;
-    private PlayerInput playerInput;
+    
+    [SerializeField]
     private CharacterController characterController;
 
+    private PlayerInput playerInput;
     // move
     private bool isForward = false;
     private Vector3 currMove;
@@ -25,6 +26,8 @@ public class
     private bool isTurned = true;
     private bool isForwardAnimation = false;
     private float zPos = 0.5f;
+    private float gravity = -9.82f;
+    private float groundedGravity = -0.05f;
     // jump
     private float jumpHeight = 0.3f;
     private bool isJumpingPressed = false;
@@ -39,25 +42,28 @@ public class
     private bool isBlocking = false;
     private bool isBlockAnimation = false;
     // attack
+    [SerializeField]
+    private Attack attack1;
     private bool isAttack1 = false;
+    [SerializeField]
+    private Attack attack2;
     private bool isAttack2 = false;
+    [SerializeField]
+    private Attack attack3;
     private bool isAttack3 = false;
 
     private void Awake()
     {
         playerInput = new PlayerInput();
         // needs to be removed when finished testing 
-        characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
-        int direction = m_isPlayer1 ? 1 : -1;
-        transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
-        isTurned = m_isPlayer1 ? false : true;
-
         SubscribeActions();
     }
 
     private void Start()
     {
+        int direction = m_isPlayer1 ? 1 : -1;
+        transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
+        isTurned = m_isPlayer1 ? false : true;
         float timeToUp = jumpHeight / 2;
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToUp, 2);
         initJumpVelocity = (2 * jumpHeight) / timeToUp;
@@ -67,6 +73,11 @@ public class
     // Update is called once per frame
     private void Update()
     {
+        if (AttackIsExecuting())
+        {
+            // animator ..
+            return;
+        }
         Attack();
         Turn();
         Jump();
@@ -79,14 +90,14 @@ public class
 
     public void SetupController(bool isPlayer1, Transform opponent)
     {
-        characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+
         m_isPlayer1 = isPlayer1;
         m_opponent = opponent;
+        // reset facing
         int direction = isPlayer1 ? 1 : -1;
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
         isTurned = m_isPlayer1 ? false : true;
-        
+ 
         SubscribeActions();
     }
 
@@ -175,7 +186,7 @@ public class
 
     public void Move()
     {
-        if (isCrouching)
+        if (isCrouching || AttackIsExecuting())
         {
             characterController.Move(Vector3.zero);
         }
@@ -190,6 +201,10 @@ public class
         }
     }
 
+    private bool AttackIsExecuting()
+    {
+        return attack1.IsAttacking || attack2.IsAttacking || attack3.IsAttacking;
+    }
     private void Turn()
     {
         if (!isTurned && transform.position.x > m_opponent.position.x)
@@ -223,15 +238,17 @@ public class
         if (isAttack1 || (isAttack1 && isJumpingPressed)) // idle
         {
             animator.SetTrigger("attack1");
-            //Instantiate( , transform);
+            attack1.StartAttack();
         }
         if ((isAttack2 && isJumpingPressed && isForward) || (isAttack2 && isForward)) // directional
         {
             animator.SetTrigger("attack2");
+            attack2.GetComponent<Attack>().StartAttack();
         }
         if ((isAttack3 && isForward && isCrouching) || (isAttack3 && isCrouching))  // crouch
         {
             animator.SetTrigger("attack3");
+            attack3.GetComponent<Attack>().StartAttack();
         }
     }
 
