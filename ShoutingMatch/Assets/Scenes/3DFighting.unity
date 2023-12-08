@@ -304,6 +304,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab4ee236833406543855adba42a8a7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: d02dde6dca5864bf8bb5a7ee5c120c46, type: 3}
+  ch_name: Garjan
+  health: 120
   profile: {fileID: 2002037392}
   characterName: {fileID: 2091573398}
   healthPoints: {fileID: 238069939}
@@ -1625,6 +1628,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab4ee236833406543855adba42a8a7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: cef4c1ae0e5684f889f7ddf9c64101eb, type: 3}
+  ch_name: Sybil
+  health: 130
   profile: {fileID: 1312786304}
   characterName: {fileID: 1233897856}
   healthPoints: {fileID: 382872637}

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class
     PlayerController : MonoBehaviour
 {
+
     [SerializeField]
     private bool m_isPlayer1;
     [SerializeField]
@@ -45,6 +46,7 @@ public class
     private void Awake()
     {
         playerInput = new PlayerInput();
+        // needs to be removed when finished testing 
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         int direction = m_isPlayer1 ? 1 : -1;
