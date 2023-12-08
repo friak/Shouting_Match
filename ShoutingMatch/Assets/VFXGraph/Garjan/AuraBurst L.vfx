@@ -120,34 +120,10 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614904}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614906}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614910}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614935}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614988}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615114}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615117}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615150}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615172}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614925}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614976}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661615104}
@@ -157,9 +133,6 @@ MonoBehaviour:
       id: 1
       isStickyNote: 0
     - model: {fileID: 8926484042661614999}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615169}
       id: 0
       isStickyNote: 0
   stickyNoteInfos: []
@@ -10967,7 +10940,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615105}
   m_ExposedName: SubColor
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 0
   m_Category: 
   m_Min:
     m_Type:
@@ -11055,7 +11028,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615109}
   m_ExposedName: MainColor
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 1
   m_Category: 
   m_Min:
     m_Type:
@@ -11140,7 +11113,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615111}
   m_ExposedName: LightningSphereSize
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 2
   m_Category: 
   m_Min:
     m_Type:
@@ -11220,7 +11193,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615113}
   m_ExposedName: EnergyParticleSize
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 3
   m_Category: 
   m_Min:
     m_Type:
@@ -13199,7 +13172,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615177}
   m_ExposedName: EnergyLifetime
   m_Exposed: 1
-  m_Order: 6
+  m_Order: 4
   m_Category: 
   m_Min:
     m_Type:
@@ -13280,14 +13253,14 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
+  m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661615181}
   m_ExposedName: EnergyVelocity
   m_Exposed: 1
-  m_Order: 7
+  m_Order: 5
   m_Category: 
   m_Min:
     m_Type:
@@ -13462,14 +13435,14 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
+  m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661615186}
   m_ExposedName: EnergyAlpha
   m_Exposed: 1
-  m_Order: 8
+  m_Order: 6
   m_Category: 
   m_Min:
     m_Type:
@@ -13549,7 +13522,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615188}
   m_ExposedName: SwirlVelocityMin
   m_Exposed: 1
-  m_Order: 9
+  m_Order: 7
   m_Category: 
   m_Min:
     m_Type:
@@ -13731,7 +13704,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615193}
   m_ExposedName: SwirlVelocityMax
   m_Exposed: 1
-  m_Order: 10
+  m_Order: 8
   m_Category: 
   m_Min:
     m_Type:
