@@ -11,7 +11,8 @@ public class
     [SerializeField]
     private Transform m_opponent;
     public Transform Opponent { get { return m_opponent; } private set { } }
-
+    public GameObject projectile;
+    public Transform shotpoint;
     
     [SerializeField]
     private Animator animator;
@@ -247,12 +248,12 @@ public class
         if ((isAttack2 && isJumpingPressed && isForward) || (isAttack2 && isForward)) // directional
         {
             animator.SetTrigger("attack2");
-            attack2.GetComponent<Attack>().StartAttack();
+            attack2.StartAttack();
         }
         if ((isAttack3 && isForward && isCrouching) || (isAttack3 && isCrouching))  // crouch
         {
             animator.SetTrigger("attack3");
-            attack3.GetComponent<Attack>().StartAttack();
+            attack3.StartAttack();
         }
     }
 
