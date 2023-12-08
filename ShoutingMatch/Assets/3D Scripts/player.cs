@@ -1,4 +1,5 @@
 
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
 
     public bool IsPlayer1 { get; private set; }
     public bool IsDead { get;  private set; }
+    public float Health { get { return health; } private set { } }
     // private int speed;
     // private float blockTime;
 
