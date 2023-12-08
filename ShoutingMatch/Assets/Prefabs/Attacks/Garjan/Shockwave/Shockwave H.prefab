@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 61f9ff087d0d5034088b63a7d137945b, type: 2}
+    - target: {fileID: 3048894763411439616, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 23baaac674672c144b21efe928ccb3cd, type: 2}
     - target: {fileID: 3850088826703682708, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
       propertyPath: m_Name
       value: Shockwave H
@@ -22,7 +26,19 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 61f9ff087d0d5034088b63a7d137945b, type: 2}
     - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7291916751852357413, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
       propertyPath: m_LocalPosition.x
