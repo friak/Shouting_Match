@@ -37,7 +37,7 @@ public class PlayerController2D : MonoBehaviour
     public bool IsHit {get; set;}
     private bool IsAttack;
     public PlayerState State { get; private set; }
-    private Player player;
+    private Player2D player;
     int direction = 1;
     private int data;
     private float currentHealth;
@@ -280,7 +280,7 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
-    public void SetPlayer(Player p)
+    public void SetPlayer(Player2D p)
     {
         player = p;
         character.sprite = player.Character.m_idle;

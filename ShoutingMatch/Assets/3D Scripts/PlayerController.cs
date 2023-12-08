@@ -44,21 +44,23 @@ public class
 
     private void Awake()
     {
+        playerInput = new PlayerInput();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        playerInput = new PlayerInput();
+        int direction = m_isPlayer1 ? 1 : -1;
+        transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
+        isTurned = m_isPlayer1 ? false : true;
+
         SubscribeActions();
+    }
+
+    private void Start()
+    {
         float timeToUp = jumpHeight / 2;
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToUp, 2);
         initJumpVelocity = (2 * jumpHeight) / timeToUp;
-
-        if (m_isPlayer1)
-        {
-            isTurned = false;
-        }
-
+        isTurned = m_isPlayer1 ? false : true;
     }
-
 
     // Update is called once per frame
     private void Update()
@@ -73,12 +75,26 @@ public class
         ApplyGravity();
     }
 
+    public void SetupController(bool isPlayer1, Transform opponent)
+    {
+        characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        m_isPlayer1 = isPlayer1;
+        m_opponent = opponent;
+        int direction = isPlayer1 ? 1 : -1;
+        transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
+        isTurned = m_isPlayer1 ? false : true;
+        
+        SubscribeActions();
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         moveX = context.ReadValue<float>();
         currMove.x = moveX;
         isForward = isTurned ? moveX < 0 : moveX > 0;
         isBlocking = isTurned ? moveX > 0 : moveX < 0;
+        Debug.Log("context: " + moveX);
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -163,7 +179,7 @@ public class
         }
         else
         {
-            // fixing z index if needed
+            // fixing z index if character colliders are forcing the game objects off
             if (transform.position.z != 0.5f)
             {
                 currMove.z = (zPos - transform.position.z) * 0.05f;
@@ -205,6 +221,7 @@ public class
         if (isAttack1 || (isAttack1 && isJumpingPressed)) // idle
         {
             animator.SetTrigger("attack1");
+            //Instantiate( , transform);
         }
         if ((isAttack2 && isJumpingPressed && isForward) || (isAttack2 && isForward)) // directional
         {
@@ -254,17 +271,14 @@ public class
             playerInput.P1_Controls.Jump.performed += OnJump;
             playerInput.P1_Controls.Jump.canceled += OnJump;
             playerInput.P1_Controls.Crouch.started += OnCrouch;
-            playerInput.P1_Controls.Crouch.performed += OnCrouch;
             playerInput.P1_Controls.Crouch.canceled += OnCrouch;
             playerInput.P1_Controls.Attack1.started += OnAttack1;
-            playerInput.P1_Controls.Attack1.performed += OnAttack1;
             playerInput.P1_Controls.Attack1.canceled += OnAttackEnd;
             playerInput.P1_Controls.Attack2.started += OnAttack2;
-            playerInput.P1_Controls.Attack2.performed += OnAttack2;
             playerInput.P1_Controls.Attack2.canceled += OnAttackEnd;
             playerInput.P1_Controls.Attack3.started += OnAttack3;
-            playerInput.P1_Controls.Attack3.performed += OnAttack3;
             playerInput.P1_Controls.Attack3.canceled += OnAttackEnd;
+            Debug.Log("METHODS SUBSCRIBED FOR PL 1");
         }
         else
         {
@@ -274,17 +288,14 @@ public class
             playerInput.P2_Controls.Jump.performed += OnJump;
             playerInput.P2_Controls.Jump.canceled += OnJump;
             playerInput.P2_Controls.Crouch.started += OnCrouch;
-            playerInput.P2_Controls.Crouch.performed += OnCrouch;
             playerInput.P2_Controls.Crouch.canceled += OnCrouch;
             playerInput.P2_Controls.Attack1.started += OnAttack1;
-            playerInput.P2_Controls.Attack1.performed += OnAttack1;
             playerInput.P2_Controls.Attack1.canceled += OnAttackEnd;
             playerInput.P2_Controls.Attack2.started += OnAttack2;
-            playerInput.P2_Controls.Attack2.performed += OnAttack2;
             playerInput.P2_Controls.Attack2.canceled += OnAttackEnd;
             playerInput.P2_Controls.Attack3.started += OnAttack3;
-            playerInput.P2_Controls.Attack3.performed += OnAttack3;
             playerInput.P2_Controls.Attack3.canceled += OnAttackEnd;
+            Debug.Log("METHODS SUBSCRIBED FOR PL 2");
         }
     }
 

@@ -50,7 +50,7 @@ public class CharacterSelectManager : MonoBehaviour
         }
         if (allPlayersReady)
         {
-            GameStateManager.Instance.LoadLevel("FightScene");
+            GameStateManager2D.Instance.LoadLevel("FightScene");
         }
     }
 

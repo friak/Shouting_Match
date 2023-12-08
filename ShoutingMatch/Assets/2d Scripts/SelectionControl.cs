@@ -125,7 +125,7 @@ public class SelectionControl : MonoBehaviour
                 }
             case selectState.SETQUIET:
                 {
-                    GameStateManager.Instance.SetPlayer(playerId, current.GetScriptableObject());
+                    GameStateManager2D.Instance.SetPlayer(playerId, current.GetScriptableObject());
                     readyImg.transform.RotateAround(transform.position, transform.up, 90f);
                     state = selectState.READY;
                     IsReady = true;

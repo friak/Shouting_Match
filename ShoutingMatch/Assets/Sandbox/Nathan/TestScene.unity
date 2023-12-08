@@ -5729,6 +5729,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4243576792925071707, guid: da648c698a3d43841a5e774c6a2903a7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4665523881332132078, guid: da648c698a3d43841a5e774c6a2903a7, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -5771,6 +5775,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4665523881332132078, guid: da648c698a3d43841a5e774c6a2903a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758292173760239953, guid: da648c698a3d43841a5e774c6a2903a7, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -16611,6 +16619,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HitFlash
       objectReference: {fileID: 0}
+    - target: {fileID: 5988490505571388709, guid: 260c421f8a6a41849bacf8b210c0258f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9024567588597650269, guid: 260c421f8a6a41849bacf8b210c0258f, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -16718,7 +16730,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6050900558987541495, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8276556254161717599, guid: 63c5868ca7e07744a8873a5cba468d27, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16780,6 +16796,10 @@ PrefabInstance:
     - target: {fileID: 7339822533176617233, guid: 8e4e58987b8d57e40b3965b26ad35ba6, type: 3}
       propertyPath: m_Name
       value: BlockFlash
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339822533176617233, guid: 8e4e58987b8d57e40b3965b26ad35ba6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16867,6 +16887,10 @@ PrefabInstance:
     - target: {fileID: 691413809961992220, guid: bc1f99e78a85cbd43af382e6ea9a395f, type: 3}
       propertyPath: m_Name
       value: Clash Flash
+      objectReference: {fileID: 0}
+    - target: {fileID: 691413809961992220, guid: bc1f99e78a85cbd43af382e6ea9a395f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1943426549141776630, guid: bc1f99e78a85cbd43af382e6ea9a395f, type: 3}
       propertyPath: m_RootOrder

@@ -44,7 +44,7 @@ public class PauseUI : MonoBehaviour
                     image.color = m_isOpen ? new Color(image.color.r, image.color.g, image.color.b, 0.5f) : new Color(image.color.r, image.color.g, image.color.b, 0f);
                     m_Menu.SetActive(m_isOpen);
                 }
-                GameStateManager.Instance.TogglePause();
+                GameStateManager2D.Instance.TogglePause();
                 Debug.Log("Pausing game ..."); //debug
             }
             
