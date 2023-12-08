@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
         heavyDamage = asset.damageLarge;
     }
 
-    private void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         Debug.Log("Damage taken, health: " + health); ;
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Player")
         {

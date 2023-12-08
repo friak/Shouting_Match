@@ -249,6 +249,7 @@ public class
         {
             animator.SetTrigger("attack2");
             attack2.StartAttack();
+
         }
         if ((isAttack3 && isForward && isCrouching) || (isAttack3 && isCrouching))  // crouch
         {
