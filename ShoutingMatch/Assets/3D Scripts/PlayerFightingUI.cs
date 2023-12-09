@@ -13,7 +13,7 @@ public class PlayerFightingUI : MonoBehaviour
     private string health;
 
     [SerializeField]
-    private GameObject profile;
+    private GameObject profileImage;
     [SerializeField]
     private TextMeshProUGUI characterName;
     [SerializeField]
@@ -24,7 +24,7 @@ public class PlayerFightingUI : MonoBehaviour
     private void Start()
     {
         // for the live game this has to be commented out
-        profile.GetComponent<RawImage>().texture = image.texture;
+        profileImage.GetComponent<Image>().sprite = image;
         characterName.text = ch_name;
         healthPoints.text = health;
     }
@@ -35,7 +35,7 @@ public class PlayerFightingUI : MonoBehaviour
 
     public void SetPlayerUI(CharacterScriptableAsset asset)
     {
-        profile.GetComponent<RawImage>().texture = asset.m_profile.texture;
+        profileImage.GetComponent<RawImage>().texture = asset.m_profile.texture;
         characterName.text = asset.name;
         healthPoints.text = asset.m_health.ToString();
     }

@@ -10,9 +10,7 @@ public class
     [SerializeField]
     private Transform m_opponent;
     public Transform Opponent { get { return m_opponent; } private set { } }
-    public GameObject projectile;
-    public Transform shotpoint;
-    
+
     [SerializeField]
     private Animator animator;
     
@@ -109,7 +107,7 @@ public class
         currMove.x = moveX;
         isForward = isTurned ? moveX < 0 : moveX > 0;
         isBlocking = isTurned ? moveX > 0 : moveX < 0;
-        Debug.Log("context: " + moveX);
+        // Debug.Log("context: " + moveX);
     }
 
     public void OnJump(InputAction.CallbackContext context)

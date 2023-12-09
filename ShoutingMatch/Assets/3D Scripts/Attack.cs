@@ -139,9 +139,9 @@ public class Attack : MonoBehaviour
             case AttackType.PROJECTILE:
                 {
                     // thorw it at the opponent
-                    float step = 1.8f * Time.deltaTime; //  distance to move
+                    float step = 5f * Time.deltaTime; //  distance to move
                     attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.position, step);
-                    Debug.Log(Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) + "");
+                    // Debug.Log(Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) + "");
                     if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < 0.5f)
                     {
                         state = AttackState.EXIT;
@@ -186,7 +186,7 @@ public class Attack : MonoBehaviour
         string tag = opponent.gameObject.tag;
         if (other.tag == tag)
         {
-            Player opp = opponent.GetComponent<Player>();
+            Player opp = opponent.GetComponentInParent<Player>();
             opp.TakeDamage(damage);
             Debug.Log("-------- Health after hit: " + opp.Health);
         }
