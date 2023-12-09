@@ -34,8 +34,10 @@ public class Attack : MonoBehaviour
 
     private bool isEntering = false;
     private bool isExiting = false;
-    public bool IsAttacking { get; private set; } = false;
+    private bool didHitOnce = false;
 
+    private float damageDistance = 2.2f; // change this later to custom distance for MLH
+    public bool IsAttacking { get; private set; } = false;
 
 
     private void Start()
@@ -92,6 +94,7 @@ public class Attack : MonoBehaviour
                     else
                     {
                         attackInstance = Instantiate(attackPrefab, transform);
+                        CheckForHit();
                         state = AttackState.UPDATE;
                         isEntering = false;
                     }
@@ -108,21 +111,18 @@ public class Attack : MonoBehaviour
                         }
                         else
                         {
-                            attackInstance = Instantiate(attackPrefab, opponent);
-                            state = AttackState.UPDATE;
-                            isEntering = false;
+                            StartCoroutine(CoCharge(transform));
                         }
                     }
                     break;
                 }
             case AttackType.PROJECTILE:
                 {
-                    attackInstance = Instantiate(attackPrefab, transform);
-                    state = AttackState.UPDATE;
-                    isEntering = false;
+                    StartCoroutine(CoCharge(transform));
                     break;
                 }
         }
+
     }
 
     public void ExecuteAttack()
@@ -133,17 +133,21 @@ public class Attack : MonoBehaviour
             case AttackType.BLASTSELF:
             case AttackType.BLASTOPPONENT:
                 {
+                    CheckForHit();
                     state = AttackState.EXIT;
                     break;
                 }
             case AttackType.PROJECTILE:
                 {
                     // thorw it at the opponent
-                    float step = 5f * Time.deltaTime; //  distance to move
-                    attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.position, step);
-                    // Debug.Log(Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) + "");
-                    if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < 0.5f)
+                    float step = 8f * Time.deltaTime; //  distance to move
+                    attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.position + new Vector3(0, 2.8f,0), step);
+                    CheckForHit();
+                    if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < 0.3f)
                     {
+                        Player opp = opponent.GetComponentInParent<Player>();
+                        opp.TakeDamage(damage);
+                        Debug.Log("-------- Health after projectile hit: " + opp.Health);
                         state = AttackState.EXIT;
                     }
                     break;
@@ -160,10 +164,8 @@ public class Attack : MonoBehaviour
 
     private IEnumerator CoCharge(Transform trans)
     {
-        Debug.Log("CoCharge 1");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         Destroy(chargeInstance);
-        Debug.Log("CoCharge 2");
         attackInstance = Instantiate(attackPrefab, trans);
         state = AttackState.UPDATE;
         isEntering = false;
@@ -172,23 +174,25 @@ public class Attack : MonoBehaviour
 
     private IEnumerator CoExitAttack()
     {
-        Debug.Log("Exiting start");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Debug.Log("Exiting");
         Destroy(attackInstance);
         IsAttacking = false;
+        didHitOnce = false;
         isExiting = false;
         yield return true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void CheckForHit()
     {
-        string tag = opponent.gameObject.tag;
-        if (other.tag == tag)
+        Debug.Log("++++++ Checking hit +++++++++++ \n " + attackInstance.transform.localPosition.x + " " + opponent.position.x);
+        if (Mathf.Abs(attackInstance.transform.localPosition.x - opponent.position.x) < damageDistance && !didHitOnce)
         {
             Player opp = opponent.GetComponentInParent<Player>();
             opp.TakeDamage(damage);
+            didHitOnce = true;
             Debug.Log("-------- Health after hit: " + opp.Health);
         }
+
     }
 }

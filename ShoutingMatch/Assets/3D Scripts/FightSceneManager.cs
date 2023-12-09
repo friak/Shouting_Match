@@ -60,15 +60,4 @@ public class FightSceneManager : MonoBehaviour
         pl2UI.SetPlayerUI(asset2);
     }
 
-    public void UpdatePlayerHealthDisplay(bool isPlayer1, string health)
-    {
-        if (isPlayer1)
-        {
-            pl1UI.SetHealthText(health);
-        }
-        else
-        {
-            pl2UI.SetHealthText(health);
-        }
-    }
 }

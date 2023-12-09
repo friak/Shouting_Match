@@ -10,14 +10,16 @@ public class PlayerFightingUI : MonoBehaviour
     [SerializeField]
     private string ch_name;
     [SerializeField]
-    private string health;
+    private float health;
 
     [SerializeField]
     private GameObject profileImage;
     [SerializeField]
     private TextMeshProUGUI characterName;
     [SerializeField]
-    private TextMeshProUGUI healthPoints;
+    private Slider slider;
+    [SerializeField]
+    private Image fill;
 
 
 
@@ -26,17 +28,18 @@ public class PlayerFightingUI : MonoBehaviour
         // for the live game this has to be commented out
         profileImage.GetComponent<Image>().sprite = image;
         characterName.text = ch_name;
-        healthPoints.text = health;
-    }
-    public void SetHealthText(string health)
-    {
-        healthPoints.text = health;
+        slider.maxValue = health;
+        slider.value = health;
     }
 
     public void SetPlayerUI(CharacterScriptableAsset asset)
     {
         profileImage.GetComponent<RawImage>().texture = asset.m_profile.texture;
         characterName.text = asset.name;
-        healthPoints.text = asset.m_health.ToString();
+    }
+
+    public void ReduceHealthBar(float new_health)
+    {
+        slider.value = new_health;
     }
 }

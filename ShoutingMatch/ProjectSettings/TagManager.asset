@@ -8,6 +8,7 @@ TagManager:
   - GroundTouch
   - Player1
   - Player2
+  - Attack
   layers:
   - Default
   - TransparentFX
