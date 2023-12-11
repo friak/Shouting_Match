@@ -25,9 +25,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         // this will be set in the InitPLayer method
-        max_health = playerSA.m_health;
-        curr_health = max_health;
-        playerUI.SetPlayerUI(playerSA);
+        InitPLayer(playerSA);
     }
 
     // Update is called once per frame

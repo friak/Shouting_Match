@@ -40,8 +40,10 @@ public class
     private bool isCrouching = false;
     // block
     private bool isBlocking = false;
+    public bool IsBlocking { get { return isBlocking; } private set { } }
     private bool isBlockAnimation = false;
     // attack
+    [SerializeField]
     private Attack attack;
     [SerializeField]
     private AttackScriptableAsset standardAttack;
@@ -62,7 +64,6 @@ public class
 
     private void Start()
     {
-        attack = GetComponent<Attack>();
         int direction = m_isPlayer1 ? 1 : -1;
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
         isTurned = m_isPlayer1 ? false : true;
@@ -175,12 +176,14 @@ public class
     {
         if (isBlocking && !isBlockAnimation)
         {
+            attack.Block(true);
             animator.SetBool("isBlocking", true);
             isBlockAnimation = true;
             // to do: transition to block attack animation if being hit (trigger: blockAttack)
         }
         else if (!isBlocking && isBlockAnimation)
         {
+            attack.Block(false);
             animator.SetBool("isBlocking", false);
             isBlockAnimation = false;
         }
@@ -188,7 +191,7 @@ public class
 
     public void Move()
     {
-        if (isCrouching || attack.IsAttacking)
+        if (isBlocking || isCrouching || attack.IsAttacking) // we need a crouch forward animation! until then I freez crouch
         {
             characterController.Move(Vector3.zero);
         }

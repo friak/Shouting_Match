@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc87c03969871b4f89d9803502add32, type: 3}
   m_Name: Sybil_SpellBookThrow
   m_EditorClassIdentifier: 
-  attackType: 0
+  attackType: 2
   lightAttackPrefab: {fileID: 5029854626694725878, guid: 4f2d10e38ad34c24c884ff126a5a1583, type: 3}
   mediumAttackPrefab: {fileID: 8972229115285059803, guid: 256b099fd7197c849b11da7d9467580d, type: 3}
   heavyAattackPrefab: {fileID: 5254492993503138427, guid: 8f760647d410246448230c4832590c7c, type: 3}

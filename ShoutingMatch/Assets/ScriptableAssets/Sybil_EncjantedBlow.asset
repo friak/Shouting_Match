@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc87c03969871b4f89d9803502add32, type: 3}
   m_Name: Sybil_EncjantedBlow
   m_EditorClassIdentifier: 
-  attackType: 0
+  attackType: 1
   lightAttackPrefab: {fileID: 7405544378826639938, guid: 765356c7c7438e0409a41e3a4b8aca82, type: 3}
   mediumAttackPrefab: {fileID: 7405544378826639938, guid: 765356c7c7438e0409a41e3a4b8aca82, type: 3}
   heavyAattackPrefab: {fileID: 7405544378826639938, guid: 765356c7c7438e0409a41e3a4b8aca82, type: 3}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc87c03969871b4f89d9803502add32, type: 3}
   m_Name: Garjan_LightningBlast
   m_EditorClassIdentifier: 
-  attackType: 0
+  attackType: 2
   lightAttackPrefab: {fileID: 3264233044737861753, guid: de4dff234290811479db4b6f023a17af, type: 3}
   mediumAttackPrefab: {fileID: 7271776728716093697, guid: f7cbd9c08f892c242a1be728251a10be, type: 3}
   heavyAattackPrefab: {fileID: 942207755992262814, guid: 3785a3670041c4149bc66c7f92385c3c, type: 3}

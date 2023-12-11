@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc87c03969871b4f89d9803502add32, type: 3}
   m_Name: Garjn_ShockWave
   m_EditorClassIdentifier: 
-  attackType: 0
+  attackType: 2
   lightAttackPrefab: {fileID: 3850088826703682708, guid: 858e3d469c9bdd648ab8ca1fa5479f1c, type: 3}
   mediumAttackPrefab: {fileID: 3176433126588992604, guid: 2824ad4e47c327b419b4e93f020dd34b, type: 3}
   heavyAattackPrefab: {fileID: 1058021067426982547, guid: 2911769a0a4d1174cacf733369ec4827, type: 3}

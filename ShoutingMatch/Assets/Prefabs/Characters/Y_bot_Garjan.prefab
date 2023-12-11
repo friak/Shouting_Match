@@ -332,7 +332,6 @@ GameObject:
   - component: {fileID: 4634775721372382643}
   - component: {fileID: 5727995928337358908}
   - component: {fileID: 470968867642059625}
-  - component: {fileID: 7157129128871784571}
   m_Layer: 0
   m_Name: Y_bot_Garjan
   m_TagString: Untagged
@@ -422,22 +421,10 @@ MonoBehaviour:
   m_opponent: {fileID: 0}
   animator: {fileID: 4634775721372382643}
   characterController: {fileID: 5727995928337358908}
+  attack: {fileID: 0}
   standardAttack: {fileID: 0}
   forwardAttack: {fileID: 0}
   crouchAttack: {fileID: 0}
---- !u!114 &7157129128871784571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2160034085648266611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 594d5772043976d4797f65bc4cfec072, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackParent: {fileID: 6473399854646938588}
 --- !u!1 &2179059161565566504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1812,6 +1799,7 @@ GameObject:
   - component: {fileID: 207256138308287735}
   - component: {fileID: 4237201162996363863}
   - component: {fileID: 1348811533785015188}
+  - component: {fileID: 4039364255163718516}
   m_Layer: 0
   m_Name: AttackParent
   m_TagString: Untagged
@@ -1827,7 +1815,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6473399854646938588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.329, z: -0.019}
+  m_LocalPosition: {x: 0, y: 1.329, z: 0.014}
   m_LocalScale: {x: 0.37585875, y: 0.20672229, z: 0.37585875}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1907,6 +1895,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4039364255163718516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6473399854646938588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594d5772043976d4797f65bc4cfec072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockPrefab: {fileID: 4243576792925071707, guid: da648c698a3d43841a5e774c6a2903a7, type: 3}
 --- !u!1 &6520446870263618228
 GameObject:
   m_ObjectHideFlags: 0

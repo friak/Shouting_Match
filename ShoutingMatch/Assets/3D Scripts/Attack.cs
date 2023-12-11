@@ -25,22 +25,23 @@ public enum AttackLevel
 public class Attack : MonoBehaviour
 {
     [SerializeField]
-    private GameObject attackParent;
+    private GameObject blockPrefab;
     private AttackScriptableAsset currentAttack;
     private AttackLevel attackLevel;
-    private int damage;
+    private float damage;
     private AttackState state;
     private Transform opponent;
 
     private GameObject attackInstance;
     private GameObject chargeInstance;
     private GameObject indicatorInstance;
+    private GameObject blockInstance;
 
     private bool isEntering = false;
     private bool isExiting = false;
     private bool didHitOnce = false;
 
-    private float damageDistance = 2.2f; // change this later to custom distance for MLH
+    private float damageDistance = 2.2f;
     public bool IsAttacking { get; private set; } = false;
     
 
@@ -79,6 +80,7 @@ public class Attack : MonoBehaviour
     public void StartAttack(AttackScriptableAsset attack, AttackLevel level)
     {
         currentAttack = attack;
+        damageDistance = currentAttack.attackType == AttackType.BLASTSELF ? 4f : 2f;
         attackLevel = level;
         if(level == AttackLevel.LIGHT) { damage = currentAttack.lightDamage; }
         if(level == AttackLevel.MEDIUM) { damage = currentAttack.mediumDamage; }
@@ -97,19 +99,19 @@ public class Attack : MonoBehaviour
                 {
                     if (currentAttack.chargePrefab != null)
                     {
-                        chargeInstance = Instantiate(currentAttack.chargePrefab, attackParent.transform);
-                        StartCoroutine(CoCharge(attackParent.transform));
+                        chargeInstance = Instantiate(currentAttack.chargePrefab, transform);
+                        StartCoroutine(CoAttack(transform.position + new Vector3(0, -2.5f, 0), transform.rotation, transform));
                     }
                     else
                     {
-                        /*if (currentAttack.indicatorPrefab != null)
+                        if (currentAttack.indicatorPrefab != null)
                         {
-                            indicatorInstance = Instantiate(currentAttack.indicatorPrefab, attackParent.transform);
+                            indicatorInstance = Instantiate(currentAttack.indicatorPrefab, transform.position + new Vector3(0, 0.5f, -0.5f), transform.rotation, transform);
                             Debug.Log("Indicator instantiated");
                             StartCoroutine(CoShowIndicator());
-                        }*/
-                        attackInstance = InstantiateAttack(attackParent.transform); 
-                        CheckForHit();
+                        }
+                        attackInstance = InstantiateAttack(transform.position + new Vector3(0, -2.5f, 0), transform.rotation, transform);
+                        // CheckForHit();
                         state = AttackState.UPDATE;
                         isEntering = false;
                     }
@@ -121,19 +123,20 @@ public class Attack : MonoBehaviour
                     {
                         if (currentAttack.chargePrefab != null)
                         {
-                            chargeInstance = Instantiate(currentAttack.chargePrefab, opponent); // this is not a character charge but an indicator of the hit location
-                            StartCoroutine(CoCharge(opponent));
+                            chargeInstance = Instantiate(currentAttack.chargePrefab, transform.position, transform.rotation, transform);
+                            StartCoroutine(CoAttack(opponent.position, opponent.rotation, opponent));
                         }
                         else
                         {
-                            StartCoroutine(CoCharge(attackParent.transform));
+                            StartCoroutine(CoAttack(opponent.position, opponent.rotation, opponent));
                         }
                     }
                     break;
                 }
             case AttackType.PROJECTILE:
                 {
-                    StartCoroutine(CoCharge(attackParent.transform));
+                    float offset = transform.position.x < 0 ? -1.2f : 1.2f; // start projectile from behind even if turned
+                    StartCoroutine(CoAttack(transform.position + new Vector3(offset, 0, 0), transform.rotation, transform));
                     break;
                 }
         }
@@ -155,14 +158,14 @@ public class Attack : MonoBehaviour
             case AttackType.PROJECTILE:
                 {
                     // thorw it at the opponent
-                    float step = 8f * Time.deltaTime; //  distance to move
+                    float step = 9.5f * Time.deltaTime; //  distance to move
                     attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.position + new Vector3(0, 2.8f,0), step);
-                    // CheckForHit();
-                    if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < 0.3f)
+                    if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < 0.5f)
                     {
                         Player opp = opponent.GetComponentInParent<Player>();
+                        damage = opponent.GetComponent<PlayerController>().IsBlocking ? damage / 4 : damage;
                         opp.TakeDamage(damage);
-                        Debug.Log("-------- Health after projectile hit: " + opp.Health);
+                        Debug.Log("PROJECTILE DAMAGE: " + damage);
                         state = AttackState.EXIT;
                     }
                     break;
@@ -177,19 +180,19 @@ public class Attack : MonoBehaviour
         StartCoroutine(CoExitAttack());
     }
 
-    private IEnumerator CoCharge(Transform trans)
+    private IEnumerator CoAttack(Vector3 position, Quaternion rotation, Transform trans)
     {
         yield return new WaitForSeconds(1f);
         Destroy(chargeInstance);
         Debug.Log("Charge over");
-        /*if (currentAttack.indicatorPrefab != null)
+        if (currentAttack.indicatorPrefab != null)
         {
-            indicatorInstance = Instantiate(currentAttack.indicatorPrefab, opponent);
+            indicatorInstance = Instantiate(currentAttack.indicatorPrefab, opponent.position, rotation, trans);
             Debug.Log("Indicator instantiated (in co-charge)");
             StartCoroutine(CoShowIndicator());
             yield return false;
-        }*/
-        attackInstance = InstantiateAttack(trans);
+        }
+        attackInstance = InstantiateAttack(position, rotation, trans);
         Debug.Log("Attack instantiated");
         state = AttackState.UPDATE;
         isEntering = false;
@@ -198,7 +201,7 @@ public class Attack : MonoBehaviour
 
     private IEnumerator CoExitAttack()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         Debug.Log("Exiting");
         Destroy(attackInstance);
         IsAttacking = false;
@@ -217,33 +220,50 @@ public class Attack : MonoBehaviour
 
     private void CheckForHit()
     {
-        Debug.Log("++++++ Checking hit +++++++++++ \n " + attackInstance.transform.localPosition.x + " " + opponent.position.x);
-        if (Mathf.Abs(attackInstance.transform.localPosition.x - opponent.position.x) < damageDistance && !didHitOnce)
+        // Debug.Log("++++++ Checking hit +++++++++++ \n " + attackInstance.transform.localPosition.x + " " + opponent.position.x);
+        if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < damageDistance && !didHitOnce)
         {
             Player opp = opponent.GetComponentInParent<Player>();
+            damage = opponent.GetComponent<PlayerController>().IsBlocking ? damage / 4 : damage;
             opp.TakeDamage(damage);
             didHitOnce = true;
-            Debug.Log("-------- Health after hit: " + opp.Health);
+            Debug.Log("DAMAGE: " + damage);
         }
     }
 
-    private GameObject InstantiateAttack(Transform trans)
+    private GameObject InstantiateAttack(Vector3 position, Quaternion rotation, Transform trans)
     {
         switch (attackLevel)
         {
             default:
             case AttackLevel.LIGHT:
                 {
-                    return Instantiate(currentAttack.lightAttackPrefab, trans);
+                    return Instantiate(currentAttack.lightAttackPrefab, position, rotation, trans);
                 }
             case AttackLevel.MEDIUM:
                 {
-                    return Instantiate(currentAttack.mediumAttackPrefab, trans);
+                    return Instantiate(currentAttack.mediumAttackPrefab, position, rotation, trans);
                 }
             case AttackLevel.HEAVY:
                 {
-                    return Instantiate(currentAttack.heavyAattackPrefab, trans);
+                    return Instantiate(currentAttack.heavyAattackPrefab, position, rotation, trans);
                 }
+        }
+    }
+
+    public void Block(bool isBlocking)
+    {
+        if (isBlocking)
+        {
+            float offset = transform.position.x < 0 ? 1.2f : -1.2f; // position the shield in front of the player, even when turned
+            float rotateY = transform.position.x < 0 ? 1f : 90f; // flip the shield when turned
+            blockInstance = Instantiate(blockPrefab, transform.position + new Vector3(offset, 0, 0), transform.rotation, transform);
+            blockInstance.transform.GetChild(0).gameObject.transform.Rotate(new Vector3(0, rotateY, 0));
+            // Debug.Log("SHIELD ON");
+        }
+        else
+        {
+            Destroy(blockInstance);
         }
     }
 }
