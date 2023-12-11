@@ -12,7 +12,6 @@ public class PlayerFightingUI : MonoBehaviour
     private Slider slider;
 
 
-
     private void Start()
     {
 

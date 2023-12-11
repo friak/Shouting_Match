@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class
     PlayerController : MonoBehaviour
@@ -8,7 +9,7 @@ public class
     [SerializeField]
     private bool m_isPlayer1;
     [SerializeField]
-    private Transform m_opponent;
+    private Transform m_opponent; // will be set by the fight scene manager later
     public Transform Opponent { get { return m_opponent; } private set { } }
 
     [SerializeField]
@@ -16,6 +17,18 @@ public class
     
     [SerializeField]
     private CharacterController characterController;
+    // attack
+    [SerializeField]
+    private Attack attack;
+    [SerializeField]
+    private AttackScriptableAsset standardAttack;
+    private bool isLightPressed = false;
+    [SerializeField]
+    private AttackScriptableAsset forwardAttack;
+    private bool isMediumPressed = false;
+    [SerializeField]
+    private AttackScriptableAsset crouchAttack;
+    private bool isHeavyPressed = false;
 
     private PlayerInput playerInput;
     // move
@@ -42,18 +55,9 @@ public class
     private bool isBlocking = false;
     public bool IsBlocking { get { return isBlocking; } private set { } }
     private bool isBlockAnimation = false;
-    // attack
-    [SerializeField]
-    private Attack attack;
-    [SerializeField]
-    private AttackScriptableAsset standardAttack;
-    private bool isLightPressed = false;
-    [SerializeField]
-    private AttackScriptableAsset forwardAttack;
-    private bool isMediumPressed = false;
-    [SerializeField]
-    private AttackScriptableAsset crouchAttack;
-    private bool isHeavyPressed = false;
+
+    private bool isGameOver = false;
+    private Player player;
 
     private void Awake()
     {
@@ -64,6 +68,7 @@ public class
 
     private void Start()
     {
+        player = GetComponentInParent<Player>();
         int direction = m_isPlayer1 ? 1 : -1;
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
         isTurned = m_isPlayer1 ? false : true;
@@ -81,6 +86,7 @@ public class
             // animator should freeze in current state
             return;
         }
+        if (player.IsDead && !isGameOver) GameOver();
         Attack();
         Turn();
         Jump();
@@ -191,7 +197,7 @@ public class
 
     public void Move()
     {
-        if (isBlocking || isCrouching || attack.IsAttacking) // we need a crouch forward animation! until then I freez crouch
+        if (isBlocking || isCrouching || attack.IsAttacking || player.IsDead) // we need a crouch forward animation! until then I freez crouch
         {
             characterController.Move(Vector3.zero);
         }
@@ -290,6 +296,14 @@ public class
             float nextVelocity = (prevVelocity + newVelocity) * 0.5f;
             currMove.y = nextVelocity;
         }
+    }
+
+    private void GameOver()
+    {
+        animator.SetTrigger("die");
+        Animator opponentAnim = m_opponent.GetComponent<Animator>();
+        if (opponentAnim != null) {opponentAnim.SetTrigger("win"); }
+        isGameOver = true;
     }
 
     private AttackLevel GetAttackLevel()

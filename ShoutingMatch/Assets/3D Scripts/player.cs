@@ -1,7 +1,5 @@
 
-using System.Runtime.Remoting.Messaging;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -26,13 +24,6 @@ public class Player : MonoBehaviour
     {
         // this will be set in the InitPLayer method
         InitPLayer(playerSA);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
     }
 
     public void InitPLayer(CharacterScriptableAsset playerSA)

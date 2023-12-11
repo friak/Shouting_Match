@@ -30,7 +30,9 @@ public class Attack : MonoBehaviour
     private AttackLevel attackLevel;
     private float damage;
     private AttackState state;
-    private Transform opponent;
+    private GameObject opponent;
+    private Player opponentPlayer;
+    private PlayerController opponentController;
 
     private GameObject attackInstance;
     private GameObject chargeInstance;
@@ -48,7 +50,9 @@ public class Attack : MonoBehaviour
     private void Start()
     {
         state = AttackState.DORMANT;
-        opponent = GetComponentInParent<PlayerController>().Opponent;
+        opponent = GetComponentInParent<PlayerController>().Opponent.gameObject;
+        opponentPlayer = opponent.GetComponentInParent<Player>();
+        opponentController = opponent.GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -124,11 +128,11 @@ public class Attack : MonoBehaviour
                         if (currentAttack.chargePrefab != null)
                         {
                             chargeInstance = Instantiate(currentAttack.chargePrefab, transform.position, transform.rotation, transform);
-                            StartCoroutine(CoAttack(opponent.position, opponent.rotation, opponent));
+                            StartCoroutine(CoAttack(opponent.transform.position, opponent.transform.rotation, opponent.transform));
                         }
                         else
                         {
-                            StartCoroutine(CoAttack(opponent.position, opponent.rotation, opponent));
+                            StartCoroutine(CoAttack(opponent.transform.position, opponent.transform.rotation, opponent.transform));
                         }
                     }
                     break;
@@ -159,12 +163,11 @@ public class Attack : MonoBehaviour
                 {
                     // thorw it at the opponent
                     float step = 9.5f * Time.deltaTime; //  distance to move
-                    attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.position + new Vector3(0, 2.8f,0), step);
-                    if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < 0.5f)
+                    attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.transform.position + new Vector3(0, 2.8f,0), step);
+                    if (Mathf.Abs(attackInstance.transform.position.x - opponent.transform.position.x) < 0.5f)
                     {
-                        Player opp = opponent.GetComponentInParent<Player>();
-                        damage = opponent.GetComponent<PlayerController>().IsBlocking ? damage / 4 : damage;
-                        opp.TakeDamage(damage);
+                        damage = opponentController.IsBlocking ? damage / 4 : damage;
+                        opponentPlayer.TakeDamage(damage);
                         Debug.Log("PROJECTILE DAMAGE: " + damage);
                         state = AttackState.EXIT;
                     }
@@ -187,7 +190,7 @@ public class Attack : MonoBehaviour
         Debug.Log("Charge over");
         if (currentAttack.indicatorPrefab != null)
         {
-            indicatorInstance = Instantiate(currentAttack.indicatorPrefab, opponent.position, rotation, trans);
+            indicatorInstance = Instantiate(currentAttack.indicatorPrefab, opponent.transform.position, rotation, trans);
             Debug.Log("Indicator instantiated (in co-charge)");
             StartCoroutine(CoShowIndicator());
             yield return false;
@@ -221,11 +224,10 @@ public class Attack : MonoBehaviour
     private void CheckForHit()
     {
         // Debug.Log("++++++ Checking hit +++++++++++ \n " + attackInstance.transform.localPosition.x + " " + opponent.position.x);
-        if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < damageDistance && !didHitOnce)
+        if (Mathf.Abs(attackInstance.transform.position.x - opponent.transform.position.x) < damageDistance && !didHitOnce)
         {
-            Player opp = opponent.GetComponentInParent<Player>();
-            damage = opponent.GetComponent<PlayerController>().IsBlocking ? damage / 4 : damage;
-            opp.TakeDamage(damage);
+            damage = opponentController.IsBlocking ? damage / 4 : damage;
+            opponentPlayer.TakeDamage(damage);
             didHitOnce = true;
             Debug.Log("DAMAGE: " + damage);
         }
