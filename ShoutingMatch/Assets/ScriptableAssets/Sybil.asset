@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Sybil
   m_EditorClassIdentifier: 
   m_name: Sybil
-  m_profile: {fileID: 21300000, guid: cef4c1ae0e5684f889f7ddf9c64101eb, type: 3}
+  m_profile: {fileID: 21300000, guid: 883ef2143d7ec7e49b82dd8f7bb81149, type: 3}
   m_health: 150
   damageSmall: 10
   damageMedium: 20
   damageLarge: 30
-  playerPrefab: {fileID: 7855171272652905683, guid: 1e44dd205b0a0db40ba879b069942515, type: 3}
+  playerPrefab: {fileID: 4416790858356453475, guid: ca334c3df31ad734aad4474812fe4953, type: 3}

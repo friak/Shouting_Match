@@ -15,22 +15,26 @@ public enum AttackState
     UPDATE,
     EXIT
 }
+public enum AttackLevel
+{
+    NONE,
+    LIGHT,
+    MEDIUM,
+    HEAVY
+}
 public class Attack : MonoBehaviour
 {
     [SerializeField]
-    private AttackType attackType;
-    public AttackType AttackType { get { return attackType; } private set { } }
-    [SerializeField]
-    private GameObject attackPrefab;
-    [SerializeField]
-    private GameObject chargePrefab;
-    [SerializeField]
+    private GameObject attackParent;
+    private AttackScriptableAsset currentAttack;
+    private AttackLevel attackLevel;
     private int damage;
-    // multipliers for damage: 2.5 * light = medium, 4 * light = heavy // or ScriptableAssets!!!
     private AttackState state;
     private Transform opponent;
+
     private GameObject attackInstance;
     private GameObject chargeInstance;
+    private GameObject indicatorInstance;
 
     private bool isEntering = false;
     private bool isExiting = false;
@@ -38,7 +42,7 @@ public class Attack : MonoBehaviour
 
     private float damageDistance = 2.2f; // change this later to custom distance for MLH
     public bool IsAttacking { get; private set; } = false;
-
+    
 
     private void Start()
     {
@@ -72,8 +76,13 @@ public class Attack : MonoBehaviour
         }
     }
 
-    public void StartAttack()
+    public void StartAttack(AttackScriptableAsset attack, AttackLevel level)
     {
+        currentAttack = attack;
+        attackLevel = level;
+        if(level == AttackLevel.LIGHT) { damage = currentAttack.lightDamage; }
+        if(level == AttackLevel.MEDIUM) { damage = currentAttack.mediumDamage; }
+        if(level == AttackLevel.HEAVY) { damage = currentAttack.heavytDamage; }
         IsAttacking = true;
         state = AttackState.ENTER;
     }
@@ -82,18 +91,24 @@ public class Attack : MonoBehaviour
         isEntering = true;
         Debug.Log("Entered attack");
         state = AttackState.DORMANT; //waiting until enter is done
-        switch (attackType)
+        switch (currentAttack.attackType)
         {
             case AttackType.BLASTSELF:
                 {
-                    if (chargePrefab != null)
+                    if (currentAttack.chargePrefab != null)
                     {
-                        chargeInstance = Instantiate(chargePrefab, transform);
-                        StartCoroutine(CoCharge(transform));
+                        chargeInstance = Instantiate(currentAttack.chargePrefab, attackParent.transform);
+                        StartCoroutine(CoCharge(attackParent.transform));
                     }
                     else
                     {
-                        attackInstance = Instantiate(attackPrefab, transform);
+                        /*if (currentAttack.indicatorPrefab != null)
+                        {
+                            indicatorInstance = Instantiate(currentAttack.indicatorPrefab, attackParent.transform);
+                            Debug.Log("Indicator instantiated");
+                            StartCoroutine(CoShowIndicator());
+                        }*/
+                        attackInstance = InstantiateAttack(attackParent.transform); 
                         CheckForHit();
                         state = AttackState.UPDATE;
                         isEntering = false;
@@ -104,21 +119,21 @@ public class Attack : MonoBehaviour
                 {
                     if (opponent != null)
                     {
-                        if (chargePrefab != null)
+                        if (currentAttack.chargePrefab != null)
                         {
-                            chargeInstance = Instantiate(chargePrefab, opponent); // this is not a character charge but an indicator of the hit location
+                            chargeInstance = Instantiate(currentAttack.chargePrefab, opponent); // this is not a character charge but an indicator of the hit location
                             StartCoroutine(CoCharge(opponent));
                         }
                         else
                         {
-                            StartCoroutine(CoCharge(transform));
+                            StartCoroutine(CoCharge(attackParent.transform));
                         }
                     }
                     break;
                 }
             case AttackType.PROJECTILE:
                 {
-                    StartCoroutine(CoCharge(transform));
+                    StartCoroutine(CoCharge(attackParent.transform));
                     break;
                 }
         }
@@ -128,7 +143,7 @@ public class Attack : MonoBehaviour
     public void ExecuteAttack()
     {
         Debug.Log("Executing attack");
-        switch (attackType)
+        switch (currentAttack.attackType)
         {
             case AttackType.BLASTSELF:
             case AttackType.BLASTOPPONENT:
@@ -142,7 +157,7 @@ public class Attack : MonoBehaviour
                     // thorw it at the opponent
                     float step = 8f * Time.deltaTime; //  distance to move
                     attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.position + new Vector3(0, 2.8f,0), step);
-                    CheckForHit();
+                    // CheckForHit();
                     if (Mathf.Abs(attackInstance.transform.position.x - opponent.position.x) < 0.3f)
                     {
                         Player opp = opponent.GetComponentInParent<Player>();
@@ -166,7 +181,16 @@ public class Attack : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Destroy(chargeInstance);
-        attackInstance = Instantiate(attackPrefab, trans);
+        Debug.Log("Charge over");
+        /*if (currentAttack.indicatorPrefab != null)
+        {
+            indicatorInstance = Instantiate(currentAttack.indicatorPrefab, opponent);
+            Debug.Log("Indicator instantiated (in co-charge)");
+            StartCoroutine(CoShowIndicator());
+            yield return false;
+        }*/
+        attackInstance = InstantiateAttack(trans);
+        Debug.Log("Attack instantiated");
         state = AttackState.UPDATE;
         isEntering = false;
         yield return true;
@@ -183,6 +207,14 @@ public class Attack : MonoBehaviour
         yield return true;
     }
 
+    private IEnumerator CoShowIndicator()
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Showingindicator");
+        Destroy(indicatorInstance);
+        yield return true;
+    }
+
     private void CheckForHit()
     {
         Debug.Log("++++++ Checking hit +++++++++++ \n " + attackInstance.transform.localPosition.x + " " + opponent.position.x);
@@ -193,6 +225,25 @@ public class Attack : MonoBehaviour
             didHitOnce = true;
             Debug.Log("-------- Health after hit: " + opp.Health);
         }
+    }
 
+    private GameObject InstantiateAttack(Transform trans)
+    {
+        switch (attackLevel)
+        {
+            default:
+            case AttackLevel.LIGHT:
+                {
+                    return Instantiate(currentAttack.lightAttackPrefab, trans);
+                }
+            case AttackLevel.MEDIUM:
+                {
+                    return Instantiate(currentAttack.mediumAttackPrefab, trans);
+                }
+            case AttackLevel.HEAVY:
+                {
+                    return Instantiate(currentAttack.heavyAattackPrefab, trans);
+                }
+        }
     }
 }

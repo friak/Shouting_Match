@@ -5,12 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private string char_name = "Sybil";
     private float max_health = 100;
-    private Image profile;
-    private float lightDamage = 10;
-    private float mediumDamage = 15;
-    private float heavyDamage = 20;
     private float curr_health;
 
     public bool IsPlayer1 { get; private set; }
@@ -30,16 +25,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         // this will be set in the InitPLayer method
-        char_name = playerSA.m_name;
         max_health = playerSA.m_health;
-        profile.sprite = playerSA.m_profile;
-        lightDamage = playerSA.damageSmall;
-        mediumDamage = playerSA.damageMedium;
-        heavyDamage = playerSA.damageLarge;
         curr_health = max_health;
-
         playerUI.SetPlayerUI(playerSA);
-
     }
 
     // Update is called once per frame
@@ -51,13 +39,9 @@ public class Player : MonoBehaviour
 
     public void InitPLayer(CharacterScriptableAsset playerSA)
     {
-        char_name = playerSA.m_name;
         max_health = playerSA.m_health;
-        profile.sprite = playerSA.m_profile;
-        lightDamage = playerSA.damageSmall;
-        mediumDamage = playerSA.damageMedium;
-        heavyDamage = playerSA.damageLarge;
         curr_health = max_health;
+        playerUI.SetPlayerUI(playerSA);
     }
 
     public void TakeDamage(float damage)
@@ -70,20 +54,6 @@ public class Player : MonoBehaviour
             IsDead = true;
         }
     }
-
-    /*void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            Debug.Log("hit by player");
-        }
-        // blasts and projectiles must be tagged as Attack
-        if (other.tag == "Attack") 
-        {
-
-            Debug.Log("hit by attack");
-        }
-    }*/
 
 }
 

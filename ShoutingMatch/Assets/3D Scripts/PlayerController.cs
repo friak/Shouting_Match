@@ -42,15 +42,16 @@ public class
     private bool isBlocking = false;
     private bool isBlockAnimation = false;
     // attack
+    private Attack attack;
     [SerializeField]
-    private Attack attack1;
-    private bool isAttack1 = false;
+    private AttackScriptableAsset standardAttack;
+    private bool isLightPressed = false;
     [SerializeField]
-    private Attack attack2;
-    private bool isAttack2 = false;
+    private AttackScriptableAsset forwardAttack;
+    private bool isMediumPressed = false;
     [SerializeField]
-    private Attack attack3;
-    private bool isAttack3 = false;
+    private AttackScriptableAsset crouchAttack;
+    private bool isHeavyPressed = false;
 
     private void Awake()
     {
@@ -61,6 +62,7 @@ public class
 
     private void Start()
     {
+        attack = GetComponent<Attack>();
         int direction = m_isPlayer1 ? 1 : -1;
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
         isTurned = m_isPlayer1 ? false : true;
@@ -73,7 +75,7 @@ public class
     // Update is called once per frame
     private void Update()
     {
-        if (AttackIsExecuting())
+        if (attack.IsAttacking)
         {
             // animator should freeze in current state
             return;
@@ -122,15 +124,15 @@ public class
 
     public void OnAttack1(InputAction.CallbackContext context)
     {
-        isAttack1 = context.ReadValueAsButton();
+        isLightPressed = context.ReadValueAsButton();
     }
     public void OnAttack2(InputAction.CallbackContext context)
     {
-        isAttack2 = context.ReadValueAsButton();
+        isMediumPressed = context.ReadValueAsButton();
     }
     public void OnAttack3(InputAction.CallbackContext context)
     {
-        isAttack3 = context.ReadValueAsButton();
+        isHeavyPressed = context.ReadValueAsButton();
     }
 
     public void OnAttackEnd(InputAction.CallbackContext context)
@@ -186,7 +188,7 @@ public class
 
     public void Move()
     {
-        if (isCrouching || AttackIsExecuting())
+        if (isCrouching || attack.IsAttacking)
         {
             characterController.Move(Vector3.zero);
         }
@@ -199,11 +201,6 @@ public class
             }
             characterController.Move(currMove * moveSpeed * Time.deltaTime);
         }
-    }
-
-    private bool AttackIsExecuting()
-    {
-        return attack1.IsAttacking || attack2.IsAttacking || attack3.IsAttacking;
     }
 
     private void Turn()
@@ -236,22 +233,32 @@ public class
 
     private void Attack()
     {
-        if (isAttack1 || (isAttack1 && isJumpingPressed)) // idle
-        {
-            animator.SetTrigger("attack1");
-            attack1.StartAttack();
+        AttackLevel level = GetAttackLevel();
+        if (level == AttackLevel.NONE) {
+            return;
         }
-        if ((isAttack2 && isJumpingPressed && isForward) || (isAttack2 && isForward)) // directional
-        {
-            animator.SetTrigger("attack2");
-            attack2.StartAttack();
+        else
+        {   // standard attack
+            if (IsIdle() || isJumpingPressed)
+            {
+                animator.SetTrigger("attack1");
+                attack.StartAttack(standardAttack, level);
+                return;
+            } // forward attack
+            if ((isJumpingPressed && isForward) || isForward) // could be separated for two different animation!
+            {
+                animator.SetTrigger("attack2");
+                attack.StartAttack(forwardAttack, level);
+                return;
 
-        }
-        if ((isAttack3 && isForward && isCrouching) || (isAttack3 && isCrouching))  // crouch
-        {
-            animator.SetTrigger("attack3");
-            attack3.StartAttack();
-        }
+            } // crouch attack
+            if ((isForward && isCrouching) || isCrouching)  // could be separated for two different animation!
+            {
+                animator.SetTrigger("attack3");
+                attack.StartAttack(crouchAttack, level);
+                return;
+            }
+        }     
     }
 
     private void ApplyGravity()
@@ -280,6 +287,28 @@ public class
             float nextVelocity = (prevVelocity + newVelocity) * 0.5f;
             currMove.y = nextVelocity;
         }
+    }
+
+    private AttackLevel GetAttackLevel()
+    {
+        if (isLightPressed)
+        {
+            return AttackLevel.LIGHT;
+        }
+        else if (isMediumPressed)
+        {
+            return AttackLevel.MEDIUM;
+        }
+        else if (isHeavyPressed)
+        {
+            return AttackLevel.HEAVY;
+        }
+        return AttackLevel.NONE;
+    }
+
+    private bool IsIdle()
+    {
+        return moveX == 0 && !isJumpingPressed && !isCrouchPressed && (isLightPressed || isMediumPressed || isHeavyPressed);
     }
 
     private void SubscribeActions()

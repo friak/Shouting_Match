@@ -18,15 +18,13 @@ public class PlayerFightingUI : MonoBehaviour
     private TextMeshProUGUI characterName;
     [SerializeField]
     private Slider slider;
-    [SerializeField]
-    private Image fill;
 
 
 
     private void Start()
     {
         // for the live game this has to be commented out
-        profileImage.GetComponent<Image>().sprite = image;
+        if (image != null) profileImage.GetComponent<Image>().sprite = image;
         characterName.text = ch_name;
         slider.maxValue = health;
         slider.value = health;
@@ -34,8 +32,10 @@ public class PlayerFightingUI : MonoBehaviour
 
     public void SetPlayerUI(CharacterScriptableAsset asset)
     {
-        profileImage.GetComponent<RawImage>().texture = asset.m_profile.texture;
-        characterName.text = asset.name;
+        profileImage.GetComponent<Image>().sprite = asset.m_profile;
+        characterName.text = asset.m_name;
+        slider.maxValue = asset.m_health;
+        slider.value = asset.m_health;
     }
 
     public void ReduceHealthBar(float new_health)

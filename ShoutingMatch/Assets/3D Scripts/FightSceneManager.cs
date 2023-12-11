@@ -15,10 +15,6 @@ public class FightSceneManager : MonoBehaviour
     private GameObject PLayer1;
     [SerializeField]
     private GameObject PLayer2;
-    [SerializeField]
-    private GameObject Player1UI;
-    [SerializeField]
-    private GameObject Player2UI;
 
     private GameObject player1Prefab;
     private GameObject player2Prefab;
@@ -53,11 +49,6 @@ public class FightSceneManager : MonoBehaviour
         // set player info
         PLayer1.GetComponent<Player>().InitPLayer(asset1);
         PLayer2.GetComponent<Player>().InitPLayer(asset2);
-        // set player UI
-        pl1UI = Player1UI.GetComponent<PlayerFightingUI>();
-        pl1UI.SetPlayerUI(asset1);
-        pl2UI = Player2UI.GetComponent<PlayerFightingUI>();
-        pl2UI.SetPlayerUI(asset2);
     }
 
 }
