@@ -18,4 +18,4 @@ MonoBehaviour:
   damageSmall: 10
   damageMedium: 20
   damageLarge: 30
-  playerPrefab: {fileID: 4416790858356453475, guid: ca334c3df31ad734aad4474812fe4953, type: 3}
+  playerPrefab: {fileID: 7614388964594807363, guid: 5573abfd70f4ccf4a8fa6f5705a655c6, type: 3}

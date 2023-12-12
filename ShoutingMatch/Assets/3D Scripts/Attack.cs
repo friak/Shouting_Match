@@ -258,7 +258,7 @@ public class Attack : MonoBehaviour
         if (isBlocking)
         {
             float offset = transform.position.x < 0 ? 1.2f : -1.2f; // position the shield in front of the player, even when turned
-            float rotateY = transform.position.x < 0 ? 1f : 90f; // flip the shield when turned
+            float rotateY = transform.position.x < 0 ? 0f : 90f; // flip the shield when turned
             blockInstance = Instantiate(blockPrefab, transform.position + new Vector3(offset, 0, 0), transform.rotation, transform);
             blockInstance.transform.GetChild(0).gameObject.transform.Rotate(new Vector3(0, rotateY, 0));
             // Debug.Log("SHIELD ON");
