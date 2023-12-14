@@ -601,10 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d5772043976d4797f65bc4cfec072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackType: 0
-  attackPrefab: {fileID: 5367212819000101155, guid: 5f0879c7f2b957247917d459c7df84bf, type: 3}
-  chargePrefab: {fileID: 0}
-  damage: 9
+  blockPrefab: {fileID: 0}
 --- !u!136 &288686074
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -711,10 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d5772043976d4797f65bc4cfec072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackType: 1
-  attackPrefab: {fileID: 7405544378826639938, guid: 765356c7c7438e0409a41e3a4b8aca82, type: 3}
-  chargePrefab: {fileID: 7405544378826639938, guid: e80456681ef348f449032afb9ae0dde5, type: 3}
-  damage: 12
+  blockPrefab: {fileID: 0}
 --- !u!136 &420344897
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1282,7 +1276,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523184019}
-  m_LocalRotation: {x: -0.057912745, y: -0.009973133, z: -0.0005785714, w: 0.9982717}
+  m_LocalRotation: {x: -0.057912767, y: -0.009973098, z: -0.0005785696, w: 0.9982717}
   m_LocalPosition: {x: -1.929884, y: -3.969332, z: -11.778785}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1343,14 +1337,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5583695078985010879, guid: ad0712efc32662144bce2cedbc7d69d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 048ac2fc2f637b34d9beeabc0c95d5a9, type: 3}
+    - target: {fileID: -2258026866434888011, guid: ad0712efc32662144bce2cedbc7d69d6, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -2258026866434888011, guid: ad0712efc32662144bce2cedbc7d69d6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+      objectReference: {fileID: -876546973899608171, guid: 048ac2fc2f637b34d9beeabc0c95d5a9, type: 3}
+    - target: {fileID: -2258026866434888011, guid: ad0712efc32662144bce2cedbc7d69d6, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 6d0cd4f4d055aae4c99f85910e6b83f6, type: 3}
+    - target: {fileID: -732993626320138509, guid: ad0712efc32662144bce2cedbc7d69d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 6d0cd4f4d055aae4c99f85910e6b83f6, type: 3}
     - target: {fileID: 919132149155446097, guid: ad0712efc32662144bce2cedbc7d69d6, type: 3}
       propertyPath: m_Name
       value: sibal_v2@Opening Door Inwards
       objectReference: {fileID: 0}
+    - target: {fileID: 2113835144433844363, guid: ad0712efc32662144bce2cedbc7d69d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 6d0cd4f4d055aae4c99f85910e6b83f6, type: 3}
+    - target: {fileID: 4802615357780954032, guid: ad0712efc32662144bce2cedbc7d69d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 048ac2fc2f637b34d9beeabc0c95d5a9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1531,10 +1549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d5772043976d4797f65bc4cfec072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackType: 2
-  attackPrefab: {fileID: 3176433126588992604, guid: 2824ad4e47c327b419b4e93f020dd34b, type: 3}
-  chargePrefab: {fileID: 0}
-  damage: 17
+  blockPrefab: {fileID: 0}
 --- !u!136 &619368407
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1826,10 +1841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d5772043976d4797f65bc4cfec072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackType: 0
-  attackPrefab: {fileID: 5006591606786206995, guid: a2c90ad089ba0bc47aefd911961e1353, type: 3}
-  chargePrefab: {fileID: 2828521337405886255, guid: 2433d701c95cade4f9e16a9fb73d811f, type: 3}
-  damage: 10
+  blockPrefab: {fileID: 0}
 --- !u!136 &804289458
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1879,9 +1891,10 @@ MonoBehaviour:
   m_opponent: {fileID: 1325699948}
   animator: {fileID: 811139170}
   characterController: {fileID: 811139169}
-  attack1: {fileID: 288686073}
-  attack2: {fileID: 1393702411}
-  attack3: {fileID: 619368406}
+  attack: {fileID: 0}
+  standardAttack: {fileID: 0}
+  forwardAttack: {fileID: 0}
+  crouchAttack: {fileID: 0}
 --- !u!143 &811139169
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2185,9 +2198,10 @@ MonoBehaviour:
   m_opponent: {fileID: 1763767842}
   animator: {fileID: 0}
   characterController: {fileID: 0}
-  attack1: {fileID: 0}
-  attack2: {fileID: 0}
-  attack3: {fileID: 0}
+  attack: {fileID: 0}
+  standardAttack: {fileID: 0}
+  forwardAttack: {fileID: 0}
+  crouchAttack: {fileID: 0}
 --- !u!143 &847344135
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2508,6 +2522,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Himbo_v1@Hip Hop Dancing
       objectReference: {fileID: 0}
+    - target: {fileID: 1603074031212534676, guid: 3fdb17b2df33c154a88ada8343117775, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c0472e9968bc9914ba3bbca0b9e32127, type: 2}
     - target: {fileID: 5866666021909216657, guid: 3fdb17b2df33c154a88ada8343117775, type: 3}
       propertyPath: m_Controller
       value: 
@@ -2873,13 +2891,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab4ee236833406543855adba42a8a7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 10285c3699a6e7a4cbf84d3fb621daec, type: 3}
-  ch_name: Garjan
-  health: 0
   profileImage: {fileID: 1993885159}
   characterName: {fileID: 147914407}
   slider: {fileID: 0}
-  fill: {fileID: 0}
 --- !u!1 &1307222026
 GameObject:
   m_ObjectHideFlags: 0
@@ -2931,13 +2945,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab4ee236833406543855adba42a8a7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 883ef2143d7ec7e49b82dd8f7bb81149, type: 3}
-  ch_name: Sybil
-  health: 0
   profileImage: {fileID: 263775643}
   characterName: {fileID: 1233897856}
   slider: {fileID: 0}
-  fill: {fileID: 0}
 --- !u!1 &1312786304
 GameObject:
   m_ObjectHideFlags: 0
@@ -3038,9 +3048,10 @@ MonoBehaviour:
   m_opponent: {fileID: 811139167}
   animator: {fileID: 1325699951}
   characterController: {fileID: 1325699950}
-  attack1: {fileID: 804289457}
-  attack2: {fileID: 420344896}
-  attack3: {fileID: 1533883174}
+  attack: {fileID: 0}
+  standardAttack: {fileID: 0}
+  forwardAttack: {fileID: 0}
+  crouchAttack: {fileID: 0}
 --- !u!143 &1325699950
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3244,10 +3255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d5772043976d4797f65bc4cfec072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackType: 2
-  attackPrefab: {fileID: 7271776728716093697, guid: f7cbd9c08f892c242a1be728251a10be, type: 3}
-  chargePrefab: {fileID: 0}
-  damage: 13
+  blockPrefab: {fileID: 0}
 --- !u!136 &1393702412
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3350,7 +3358,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 --- !u!4 &1448949822 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3891188482495163097, guid: ca334c3df31ad734aad4474812fe4953, type: 3}
+  m_CorrespondingSourceObject: {fileID: 874460802209998950, guid: ca334c3df31ad734aad4474812fe4953, type: 3}
   m_PrefabInstance: {fileID: 2062106643443436908}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1476493413
@@ -3537,10 +3545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d5772043976d4797f65bc4cfec072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackType: 2
-  attackPrefab: {fileID: 8972229115285059803, guid: 256b099fd7197c849b11da7d9467580d, type: 3}
-  chargePrefab: {fileID: 0}
-  damage: 14
+  blockPrefab: {fileID: 0}
 --- !u!136 &1533883175
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4003,9 +4008,10 @@ MonoBehaviour:
   m_opponent: {fileID: 847344133}
   animator: {fileID: 0}
   characterController: {fileID: 0}
-  attack1: {fileID: 0}
-  attack2: {fileID: 0}
-  attack3: {fileID: 0}
+  attack: {fileID: 0}
+  standardAttack: {fileID: 0}
+  forwardAttack: {fileID: 0}
+  crouchAttack: {fileID: 0}
 --- !u!143 &1763767845
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4293,7 +4299,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 500
-  field of view: 49.18668
+  field of view: 49.18091
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -4318,7 +4324,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1898775030}
-  m_LocalRotation: {x: -0.057912745, y: -0.009973133, z: -0.0005785714, w: 0.9982717}
+  m_LocalRotation: {x: -0.057912767, y: -0.009973098, z: -0.0005785696, w: 0.9982717}
   m_LocalPosition: {x: 0.14541149, y: 0.20229936, z: -9.000466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
