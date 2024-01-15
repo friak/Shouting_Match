@@ -3631,6 +3631,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1962653253}
     m_Modifications:
+    - target: {fileID: 2342140171670384997, guid: 5573abfd70f4ccf4a8fa6f5705a655c6, type: 3}
+      propertyPath: port
+      value: COM4
+      objectReference: {fileID: 0}
     - target: {fileID: 2485484133286929349, guid: 5573abfd70f4ccf4a8fa6f5705a655c6, type: 3}
       propertyPath: m_opponent
       value: 
@@ -3860,6 +3864,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1095727350}
     m_Modifications:
+    - target: {fileID: 1070638022988037205, guid: c87be575b91b29949ae34ea1f31ee5a3, type: 3}
+      propertyPath: port
+      value: COM3
+      objectReference: {fileID: 0}
     - target: {fileID: 2737087981216398668, guid: c87be575b91b29949ae34ea1f31ee5a3, type: 3}
       propertyPath: m_Controller
       value: 
@@ -3982,7 +3990,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 500
-  field of view: 38.693325
+  field of view: 48.632046
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

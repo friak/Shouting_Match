@@ -1,13 +1,11 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using System;
 
 public class
     PlayerController : MonoBehaviour
 {
-    
     [SerializeField]
     private bool m_isPlayer1;
+    public bool IsPlayer1 { get { return m_isPlayer1; } private set { } }
     [SerializeField]
     private Transform m_opponent; // will be set by the fight scene manager later
     public Transform Opponent { get { return m_opponent; } private set { } }
@@ -29,8 +27,8 @@ public class
     [SerializeField]
     private AttackScriptableAsset crouchAttack;
     private bool isHeavyPressed = false;
+    private AttackLevel attackLeve = AttackLevel.NONE;
 
-    private PlayerInput playerInput;
     // move
     private bool isForward = false;
     private Vector3 currMove;
@@ -58,13 +56,6 @@ public class
 
     private bool isGameOver = false;
     private Player player;
-
-    private void Awake()
-    {
-        playerInput = new PlayerInput();
-        // needs to be removed when finished testing 
-        SubscribeActions();
-    }
 
     private void Start()
     {
@@ -99,57 +90,61 @@ public class
 
     public void SetupController(bool isPlayer1, Transform opponent)
     {
-
         m_isPlayer1 = isPlayer1;
         m_opponent = opponent;
         // reset facing
         int direction = isPlayer1 ? 1 : -1;
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
         isTurned = m_isPlayer1 ? false : true;
- 
-        SubscribeActions();
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    public void SetMoveFromArduino(float move)
     {
-        moveX = context.ReadValue<float>();
+        moveX = move;
         currMove.x = moveX;
         isForward = isTurned ? moveX < 0 : moveX > 0;
         isBlocking = isTurned ? moveX > 0 : moveX < 0;
         // Debug.Log("context: " + moveX);
     }
 
-    public void OnJump(InputAction.CallbackContext context)
+    public void SetJumpFromArduino(bool jump)
     {
-        isJumpingPressed = context.ReadValueAsButton();   
+        isJumpingPressed = jump;
+    }
+    public void SetCrouchFromArduino(bool crouch)
+    {
+        isCrouchPressed = crouch;
+    }
+    public void SetAttackFromArduino(bool attack, int level)
+    {
+        switch (level)
+        {
+            case 1:
+                isLightPressed = attack;
+                break;
+            case 2:
+                isMediumPressed = attack;
+                break;
+            case 3:
+                isHeavyPressed = attack;
+                break;
+            case 0:
+            default:
+                isLightPressed = attack;
+                isMediumPressed = attack;
+                isHeavyPressed = attack;
+                break;
+        }
     }
 
-    public void OnCrouch(InputAction.CallbackContext context)
-    {
-        isCrouchPressed = context.ReadValueAsButton();
-    }
-
-    public void OnAttack1(InputAction.CallbackContext context)
-    {
-        isLightPressed = context.ReadValueAsButton();
-    }
-    public void OnAttack2(InputAction.CallbackContext context)
-    {
-        isMediumPressed = context.ReadValueAsButton();
-    }
-    public void OnAttack3(InputAction.CallbackContext context)
-    {
-        isHeavyPressed = context.ReadValueAsButton();
-    }
-
-    public void OnAttackEnd(InputAction.CallbackContext context)
+    public void ResetAttackTriggers()
     {
         animator.ResetTrigger("attack1");
         animator.ResetTrigger("attack2");
         animator.ResetTrigger("attack3");
     }
 
-    public void Jump()
+    private void Jump()
     {
         if (!isJumping && isJumpingPressed && characterController.isGrounded)
         {
@@ -164,7 +159,7 @@ public class
         }
     }
 
-    public void Crouch()
+    private void Crouch()
     {
         if (!isCrouching && isCrouchPressed && characterController.isGrounded)
         {
@@ -178,7 +173,7 @@ public class
         }
     }
 
-    public void Block()
+    private void Block()
     {
         if (isBlocking && !isBlockAnimation)
         {
@@ -195,7 +190,7 @@ public class
         }
     }
 
-    public void Move()
+    private void Move()
     {
         if (isBlocking || isCrouching || attack.IsAttacking || player.IsDead) // we need a crouch forward animation! until then I freez crouch
         {
@@ -252,12 +247,14 @@ public class
             {
                 animator.SetTrigger("attack1");
                 attack.StartAttack(standardAttack, level);
+                animator.ResetTrigger("attack1");
                 return;
             } // forward attack
             if ((isJumpingPressed && isForward) || isForward) // could be separated for two different animation!
             {
                 animator.SetTrigger("attack2");
                 attack.StartAttack(forwardAttack, level);
+                animator.ResetTrigger("attack2");
                 return;
 
             } // crouch attack
@@ -265,6 +262,7 @@ public class
             {
                 animator.SetTrigger("attack3");
                 attack.StartAttack(crouchAttack, level);
+                animator.ResetTrigger("attack2");
                 return;
             }
         }     
@@ -328,66 +326,4 @@ public class
         return moveX == 0 && !isJumpingPressed && !isCrouchPressed && (isLightPressed || isMediumPressed || isHeavyPressed);
     }
 
-    private void SubscribeActions()
-    {
-        if (m_isPlayer1)
-        {
-            playerInput.P1_Controls.Move.started += OnMove;
-            playerInput.P1_Controls.Move.performed += OnMove;
-            playerInput.P1_Controls.Move.canceled += OnMove;
-            playerInput.P1_Controls.Jump.performed += OnJump;
-            playerInput.P1_Controls.Jump.canceled += OnJump;
-            playerInput.P1_Controls.Crouch.started += OnCrouch;
-            playerInput.P1_Controls.Crouch.canceled += OnCrouch;
-            playerInput.P1_Controls.Attack1.started += OnAttack1;
-            playerInput.P1_Controls.Attack1.canceled += OnAttackEnd;
-            playerInput.P1_Controls.Attack2.started += OnAttack2;
-            playerInput.P1_Controls.Attack2.canceled += OnAttackEnd;
-            playerInput.P1_Controls.Attack3.started += OnAttack3;
-            playerInput.P1_Controls.Attack3.canceled += OnAttackEnd;
-            Debug.Log("METHODS SUBSCRIBED FOR PL 1");
-        }
-        else
-        {
-            playerInput.P2_Controls.Move.started += OnMove;
-            playerInput.P2_Controls.Move.performed += OnMove;
-            playerInput.P2_Controls.Move.canceled += OnMove;
-            playerInput.P2_Controls.Jump.performed += OnJump;
-            playerInput.P2_Controls.Jump.canceled += OnJump;
-            playerInput.P2_Controls.Crouch.started += OnCrouch;
-            playerInput.P2_Controls.Crouch.canceled += OnCrouch;
-            playerInput.P2_Controls.Attack1.started += OnAttack1;
-            playerInput.P2_Controls.Attack1.canceled += OnAttackEnd;
-            playerInput.P2_Controls.Attack2.started += OnAttack2;
-            playerInput.P2_Controls.Attack2.canceled += OnAttackEnd;
-            playerInput.P2_Controls.Attack3.started += OnAttack3;
-            playerInput.P2_Controls.Attack3.canceled += OnAttackEnd;
-            Debug.Log("METHODS SUBSCRIBED FOR PL 2");
-        }
-    }
-
-    private void OnEnable()
-    {
-        if (m_isPlayer1)
-        {
-            playerInput.P1_Controls.Enable();
-        }
-        else
-        {
-            playerInput.P2_Controls.Enable();
-        }
-
-    }
-
-    private void OnDisable()
-    {
-        if (m_isPlayer1)
-        {
-            playerInput.P1_Controls.Disable();
-        }
-        else
-        {
-            playerInput.P2_Controls.Disable();
-        }
-    }
 }

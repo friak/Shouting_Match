@@ -21,7 +21,6 @@ public class FightSceneManager : MonoBehaviour
     private PlayerFightingUI pl1UI;
     private PlayerFightingUI pl2UI;
 
-
     private void Awake()
     {
         if (_instance == null)
