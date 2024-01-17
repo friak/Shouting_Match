@@ -12,6 +12,8 @@ public class PlayerControlInput : MonoBehaviour
     [SerializeField] private string port;
     [SerializeField] private int baudRate = 9600;
 
+    private bool firstContact = false;
+
     private void Awake()
     {
         // UNITY INPUT SYSTEM
@@ -25,16 +27,18 @@ public class PlayerControlInput : MonoBehaviour
     {
 
         // ARDUINO INPUT
-        sPort = new SerialPort(port, baudRate);
+        sPort = new SerialPort(port, baudRate, Parity.None, 8, StopBits.One);
+        sPort.ReadTimeout = 1; //Shortest possible read time out.
+        sPort.WriteTimeout = 1; //Shortest possible write time out.
+
         try
         {
             sPort.Open();
-            sPort.ReadTimeout = 25;
             Debug.Log("Port open: " + sPort.PortName);
         }
         catch (System.Exception e)
         {
-            Debug.Log("Port Not Found! " + e);
+            Debug.Log("Cannot open port: " + e);
         }
     }
 
@@ -45,7 +49,33 @@ public class PlayerControlInput : MonoBehaviour
         {
             try
             {
-                ArduinoControl(sPort.ReadByte());
+                int data = CheckIfDataReceived();
+                if (data >= 100)
+                {
+                    playerController.SetAttackFromArduino(true, GetAttacklevel(data));
+                }else if (data > 10 && data <=100)
+                {
+                    playerController.SetAttackFromArduino(false, 0);
+                }
+
+                if (data == 3)
+                {
+                    playerController.SetJumpFromArduino(true);
+                }
+                else if (data == 2)
+                {
+                    playerController.SetJumpFromArduino(false);
+                    playerController.SetCrouchFromArduino(false);
+                }
+                else if (data == 4)
+                {
+                    playerController.SetCrouchFromArduino(true);
+                }
+
+                if(data == -1 || data == 0 || data == 1)
+                {
+                    playerController.SetMoveFromArduino(data);
+                }
             }
             catch (System.Exception e)
             {
@@ -54,51 +84,36 @@ public class PlayerControlInput : MonoBehaviour
         }
     }
 
-    private void ArduinoControl(int data)
+    public int CheckIfDataReceived()
     {
-        if(data > 100)
+        if (firstContact == true)
         {
-            playerController.SetAttackFromArduino(true, GetAttacklevel(data));
-            Debug.Log("====================================\nAttack: " + data);
-        }else if (data == 0)
+            int handShake = sPort.ReadByte();
+            if (handShake == 255)
+            {
+                sPort.Write("R");       // ask for data
+                sPort.BaseStream.Flush();
+                sPort.DiscardInBuffer();
+                firstContact = false;
+                Debug.Log("First contact.");
+            }
+            return 0;
+        }
+        else
         {
-            playerController.SetAttackFromArduino(false, 0);
+            try // Ignore malformed serial commands
+            {
+                string input = sPort.ReadLine();
+                Debug.Log("ARDUINO: " + input);
+               // sPort.Write("R");       // ask for data
+                sPort.BaseStream.Flush();
+                sPort.DiscardInBuffer();
+                return int.Parse(input);
+            }
+            catch { return 0; }
         }
 
-
-        if (data == 1)
-        {
-            playerController.SetCrouchFromArduino(true);
-            Debug.Log("CROUCH");
-        }
-        else if (data == 2)
-        {
-            playerController.SetJumpFromArduino(false);
-            playerController.SetCrouchFromArduino(false);
-            Debug.Log("NO JUMP OR CROUCH");
-        }
-        else if (data == 3)
-        {
-            playerController.SetJumpFromArduino(true);
-            Debug.Log("JUMP");
-        }
-
-        if (data == 4)
-        {
-            playerController.SetMoveFromArduino(1);
-            Debug.Log("RIGHT");
-        }
-        else if( data == 5)
-        {
-            playerController.SetMoveFromArduino(0); ;
-            Debug.Log("NO LEFT OR RIGHT");
-        }
-        else if (data == 6)
-        {
-            playerController.SetMoveFromArduino(-1);
-            Debug.Log("LEFT");
-            return;
-        }
+           
     }
 
     private int GetAttacklevel(int data)
