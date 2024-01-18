@@ -9,6 +9,11 @@ int shout = 0;
 int verticalMove = 0;
 int horizontalMove = 0;
 
+unsigned long duration = 0;
+unsigned long minDuration = 1000;
+unsigned long startTime = 0;
+bool isShouting = false;
+
 void setup() {
   Serial.begin(9600);
   while (!Serial) {}  // wait for serial port to connect - for native USB port only}
@@ -21,6 +26,26 @@ void setup() {
 }
 
 void loop() {
+  
+  if(getDeltaFromMic() > 100){
+    // if beginning of the command
+    if(duration == 0){
+      startTime = millis();
+      isShouting = true;
+    }
+    duration = millis() - startTime;
+  } else {
+    // end of the shout
+    if(isShouting == true){
+      Serial.print('D');
+      Serial.println();
+      Serial.print(duration);
+      Serial.println();
+      isShouting = false;
+      duration = 0;
+    }
+  }
+
   // only send if requested
   if (Serial.available() > 0) {
     char s = Serial.read();
@@ -42,8 +67,6 @@ void loop() {
       Serial.println();
       // delay(30);
      
-    }else if(s == 'D'){
-
     }
   }
 }

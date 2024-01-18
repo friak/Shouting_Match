@@ -86,14 +86,11 @@ public class PlayerControlInput : MonoBehaviour
 
     public int CheckIfDataReceived()
     {
-        sPort.BaseStream.Flush();
+       // sPort.BaseStream.Flush();
        // sPort.DiscardInBuffer();
         sPort.Write("V");       // ask for data
         string input = sPort.ReadLine();
         Debug.Log("ARDUINO: " + input);
-
-
-
         return int.Parse(input);
 
     }
