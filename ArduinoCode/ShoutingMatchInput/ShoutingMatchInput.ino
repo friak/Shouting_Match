@@ -17,17 +17,16 @@ void setup() {
       Serial.println("Joystick not connected");
       while (1);
     }
-  //Contact();  // send a byte until receiver responds (handshake)
+    // Contact();  // send a byte until receiver responds (handshake)
 }
 
 void loop() {
   // only send if requested
   if (Serial.available() > 0) {
-    if(Serial.readString() == "R"){
-      
-      
-    }
-  }
+    char s = Serial.read();
+      Serial.print(s);
+      Serial.println();
+    if(s == 'V'){
 
       shout = getDeltaFromMic();
       verticalMove = getVertical();
@@ -35,13 +34,18 @@ void loop() {
 
       Serial.print(shout);
       Serial.println();
-      delay(30);
+      // delay(30);
       Serial.print(verticalMove);
       Serial.println();
-      delay(30);
+      // delay(30);
       Serial.print(horizontalMove);
       Serial.println();
-      delay(30);
+      // delay(30);
+     
+    }else if(s == 'D'){
+
+    }
+  }
 }
 
 void Contact(){

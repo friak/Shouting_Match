@@ -86,34 +86,16 @@ public class PlayerControlInput : MonoBehaviour
 
     public int CheckIfDataReceived()
     {
-        if (firstContact == true)
-        {
-            int handShake = sPort.ReadByte();
-            if (handShake == 255)
-            {
-                sPort.Write("R");       // ask for data
-                sPort.BaseStream.Flush();
-                sPort.DiscardInBuffer();
-                firstContact = false;
-                Debug.Log("First contact.");
-            }
-            return 0;
-        }
-        else
-        {
-            try // Ignore malformed serial commands
-            {
-                string input = sPort.ReadLine();
-                Debug.Log("ARDUINO: " + input);
-               // sPort.Write("R");       // ask for data
-                sPort.BaseStream.Flush();
-                sPort.DiscardInBuffer();
-                return int.Parse(input);
-            }
-            catch { return 0; }
-        }
+        sPort.BaseStream.Flush();
+       // sPort.DiscardInBuffer();
+        sPort.Write("V");       // ask for data
+        string input = sPort.ReadLine();
+        Debug.Log("ARDUINO: " + input);
 
-           
+
+
+        return int.Parse(input);
+
     }
 
     private int GetAttacklevel(int data)
