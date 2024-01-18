@@ -224,6 +224,7 @@ public class
     }
     private void Forward()
     {
+        Debug.Log("forward mode");
         if (isForward && !isForwardAnimation)
         {
             animator.SetBool("isForward", true);
@@ -246,6 +247,7 @@ public class
         {   // standard attack
             if (IsIdle() || isJumpingPressed)
             {
+                Debug.Log("idle mode");
                 animator.SetTrigger("attack1");
                 attack.StartAttack(standardAttack, level);
                 //animator.ResetTrigger("attack1");
