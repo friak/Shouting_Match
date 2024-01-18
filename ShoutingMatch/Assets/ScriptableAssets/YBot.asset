@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 255d5afec4300a04b8e31db833bd0646, type: 3}
+  m_Name: YBot
+  m_EditorClassIdentifier: 
+  m_name: Y Bot
+  m_profile: {fileID: 21300000, guid: 69d58762ece2af14daf62389a038dc0a, type: 3}
+  combatType: 0
+  attackLowMax: 
+  attackMediumMax: 
+  attackHighMax: 
+  m_health: 130
+  damageSmall: 8
+  damageMedium: 21
+  damageLarge: 28
+  playerPrefab: {fileID: 2160034085648266611, guid: bd60edc504dec9a4e83785cf22bc99be, type: 3}

@@ -35,9 +35,14 @@ public class GameStateManager : MonoBehaviour
     private CharacterScriptableAsset m_player1;
     [SerializeField]
     private CharacterScriptableAsset m_player2;
-
-    public SerialPort SPort1 { get; private set; }
-    public SerialPort SPort2 { get; private set; }
+    [SerializeField]
+    private string port1 = "COM3";
+    [SerializeField]
+    private string port2 = "COM4";
+    [SerializeField]
+    private int baudRate = 9600;
+    public SerialPort SPort1 { get; private set; } 
+    public SerialPort SPort2 { get; private set; } 
 
     public CharacterScriptableAsset Player1 { get { return m_player1; } set { } }
     public CharacterScriptableAsset Player2 { get { return m_player2; } set { } }
@@ -57,8 +62,15 @@ public class GameStateManager : MonoBehaviour
 
     private void Start()
     {
-        SPort1 = new SerialPort("/dev/cu.usbmodem141101", 9600);
-        SPort2 = new SerialPort("/dev/cu.usbmodem142101", 9600);
+        SPort1 = new SerialPort(port1, baudRate, Parity.None, 8, StopBits.One);
+        SPort2 = new SerialPort(port2, baudRate, Parity.None, 8, StopBits.One);
+        // ARDUINO INPUT
+        SPort1.ReadTimeout = 1; //Shortest possible read time out.
+        SPort1.WriteTimeout = 1; //Shortest possible write time out.
+        SPort2.ReadTimeout = 1; 
+        SPort2.WriteTimeout = 1;
+        OpenPort(SPort1);
+        OpenPort(SPort2);
     }
 
     public void TogglePause()
@@ -92,7 +104,9 @@ public class GameStateManager : MonoBehaviour
     public void CloseApp()
     {
         //Test when running the game in the Editor,
-        Debug.Log("Quitting game ...");
+        Debug.Log("Quitting game, closing ports ...");
+        SPort1.Close();
+        SPort2.Close();
         // quit otherwise
         Application.Quit();
     }
@@ -115,10 +129,22 @@ public class GameStateManager : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
-    public void SetPlayer(CharacterScriptableAsset[] playerAssets)
+    public void SetPlayer(int id, CharacterScriptableAsset playerAssets)
     {
-        // to do check the array lenghts and set default if not enough players
-        Player1 = playerAssets[0];
-        Player2 = playerAssets[1];
+        if (id == 1) { Player1 = playerAssets; }
+        if (id == 2) { Player2 = playerAssets; }
+    }
+
+    private void OpenPort(SerialPort sPort)
+    {
+        try
+        {
+            sPort.Open();
+            Debug.Log("Port open: " + sPort.PortName);
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log("Cannot open port: " + e);
+        }
     }
 }

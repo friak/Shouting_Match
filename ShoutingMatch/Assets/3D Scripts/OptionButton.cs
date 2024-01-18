@@ -10,10 +10,10 @@ public class OptionButton : MonoBehaviour
     [SerializeField]
     private Sprite spriteMultiselect, spriteP1, spriteP2;
 
-    private CharacterSO character;
+    private CharacterScriptableAsset character;
     private int numberOfSelects;
 
-    public void SetCharacter(CharacterSO ch, int id)
+    public void SetCharacter(CharacterScriptableAsset ch, int id)
     {
         this.id = id;
         character = ch;
@@ -29,7 +29,7 @@ public class OptionButton : MonoBehaviour
         return id;
     }
 
-    public CharacterSO GetScriptableObject()
+    public CharacterScriptableAsset GetScriptableObject()
     {
         return character;
     }

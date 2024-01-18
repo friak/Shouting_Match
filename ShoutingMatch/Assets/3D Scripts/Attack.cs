@@ -45,12 +45,14 @@ public class Attack : MonoBehaviour
 
     private float damageDistance = 2.2f;
     public bool IsAttacking { get; private set; } = false;
+    Vector3 opponentOriginalPos;
     
 
     private void Start()
     {
         state = AttackState.DORMANT;
         opponent = GetComponentInParent<PlayerController>().Opponent.gameObject;
+        opponentOriginalPos = opponent.transform.position;
         opponentPlayer = opponent.GetComponentInParent<Player>();
         opponentController = opponent.GetComponent<PlayerController>();
     }
@@ -163,7 +165,7 @@ public class Attack : MonoBehaviour
                 {
                     // thorw it at the opponent
                     float step = 9.5f * Time.deltaTime; //  distance to move
-                    attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponent.transform.position + new Vector3(0, 2.8f,0), step);
+                    attackInstance.transform.position = Vector3.MoveTowards(attackInstance.transform.position, opponentOriginalPos + new Vector3(0, -1.8f,0), step);
                     if (Mathf.Abs(attackInstance.transform.position.x - opponent.transform.position.x) < 0.5f)
                     {
                         damage = opponentController.IsBlocking ? damage / 4 : damage;

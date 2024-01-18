@@ -44,5 +44,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    public CombatType GetCombatType()
+    {
+        return playerSA.combatType;
+    }
+
 }
 

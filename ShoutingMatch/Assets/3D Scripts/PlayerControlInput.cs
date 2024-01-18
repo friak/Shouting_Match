@@ -9,10 +9,6 @@ public class PlayerControlInput : MonoBehaviour
     private PlayerController playerController;
 
     private SerialPort sPort;
-    [SerializeField] private string port;
-    [SerializeField] private int baudRate = 9600;
-
-    private bool firstContact = false;
 
     private void Awake()
     {
@@ -25,21 +21,7 @@ public class PlayerControlInput : MonoBehaviour
 
     private void Start()
     {
-
-        // ARDUINO INPUT
-        sPort = new SerialPort(port, baudRate, Parity.None, 8, StopBits.One);
-        sPort.ReadTimeout = 1; //Shortest possible read time out.
-        sPort.WriteTimeout = 1; //Shortest possible write time out.
-
-        try
-        {
-            sPort.Open();
-            Debug.Log("Port open: " + sPort.PortName);
-        }
-        catch (System.Exception e)
-        {
-            Debug.Log("Cannot open port: " + e);
-        }
+        sPort = playerController.IsPlayer1 ? GameStateManager.Instance.SPort1 : GameStateManager.Instance.SPort2;
     }
 
     private void Update()
@@ -90,22 +72,42 @@ public class PlayerControlInput : MonoBehaviour
        // sPort.DiscardInBuffer();
         sPort.Write("V");       // ask for data
         string input = sPort.ReadLine();
-        Debug.Log("ARDUINO: " + input);
+        string pl = playerController.IsPlayer1 ? "P1: " : "P2: ";
+        Debug.Log( pl + "" + input);
         return int.Parse(input);
-
     }
 
     private int GetAttacklevel(int data)
     {
-        if(data > 100 && data <= 150)
+        switch (playerController.Combat)
         {
-            return 2;
+            case CombatType.DURATION:
+                {
+                    if (data > 1000 && data <= 10000)
+                    {
+                        return 1;
+                    }
+                    else if (data > 10000 && data <= 100000)
+                    {
+                        return 2;
+                    }
+                    return 3;
+                }
+            case CombatType.VOLUME:
+                {
+                    if (data > 100 && data <= 150)
+                    {
+                        return 2;
+                    }
+                    else if (data > 150)
+                    {
+                        return 3;
+                    }
+                    return 1;
+                }
+            default:
+                return 1;
         }
-        else if (data > 150)
-        {
-            return 3;
-        }
-        return 1;
     }
 
     public void OnMove(InputAction.CallbackContext context)

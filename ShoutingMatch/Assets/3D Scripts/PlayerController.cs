@@ -27,7 +27,6 @@ public class
     [SerializeField]
     private AttackScriptableAsset crouchAttack;
     private bool isHeavyPressed = false;
-    private AttackLevel attackLeve = AttackLevel.NONE;
 
     // move
     private bool isForward = false;
@@ -56,17 +55,18 @@ public class
 
     private bool isGameOver = false;
     private Player player;
+    public CombatType Combat { get; private set; }
 
     private void Start()
     {
         player = GetComponentInParent<Player>();
-        int direction = m_isPlayer1 ? 1 : -1;
+        Combat = player.GetCombatType();
+       /* int direction = m_isPlayer1 ? 1 : -1;
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
-        isTurned = m_isPlayer1 ? false : true;
+        isTurned = m_isPlayer1 ? false : true;*/
         float timeToUp = jumpHeight / 2;
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToUp, 2);
         initJumpVelocity = (2 * jumpHeight) / timeToUp;
-        isTurned = m_isPlayer1 ? false : true;
     }
 
     // Update is called once per frame
@@ -96,6 +96,7 @@ public class
         int direction = isPlayer1 ? 1 : -1;
         transform.Rotate(0.0f, direction * 90.0f, 0.0f, Space.Self);
         isTurned = m_isPlayer1 ? false : true;
+        gameObject.AddComponent<PlayerControlInput>();
     }
 
     public void SetMoveFromArduino(float move)
@@ -128,7 +129,7 @@ public class
             case 3:
                 isHeavyPressed = attack;
                 break;
-            case 0:
+            case 0: // no attack
             default:
                 isLightPressed = attack;
                 isMediumPressed = attack;
@@ -247,14 +248,14 @@ public class
             {
                 animator.SetTrigger("attack1");
                 attack.StartAttack(standardAttack, level);
-                animator.ResetTrigger("attack1");
+                //animator.ResetTrigger("attack1");
                 return;
             } // forward attack
             if ((isJumpingPressed && isForward) || isForward) // could be separated for two different animation!
             {
                 animator.SetTrigger("attack2");
                 attack.StartAttack(forwardAttack, level);
-                animator.ResetTrigger("attack2");
+                //animator.ResetTrigger("attack2");
                 return;
 
             } // crouch attack
@@ -262,7 +263,7 @@ public class
             {
                 animator.SetTrigger("attack3");
                 attack.StartAttack(crouchAttack, level);
-                animator.ResetTrigger("attack2");
+                //animator.ResetTrigger("attack2");
                 return;
             }
         }     

@@ -47,5 +47,8 @@ MonoBehaviour:
   m_TitleScene: TitleScene
   m_TutorialScene: TurorialScene
   m_SelectScene: SelectScene
-  m_player1: {fileID: 11400000, guid: 78a3a7bed18d2fe429939a3b175cb015, type: 2}
-  m_player2: {fileID: 11400000, guid: 4553ce6f44704814d8be1eb48bbb9967, type: 2}
+  m_player1: {fileID: 11400000, guid: edbb32327c645db44942b509f9821169, type: 2}
+  m_player2: {fileID: 11400000, guid: abe8a21818e3d954689eb49b8660a5e6, type: 2}
+  port1: COM3
+  port2: COM4
+  baudRate: 9600

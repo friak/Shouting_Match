@@ -33,13 +33,14 @@ void loop() {
       startTime = millis();
       isShouting = true;
     }
+    delay(20);
     duration = millis() - startTime;
   } else {
     // end of the shout
     if(isShouting == true){
       Serial.print('D');
       Serial.println();
-      Serial.print(duration);
+      Serial.print(duration * 100);
       Serial.println();
       isShouting = false;
       duration = 0;

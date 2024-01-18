@@ -7,7 +7,7 @@ using UnityEngine;
 public class CharacterSelectManager : MonoBehaviour
 {
     [SerializeField]
-    private List<CharacterSO> characters;
+    private List<CharacterScriptableAsset> characters;
     [SerializeField]
     private GameObject optionsHolder;
     [SerializeField]
